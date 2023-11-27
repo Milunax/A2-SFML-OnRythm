@@ -21,6 +21,7 @@ int main()
 	rectangle.setSize(sf::Vector2f(128, 128));
 
 	sf::Clock frameClock;
+	int tickCount = 0;
 
 	while (window.isOpen())
 	{
@@ -50,7 +51,8 @@ int main()
 			//std::cout << countTick;
 		}
 		else {
-			std::cout << "TOP";
+			tickCount++;
+			std::cout << (((tickCount % 4) == 0) ? "TOP" : "TIP");
 			countTick -= tick;
 		}
 
