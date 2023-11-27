@@ -1,7 +1,8 @@
 #include "Entity.h"
 #include <algorithm>
 
-Entity::Entity(float maxHealth, float speed) {
+Entity::Entity(sf::Vector2f startPos, float maxHealth, float speed) {
+	_position = startPos;
 	_maxHealth = maxHealth;
 	_health = _maxHealth;
 	_speed = speed;
