@@ -3,12 +3,15 @@
 #include <iostream>
 
 constexpr float cubeSpeed = 500.f;
+float bpm = 150.0f;
+float countTick = 0.0f;
+float tick = 1 /(bpm / 60);
 
 int main()
 {
 	// Initialisation
 
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "Geometry Wars");
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
 
 	// Début de la boucle de jeu
@@ -39,7 +42,17 @@ int main()
 		}
 
 		float deltaTime = frameClock.restart().asSeconds();
-		std::cout << 1.f / deltaTime << " FPS" << std::endl;
+		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
+
+
+		if (countTick < tick) {
+			countTick += deltaTime;
+			//std::cout << countTick;
+		}
+		else {
+			std::cout << "TOP";
+			countTick -= tick;
+		}
 
 		// Logique
 		sf::Vector2f pos = rectangle.getPosition();
