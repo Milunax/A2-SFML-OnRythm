@@ -1,11 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 
+#include "Background.h"
+
 constexpr float cubeSpeed = 500.f;
-float bpm = 150.0f;
+float bpm = 151.0f;
 float countTick = 0.0f;
 float tick = 1 /(bpm / 60);
+
+sf::Color backgroundColor;
+
+// Sound
+sf::Music music;
+
 
 int main()
 {
@@ -14,15 +23,32 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
 
-	// Début de la boucle de jeu
+	// Objects
 	sf::RectangleShape rectangle;
 	rectangle.setFillColor(sf::Color::Red);
 	rectangle.setPosition(640, 360);
 	rectangle.setSize(sf::Vector2f(128, 128));
 
+	sf::CircleShape circle;
+	circle.setFillColor(sf::Color::Transparent);
+	circle.setPosition(640, 360);
+	circle.setOutlineThickness(15);
+	circle.setOutlineColor(sf::Color::Blue);
+	circle.setRadius(100);
+	int goalScale = 500;
+	int resultScale = (float)circle.getRadius();
+	
+
 	sf::Clock frameClock;
 	int tickCount = 0;
 
+	// Music buffer
+	if (!music.openFromFile("../sound/150.wav"))
+		return -1; // error
+	music.play();
+	music.setLoop(true);
+
+	// Main Game
 	while (window.isOpen())
 	{
 		// Gérer les événéments survenus depuis le dernier tour de boucle
@@ -52,7 +78,18 @@ int main()
 		}
 		else {
 			tickCount++;
-			std::cout << (((tickCount % 4) == 0) ? "TOP" : "TIP");
+			/*
+			std::cout << (((tickCount % 2) == 0) ? "TOP" : "TIP") << std::endl;
+			std::cout << tickCount << std::endl;
+			*/
+			if (tickCount < 287) {
+
+				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Yellow) : rectangle.setFillColor(sf::Color::Magenta);
+				backgroundColor = ChangeBackground(tickCount % 3);
+			}
+			else {
+				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Green) : rectangle.setFillColor(sf::Color::Yellow);
+			}
 			countTick -= tick;
 		}
 
@@ -74,12 +111,16 @@ int main()
 		rectangle.setPosition(pos);
 
 		// Affichage
-		
+		/*
+		resultScale = circle.getRadius();
+		resultScale += (goalScale - resultScale) / 100; // increase division for stronger easing
+		circle.setRadius(resultScale);
+		*/
 		// Remise au noir de toute la fenêtre
-		window.clear();
-
+		window.clear(backgroundColor);
 		// Tout le rendu va se dérouler ici
 		window.draw(rectangle);
+		window.draw(circle);
 
 		// On présente la fenêtre sur l'écran
 		window.display();
