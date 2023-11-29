@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Player.h"
 #include "Enemy.h"
+#include "EnemySpawner.h"
 
 constexpr float cubeSpeed = 500.f;
 
@@ -19,7 +20,8 @@ int main()
 	//rectangle.setPosition(640, 360);
 	//rectangle.setSize(sf::Vector2f(128, 128));
 	Player player(sf::Color::Blue, sf::Vector2f(100, 100), 50, 100, 50);
-	Enemy testEnemy(sf::Vector2f(300,300), 10, 20, sf::Vector2f(50,50), sf::Color::Red);
+	EnemySpawner enemySpawner(sf::Vector2f(800, 300));
+	Enemy* enemy = enemySpawner.InstantiateEnemy(&player);
 
 	sf::Clock frameClock;
 
@@ -46,7 +48,7 @@ int main()
 		//std::cout << 1.f / deltaTime << " FPS" << std::endl;
 
 		// Logique
-		sf::Vector2f pos = player.getPosition();
+		sf::Vector2f pos = player.GetPosition();
 		//
 		// std::cout << pos.x << " : " << pos.y << std::endl;
 		
@@ -62,9 +64,11 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			pos.y = pos.y + deltaTime * cubeSpeed;
 
-		player.setPosition(pos);
-		player.getPlayerShape().setPosition(pos);
-		std::cout << pos.x << " : " << pos.y << std::endl;
+		player.SetPosition(pos);
+		player.GetPlayerShape().setPosition(pos);
+		//std::cout << pos.x << " : " << pos.y << std::endl;
+		enemy->Move(deltaTime);
+
 
 		// Affichage
 		
@@ -72,9 +76,8 @@ int main()
 		window.clear();
 
 		// Tout le rendu va se dérouler ici
-		window.draw(player.getPlayerShape());
-		window.draw(testEnemy.GetEnemyShape());
-
+		window.draw(player.GetPlayerShape());
+		enemy->Draw(window);
 		// On présente la fenêtre sur l'écran
 		window.display();
 	}

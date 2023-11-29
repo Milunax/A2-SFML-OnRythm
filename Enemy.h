@@ -1,15 +1,18 @@
 #pragma once
-#include "Entity.h"
 #include <SFML/Graphics.hpp>
+#include "Entity.h"
+#include "Math.h"
 
 
-class Enemy : public Entity {
+class Enemy : public Entity 
+{
 	public :
-		Enemy(sf::Vector2f startPos, float maxHealth, float speed, sf::Vector2f size, sf::Color color);
-		sf::RectangleShape& GetEnemyShape();
+		Enemy(sf::Vector2f size, sf::Color color, sf::Vector2f startPos, float maxHealth, float speed);
+		void Draw(sf::RenderWindow& window);
 		void SetTarget(Entity* target);
-		void Move();
+		void Move(float deltaTime);
 	private :
-		sf::RectangleShape _enemyShape;
+		sf::Vector2f _size;
+		sf::Color _color;
 		Entity* _target;
 };
