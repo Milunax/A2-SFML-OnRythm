@@ -12,7 +12,7 @@ class Entity
 		void SetPosition(sf::Vector2f pos);
 		int GetSpeed();
 		virtual void Draw(sf::RenderWindow& window);
-	protected :
+	protected:
 		float _speed;
 		sf::Vector2f _position;
 	private : 
