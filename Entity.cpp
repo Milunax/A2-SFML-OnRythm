@@ -15,3 +15,11 @@ void Entity::TakeDamage(float damage) {
 void Entity::Heal(float heal) {
 	_health = std::clamp(_health + heal, 0.0f, _maxHealth);
 }
+
+sf::Vector2f Entity::getPosition() {
+	return _position;
+}
+
+void Entity::setPosition(sf::Vector2f pos) {
+	_position = pos;
+}

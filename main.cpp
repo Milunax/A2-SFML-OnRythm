@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include "Player.h"
 
 constexpr float cubeSpeed = 500.f;
 
@@ -12,10 +13,12 @@ int main()
 	window.setVerticalSyncEnabled(true);
 
 	// Début de la boucle de jeu
-	sf::RectangleShape rectangle;
-	rectangle.setFillColor(sf::Color::Red);
-	rectangle.setPosition(640, 360);
-	rectangle.setSize(sf::Vector2f(128, 128));
+	//sf::RectangleShape rectangle;
+	//rectangle.setFillColor(sf::Color::Red);
+	//rectangle.setPosition(640, 360);
+	//rectangle.setSize(sf::Vector2f(128, 128));
+	Player player(sf::Color::Blue, sf::Vector2f(100, 100), 50, 100, 50);
+
 
 	sf::Clock frameClock;
 
@@ -39,10 +42,12 @@ int main()
 		}
 
 		float deltaTime = frameClock.restart().asSeconds();
-		std::cout << 1.f / deltaTime << " FPS" << std::endl;
+		//std::cout << 1.f / deltaTime << " FPS" << std::endl;
 
 		// Logique
-		sf::Vector2f pos = rectangle.getPosition();
+		sf::Vector2f pos = player.getPosition();
+		//
+		// std::cout << pos.x << " : " << pos.y << std::endl;
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
 			pos.x = pos.x - deltaTime * cubeSpeed;
@@ -56,7 +61,9 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			pos.y = pos.y + deltaTime * cubeSpeed;
 
-		rectangle.setPosition(pos);
+		player.setPosition(pos);
+		player.getPlayerShape().setPosition(pos);
+		std::cout << pos.x << " : " << pos.y << std::endl;
 
 		// Affichage
 		
@@ -64,7 +71,7 @@ int main()
 		window.clear();
 
 		// Tout le rendu va se dérouler ici
-		window.draw(rectangle);
+		window.draw(player.getPlayerShape());
 
 		// On présente la fenêtre sur l'écran
 		window.display();
