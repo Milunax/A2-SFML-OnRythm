@@ -40,7 +40,7 @@ void Player::Move(float deltaTime)
 void Player::Shoot(float deltaTime) 
 {
 	_fireTimer += deltaTime;
-	std::cout << _fireTimer << std::endl;
+	//std::cout << _fireTimer << std::endl;
 	if (_fireTimer >= 1 / _bulletFireRate) {
 		Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, sf::Vector2f{1, 0}, 50);
 		_fireTimer = 0.0f;

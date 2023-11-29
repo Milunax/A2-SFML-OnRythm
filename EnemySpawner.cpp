@@ -1,20 +1,8 @@
 #include "EnemySpawner.h"
 
-EnemySpawner::EnemySpawner(sf::Vector2f position, float spawnRate) 
+EnemySpawner::EnemySpawner(sf::Vector2f position) 
 {
 	_position = position;
-	_timer = 0;
-	_spawnRate = spawnRate;
-}
-
-void EnemySpawner::Update(float deltaTime, std::vector<Enemy*>& enemyList, Entity* enemyTarget)
-{
-	UpdateTimer(deltaTime);
-	if (_timer > 3) 
-	{
-		enemyList.push_back(InstantiateEnemy(enemyTarget));
-		_timer = 0;
-	}
 }
 
 Enemy* EnemySpawner::InstantiateEnemy(Entity* enemyTarget) 
@@ -25,7 +13,3 @@ Enemy* EnemySpawner::InstantiateEnemy(Entity* enemyTarget)
 
 }
 
-void EnemySpawner::UpdateTimer(float deltaTime) 
-{
-	_timer += deltaTime;
-}

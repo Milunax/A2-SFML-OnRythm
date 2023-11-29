@@ -27,6 +27,7 @@ void Enemy::Draw(sf::RenderWindow& window)
 {
 	sf::RectangleShape shape;
 	shape.setSize(_size);
+	shape.setOrigin(sf::Vector2f( (_size.x / 2), (_size.y / 2) ));
 	shape.setFillColor(_color);
 	shape.setPosition(_position);
 	window.draw(shape);
