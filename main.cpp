@@ -19,7 +19,6 @@ int main()
 	//rectangle.setPosition(640, 360);
 	//rectangle.setSize(sf::Vector2f(128, 128));
 	Player player(sf::Color::Blue, sf::Vector2f(100, 100), 50, 100, 500);
-	Enemy testEnemy(sf::Vector2f(300,300), 10, 20, sf::Vector2f(50,50), sf::Color::Red);
 
 	sf::Clock frameClock;
 
@@ -56,7 +55,6 @@ int main()
 
 		// Tout le rendu va se dérouler ici
 		player.Draw(window);
-		window.draw(testEnemy.GetEnemyShape());
 
 		// On présente la fenêtre sur l'écran
 		window.display();
