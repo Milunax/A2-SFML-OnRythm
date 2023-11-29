@@ -27,3 +27,7 @@ void Entity::SetPosition(sf::Vector2f pos) {
 int Entity::GetSpeed() {
 	return _speed;
 }
+
+void Entity::Draw(sf::RenderWindow& window) {
+
+}

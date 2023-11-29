@@ -18,7 +18,7 @@ int main()
 	//rectangle.setFillColor(sf::Color::Red);
 	//rectangle.setPosition(640, 360);
 	//rectangle.setSize(sf::Vector2f(128, 128));
-	Player player(sf::Color::Blue, sf::Vector2f(100, 100), 50, 100, 50);
+	Player player(sf::Color::Blue, sf::Vector2f(100, 100), 50, 100, 500);
 	Enemy testEnemy(sf::Vector2f(300,300), 10, 20, sf::Vector2f(50,50), sf::Color::Red);
 
 	sf::Clock frameClock;
@@ -46,25 +46,8 @@ int main()
 		//std::cout << 1.f / deltaTime << " FPS" << std::endl;
 
 		// Logique
-		sf::Vector2f pos = player.getPosition();
-		//
-		// std::cout << pos.x << " : " << pos.y << std::endl;
-		
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-			pos.x = pos.x - deltaTime * cubeSpeed;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			pos.x = pos.x + deltaTime * cubeSpeed;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-			pos.y = pos.y - deltaTime * cubeSpeed;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			pos.y = pos.y + deltaTime * cubeSpeed;
-
-		player.setPosition(pos);
-		player.getPlayerShape().setPosition(pos);
-		std::cout << pos.x << " : " << pos.y << std::endl;
+		player.Move(deltaTime);
+		player.Shoot(deltaTime);
 
 		// Affichage
 		
@@ -72,7 +55,7 @@ int main()
 		window.clear();
 
 		// Tout le rendu va se dérouler ici
-		window.draw(player.getPlayerShape());
+		player.Draw(window);
 		window.draw(testEnemy.GetEnemyShape());
 
 		// On présente la fenêtre sur l'écran
