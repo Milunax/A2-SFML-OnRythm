@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Player.h"
 #include "Enemy.h"
+#include "Bullet.h"
+
 
 constexpr float cubeSpeed = 500.f;
 
@@ -10,7 +12,7 @@ int main()
 {
 	// Initialisation
 
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "Geometry Wars");
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "Epileptik Rythm");
 	window.setVerticalSyncEnabled(true);
 
 	// Début de la boucle de jeu
@@ -19,6 +21,7 @@ int main()
 	//rectangle.setPosition(640, 360);
 	//rectangle.setSize(sf::Vector2f(128, 128));
 	Player player(sf::Color::Blue, sf::Vector2f(100, 100), 50, 100, 500);
+	std::vector<Bullet*> bulletList;
 
 	sf::Clock frameClock;
 
@@ -46,7 +49,7 @@ int main()
 
 		// Logique
 		player.Move(deltaTime);
-		player.Shoot(deltaTime);
+		player.Update(deltaTime, bulletList);
 
 		// Affichage
 		

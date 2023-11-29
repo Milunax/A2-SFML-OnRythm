@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Player.h"
 #include "Bullet.h"
 
@@ -37,16 +36,26 @@ void Player::Move(float deltaTime)
 	_circle.setPosition(_position);
 }
 
-void Player::Shoot(float deltaTime) 
+void Player::Update(float deltaTime, std::vector<Bullet*>& bulletList) 
+{
+	UpdateTimer(deltaTime);
+	if (_fireTimer >= 1 / _bulletFireRate) {
+		bulletList.push_back(Shoot());
+		_fireTimer = 0.0f;
+	}
+}
+
+void Player::UpdateTimer(float deltaTime) 
 {
 	_fireTimer += deltaTime;
 	std::cout << _fireTimer << std::endl;
-	if (_fireTimer >= 1 / _bulletFireRate) {
-		Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, sf::Vector2f{1, 0}, 50);
-		_fireTimer = 0.0f;
-		std::cout << "a tiré" << std::endl;
-	}
+}
 
+Bullet* Player::Shoot()
+{
+	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, sf::Vector2f{1, 0}, 50);
+	std::cout << "a tiré" << std::endl;
+	return bullet;
 }
 
 void Player::Draw(sf::RenderWindow& window)
