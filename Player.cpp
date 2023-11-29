@@ -7,6 +7,6 @@ Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHeal
 	_circle.setRadius(radius);
 }
 
-sf::CircleShape& Player::getPlayerShape() {
+sf::CircleShape& Player::GetPlayerShape() {
 	return _circle;
 }

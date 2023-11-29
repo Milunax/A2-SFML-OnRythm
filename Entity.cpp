@@ -16,10 +16,14 @@ void Entity::Heal(float heal) {
 	_health = std::clamp(_health + heal, 0.0f, _maxHealth);
 }
 
-sf::Vector2f Entity::getPosition() {
+sf::Vector2f Entity::GetPosition() {
 	return _position;
 }
 
-void Entity::setPosition(sf::Vector2f pos) {
+void Entity::SetPosition(sf::Vector2f pos) {
 	_position = pos;
+}
+
+int Entity::GetSpeed() {
+	return _speed;
 }
