@@ -2,8 +2,9 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-
 #include "Background.h"
+#include "Player.h"
+#include "WaveManager.h"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 151.0f;
@@ -38,6 +39,8 @@ int main()
 	int goalScale = 500;
 	int resultScale = (float)circle.getRadius();
 	
+	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
+	WaveManager waveManager(window, &player);
 
 	sf::Clock frameClock;
 	int tickCount = 0;
@@ -85,6 +88,7 @@ int main()
 			if (tickCount < 287) {
 
 				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Yellow) : rectangle.setFillColor(sf::Color::Magenta);
+				if (tickCount % 2 == 0) waveManager.MoveAllEnemies();
 				backgroundColor = ChangeBackground(tickCount % 3);
 			}
 			else {
@@ -110,6 +114,8 @@ int main()
 
 		rectangle.setPosition(pos);
 
+		waveManager.Update(deltaTime);
+
 		// Affichage
 		/*
 		resultScale = circle.getRadius();
@@ -117,10 +123,12 @@ int main()
 		circle.setRadius(resultScale);
 		*/
 		// Remise au noir de toute la fenêtre
-		window.clear(backgroundColor);
+		window.clear();
 		// Tout le rendu va se dérouler ici
 		window.draw(rectangle);
 		window.draw(circle);
+		player.Draw(window);
+		waveManager.DrawAllEnemies(window);
 
 		// On présente la fenêtre sur l'écran
 		window.display();

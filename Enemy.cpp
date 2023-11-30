@@ -12,13 +12,13 @@ void Enemy::SetTarget(Entity* target)
 	_target = target;
 }
 
-void Enemy::Move(float deltaTime) 
+void Enemy::Move() 
 {
 	if (_target != nullptr) 
 	{
 		sf::Vector2f direction = _target->GetPosition() - _position;
 		Normalize(direction);
-		_position = _position + direction * _speed * deltaTime;
+		_position = _position + direction * _speed;
 	}
 	
 }

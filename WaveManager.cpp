@@ -18,7 +18,7 @@ WaveManager::WaveManager(sf::RenderWindow& window, Player* player)
 	}
 
 	_timer = 0;
-	_spawnTime = 2;
+	_spawnTime = 5;
 
 	_player = player;
 }
@@ -31,18 +31,21 @@ void WaveManager::Update(float deltaTime)
 		SpawnWave();
 		_timer = 0;
 	}
-
-	for (Enemy* enemy : _enemyList) 
-	{
-		enemy->Move(deltaTime);
-	}
 }
 
 void WaveManager::SpawnWave()
 {
-	for (EnemySpawner* spawner : _spawners)
+	for (int i = 0; i < _numberOfEnemiesToSpawn; i++)
 	{
-		_enemyList.push_back(spawner->InstantiateEnemy(_player));
+
+	}
+}
+
+void WaveManager::MoveAllEnemies() 
+{
+	for (Enemy* enemy : _enemyList)
+	{
+		enemy->Move();
 	}
 }
 
