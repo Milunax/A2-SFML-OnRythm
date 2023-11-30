@@ -19,8 +19,8 @@ class WaveManager
 		std::vector<Enemy*> _enemyList;
 		float _timer;
 		float _spawnTime;
-		int _numberOfEnemiesToSpawn = 3;
-		int _maxEnemyCount = 32;
+		int _numberOfEnemiesToSpawn;
+		int _maxEnemyCount;
 
 		Player* _player;
 };
