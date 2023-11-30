@@ -8,6 +8,9 @@ float Magnitude(sf::Vector2f vector)
 
 void Normalize(sf::Vector2f& vector) 
 {
-	vector.x = vector.x / Magnitude(vector);
-	vector.y = vector.y / Magnitude(vector);
+	if (Magnitude(vector) != 0) 
+	{
+		vector.x = vector.x / Magnitude(vector);
+		vector.y = vector.y / Magnitude(vector);
+	}
 }
