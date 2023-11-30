@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Bullet.h"
+#include "Math.h"
 
 Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed) : Entity(startPos, maxHealth, speed)
 {
@@ -18,42 +19,57 @@ void Player::Move(float deltaTime)
 	// Position avant le mouvement
 	// std::cout << pos.x << " : " << pos.y << std::endl;
 
+	_moveDirection = sf::Vector2f(0, 0);
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-		_position.x = _position.x - deltaTime * _speed;
+	{
+		_moveDirection.x = -1;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) 
+	{
+		_moveDirection.x = 1;
+	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		_position.x = _position.x + deltaTime * _speed;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) 
+	{
+		_moveDirection.y = -1;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) 
+	{
+		_moveDirection.y = 1;
+	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-		_position.y = _position.y - deltaTime * _speed;
+	Normalize(_moveDirection);
+	//std::cout << _moveDirection.x << " : " << _moveDirection.y << std::endl;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		_position.y = _position.y + deltaTime * _speed;
+	if (_moveDirection != sf::Vector2f(0, 0)) _orientationDirection = _moveDirection;
 
+	_position = _position + _moveDirection * _speed * deltaTime;
 	// Position apres le mouvement
-	// std::cout << pos.x << " : " << pos.y << std::endl;
-
-	_circle.setPosition(_position);
+	//std::cout << _position.x << " : " << _position.y << std::endl;
 }
 
-void Player::Update(float deltaTime, std::vector<Bullet*>& bulletList) 
+void Player::Update(float deltaTime) 
 {
 	UpdateTimer(deltaTime);
 	if (_fireTimer >= 1 / _bulletFireRate) {
-		bulletList.push_back(Shoot());
+		_bulletList.push_back(Shoot());
+		std::cout << _bulletList.size() << std::endl;
 		_fireTimer = 0.0f;
 	}
+
+	UpdateBullets(deltaTime);
 }
 
 void Player::UpdateTimer(float deltaTime) 
 {
 	_fireTimer += deltaTime;
-	std::cout << _fireTimer << std::endl;
+	//std::cout << _fireTimer << std::endl;
 }
 
 Bullet* Player::Shoot()
 {
-	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, sf::Vector2f{1, 0}, 50);
+	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, _orientationDirection, 50);
 	std::cout << "a tiré" << std::endl;
 	return bullet;
 }
@@ -61,8 +77,22 @@ Bullet* Player::Shoot()
 void Player::Draw(sf::RenderWindow& window)
 {
 	sf::CircleShape shape;
+	shape.setOrigin(sf::Vector2f(_radius, _radius));
 	shape.setRadius(_radius);
 	shape.setFillColor(_color);
 	shape.setPosition(_position);
 	window.draw(shape);
+}
+
+void Player::DrawBullets(sf::RenderWindow& window) {
+	for (Bullet* bullet : _bulletList) {
+		bullet->Draw(window);
+	}
+}
+
+void Player::UpdateBullets(float deltaTime) 
+{
+	for (Bullet* bullet : _bulletList) {
+		bullet->Move(deltaTime);
+	}
 }

@@ -6,7 +6,7 @@ class Bullet {
 	public :
 		Bullet(sf::Color color, int radius, sf::Vector2f startPos, sf::Vector2f direction, float speed);
 		void Draw(sf::RenderWindow& window);
-		//void Move(float deltaTime);
+		void Move(float deltaTime);
 	private :
 		sf::CircleShape _circle;
 		float _radius;
@@ -14,5 +14,4 @@ class Bullet {
 		float _speed;
 		sf::Vector2f _position;
 		sf::Vector2f _direction;
-		sf::Vector2f _direection;
 };
