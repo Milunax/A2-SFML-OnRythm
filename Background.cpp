@@ -4,7 +4,7 @@ sf::Color ChangeBackground(int numb) {
 	srand((unsigned)time(NULL));
 	int finalCol = numb;
 	
-	std::cout << finalCol;
+	//std::cout << finalCol;
 	switch (finalCol)
 	{
 	case 0:
