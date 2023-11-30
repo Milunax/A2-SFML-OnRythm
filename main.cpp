@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
+#include "RythmSystem.h"
 #include "Background.h"
 
 constexpr float cubeSpeed = 500.f;
@@ -15,11 +16,17 @@ sf::Color backgroundColor;
 // Sound
 sf::Music music;
 
+enum State
+{
+	PAUSE,
+	NORMAL,
+	SLOW,
+	BOSS
+};
 
 int main()
 {
 	// Initialisation
-
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
 
