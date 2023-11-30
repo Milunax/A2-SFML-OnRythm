@@ -1,28 +1,54 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
-#include <list>
-#include "Player.h"
-#include "WaveManager.h"
+
+#include "Background.h"
+
 constexpr float cubeSpeed = 500.f;
+float bpm = 151.0f;
+float countTick = 0.0f;
+float tick = 1 /(bpm / 60);
+
+sf::Color backgroundColor;
+
+// Sound
+sf::Music music;
+
 
 int main()
 {
 	// Initialisation
 
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "Geometry Wars");
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
 
-	// Début de la boucle de jeu
-	//sf::RectangleShape rectangle;
-	//rectangle.setFillColor(sf::Color::Red);
-	//rectangle.setPosition(640, 360);
-	//rectangle.setSize(sf::Vector2f(128, 128));
-	Player player(sf::Color::Blue, sf::Vector2f(100, 100), 50, 100, 500);
-	WaveManager waveManager(window, &player);
+	// Objects
+	sf::RectangleShape rectangle;
+	rectangle.setFillColor(sf::Color::Red);
+	rectangle.setPosition(640, 360);
+	rectangle.setSize(sf::Vector2f(128, 128));
+
+	sf::CircleShape circle;
+	circle.setFillColor(sf::Color::Transparent);
+	circle.setPosition(640, 360);
+	circle.setOutlineThickness(15);
+	circle.setOutlineColor(sf::Color::Blue);
+	circle.setRadius(100);
+	int goalScale = 500;
+	int resultScale = (float)circle.getRadius();
+	
 
 	sf::Clock frameClock;
+	int tickCount = 0;
 
+	// Music buffer
+	if (!music.openFromFile("../sound/150.wav"))
+		return -1; // error
+	music.play();
+	music.setLoop(true);
+
+	// Main Game
 	while (window.isOpen())
 	{
 		// Gérer les événéments survenus depuis le dernier tour de boucle
@@ -43,22 +69,58 @@ int main()
 		}
 
 		float deltaTime = frameClock.restart().asSeconds();
-		//std::cout << 1.f / deltaTime << " FPS" << std::endl;
+		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
+
+
+		if (countTick < tick) {
+			countTick += deltaTime;
+			//std::cout << countTick;
+		}
+		else {
+			tickCount++;
+			/*
+			std::cout << (((tickCount % 2) == 0) ? "TOP" : "TIP") << std::endl;
+			std::cout << tickCount << std::endl;
+			*/
+			if (tickCount < 287) {
+
+				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Yellow) : rectangle.setFillColor(sf::Color::Magenta);
+				backgroundColor = ChangeBackground(tickCount % 3);
+			}
+			else {
+				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Green) : rectangle.setFillColor(sf::Color::Yellow);
+			}
+			countTick -= tick;
+		}
 
 		// Logique
+		sf::Vector2f pos = rectangle.getPosition();
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+			pos.x = pos.x - deltaTime * cubeSpeed;
 
-		player.Move(deltaTime);
-		player.Shoot(deltaTime);
-		waveManager.Update(deltaTime);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			pos.x = pos.x + deltaTime * cubeSpeed;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+			pos.y = pos.y - deltaTime * cubeSpeed;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			pos.y = pos.y + deltaTime * cubeSpeed;
+
+		rectangle.setPosition(pos);
 
 		// Affichage
-		
+		/*
+		resultScale = circle.getRadius();
+		resultScale += (goalScale - resultScale) / 100; // increase division for stronger easing
+		circle.setRadius(resultScale);
+		*/
 		// Remise au noir de toute la fenêtre
-		window.clear();
-
+		window.clear(backgroundColor);
 		// Tout le rendu va se dérouler ici
-		player.Draw(window);
-		waveManager.DrawAllEnemies(window);
+		window.draw(rectangle);
+		window.draw(circle);
 
 		// On présente la fenêtre sur l'écran
 		window.display();
