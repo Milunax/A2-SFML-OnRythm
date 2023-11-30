@@ -1,22 +1,24 @@
 #include "RythmSystem.h"
 
-
 enum State
 {
-	PAUSE,
+	NONE,
 	NORMAL,
 	SLOW,
+	PAUSE,
 	BOSS	
 };
 
-std::map<int, State> level_1 = { {19, PAUSE}, {25,NORMAL} };
 
-State GetStateOfBeat(std::map<int, State> lvl, int beat) {
+
+State GetStateOfBeat(std::map<int, State> lvl, int beat, State actualState) {
 	for (auto element : lvl) {
 		if (element.first == beat) {
 			return element.second;
 		}
 	}
+	return actualState;
 }
+
 
 

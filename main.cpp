@@ -7,24 +7,21 @@
 #include "Background.h"
 #include "Player.h"
 #include "WaveManager.h"
+#include "RythmSystem.cpp"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 151.0f;
 float countTick = 0.0f;
 float tick = 1 /(bpm / 60);
+int tickCount = 0;
 
 sf::Color backgroundColor;
 
+std::map<int, State> level_1 = { {10, State::SLOW}, {30,State::NORMAL} };
+State actualState = State::NORMAL;
+
 // Sound
 sf::Music music;
-
-enum State
-{
-	PAUSE,
-	NORMAL,
-	SLOW,
-	BOSS
-};
 
 int main()
 {
@@ -47,7 +44,6 @@ int main()
 	WaveManager waveManager(window, &player);
 
 	sf::Clock frameClock;
-	int tickCount = 0;
 
 	// Music buffer
 	if (!music.openFromFile("../sound/150.wav"))
@@ -85,18 +81,27 @@ int main()
 		}
 		else {
 			tickCount++;
-			/*
-			std::cout << (((tickCount % 2) == 0) ? "TOP" : "TIP") << std::endl;
-			std::cout << tickCount << std::endl;
-			*/
-			if (tickCount < 287) {
+			std::cout << "COUNT : " << tickCount << std::endl;
+			
+			actualState = GetStateOfBeat(level_1, tickCount, actualState);
+			std::cout << "STATE : " << actualState << std::endl;
 
-				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Yellow) : player.SetColor(sf::Color::Magenta);
-				if (tickCount % 2 == 0) waveManager.MoveAllEnemies();
+			switch (actualState)
+			{
+			case State::NONE:
+				std::cout << "lol" << std::endl;
+				break;
+			case State::NORMAL:
+				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
+				waveManager.MoveAllEnemies();
 				backgroundColor = ChangeBackground(tickCount % 3);
-			}
-			else {
+				break;
+			case State::SLOW:
+				if (tickCount % 2 == 0) waveManager.MoveAllEnemies();
 				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Green) : player.SetColor(sf::Color::Yellow);
+				break;
+			default:
+				break;
 			}
 			countTick -= tick;
 		}
