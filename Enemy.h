@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Math.h"
 #include <cmath>
+#include "Collider.h"
 
 struct EnemyData
 {
@@ -21,11 +22,15 @@ class Enemy : public Entity
 		Enemy(EnemyData data, sf::Vector2f startPos, Player* target);
 		~Enemy();
 		void SetTarget(Player* target);
-		void Move();
-		bool CollidingWithPlayer();
+		void SetNextPosition();
+		void Move(float deltaTime);
+		CircleCollider GetCollider();
 		void Draw(sf::RenderWindow& window);
 	private :
 		float _radius;
 		sf::Color _color;
+		sf::Vector2f _nextPosition;
+		float _moveDistance = 10.0f;
+
 		Player* _player;
 };

@@ -22,6 +22,8 @@ WaveManager::WaveManager(sf::RenderWindow& window, Player* player)
 	_numberOfEnemiesToSpawn = 3;
 	_maxEnemyCount = 32;
 
+	_boss = nullptr;
+
 	_player = player;
 }
 
@@ -33,6 +35,7 @@ void WaveManager::Update(float deltaTime)
 		SpawnWave();
 		_timer = 0;
 	}
+	MoveAllEnemies(deltaTime);
 	CheckCollisionAllEnemies();
 }
 
@@ -58,25 +61,48 @@ void WaveManager::SpawnWave()
 	}
 }
 
-void WaveManager::MoveAllEnemies() 
+void WaveManager::SpawnBoss() 
+{
+	if (_boss == nullptr) 
+	{
+		int random = rand() % _spawners.size();
+		_boss = _spawners[random]->InstantiateEnemy(bossEnemy, _spawners[random]->GetPosition(), _player);
+	}
+}
+
+void WaveManager::SetEnemiesNextPosition() 
 {
 	for (Enemy* enemy : _enemyList)
 	{
-		enemy->Move();
+		enemy->SetNextPosition();
 	}
 
-	if(_boss !=nullptr) _boss->Move();
+	if (_boss != nullptr) _boss->SetNextPosition();
+}
+
+
+void WaveManager::MoveAllEnemies(float deltaTime)
+{
+	for (Enemy* enemy : _enemyList)
+	{
+		enemy->Move(deltaTime);
+	}
+
+	if(_boss !=nullptr) _boss->Move(deltaTime);
 }
 
 void WaveManager::CheckCollisionAllEnemies() 
 {
+	CircleCollider playerCol = _player->GetCollider();
+
 	std::vector<Enemy*>::iterator it = _enemyList.begin();
-	while (it != _enemyList.end()) {
-		if ((*it)->CollidingWithPlayer())
+	while (it != _enemyList.end())
+	{
+		CircleCollider enemyCol = (*it)->GetCollider();
+		if (AreCircleCollidersOverlapping(enemyCol, playerCol)) 
 		{
-			Enemy* enemy = (*it);
+			delete (*it);
 			it = _enemyList.erase(it);
-			delete enemy;
 		}
 		else 
 		{
@@ -84,10 +110,15 @@ void WaveManager::CheckCollisionAllEnemies()
 		}
 	}
 
-	if (_boss != nullptr && _boss->CollidingWithPlayer())
+	
+	if (_boss != nullptr)
 	{
-		delete _boss;
-		_boss = nullptr;
+		CircleCollider bossCol = _boss->GetCollider();
+		if (AreCircleCollidersOverlapping(bossCol, playerCol)) 
+		{
+			delete _boss;
+			_boss = nullptr;
+		}
 	}
 }
 
@@ -99,13 +130,4 @@ void WaveManager::DrawAllEnemies(sf::RenderWindow& window)
 	}
 
 	if (_boss != nullptr) _boss->Draw(window);
-}
-
-void WaveManager::SpawnBoss() 
-{
-	if (_boss == nullptr) 
-	{
-		int random = rand() % _spawners.size();
-		_boss = _spawners[random]->InstantiateEnemy(bossEnemy, _spawners[random]->GetPosition(), _player);
-	}
 }

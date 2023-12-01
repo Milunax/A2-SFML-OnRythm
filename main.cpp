@@ -88,12 +88,12 @@ int main()
 			if (tickCount < 287) {
 				if (tickCount == 1) waveManager.SpawnBoss();
 				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Yellow) : rectangle.setFillColor(sf::Color::Magenta);
-				if (tickCount % 2 == 0) waveManager.MoveAllEnemies();
+				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 				backgroundColor = ChangeBackground(tickCount % 3);
 			}
 			else {
-				if (tickCount == 287) waveManager.SpawnBoss();
 				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Green) : rectangle.setFillColor(sf::Color::Yellow);
+				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 			}
 			countTick -= tick;
 		}

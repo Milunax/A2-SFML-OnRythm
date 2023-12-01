@@ -5,6 +5,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <vector>
+#include "Collider.h"
 
 class Bullet;
 
@@ -21,6 +22,7 @@ class Player : public Entity {
 		void DrawBullets(sf::RenderWindow& window);
 		void UpdateBullets(float deltaTime);
 		float GetRadius();
+		CircleCollider GetCollider();
 	private :
 		sf::CircleShape _circle;
 		sf::Color _color;

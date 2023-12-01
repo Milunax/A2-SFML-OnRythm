@@ -8,10 +8,10 @@ class Entity
 		Entity(sf::Vector2f startPos, float maxHealth, float speed);
 		void TakeDamage(float damage);
 		void Heal(float heal);
+		virtual void Draw(sf::RenderWindow& window);
 		sf::Vector2f GetPosition();
 		void SetPosition(sf::Vector2f pos);
 		int GetSpeed();
-		virtual void Draw(sf::RenderWindow& window);
 	protected:
 		float _speed;
 		sf::Vector2f _position;
