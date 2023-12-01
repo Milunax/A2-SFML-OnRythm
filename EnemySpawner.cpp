@@ -16,5 +16,3 @@ sf::Vector2f EnemySpawner::GetPosition()
 {
 	return _position;
 }
-
-

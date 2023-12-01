@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-EnemyData normalEnemy = { 20.0f, sf::Color::Red, 10.0f , 20.0f };
+EnemyData normalEnemy = { 20.0f, sf::Color::Red, 10.0f , 70.0f };
 EnemyData bossEnemy = { 40.0f, sf::Color::Magenta, 100.0f , 20.0f };
 
 Enemy::Enemy(EnemyData data, sf::Vector2f startPos, Player* target) : Entity(startPos, data.MaxHealth, data.Speed)
@@ -20,27 +20,33 @@ void Enemy::SetTarget(Player* player)
 	_player = player;
 }
 
-void Enemy::Move() 
+void Enemy::SetNextPosition() 
 {
-	if (_player != nullptr) 
+	if (_player != nullptr)
 	{
 		sf::Vector2f direction = _player->GetPosition() - _position;
 		Normalize(direction);
-		_position = _position + direction * _speed;
+		_nextPosition = _position + direction * _moveDistance;
 	}
 	
 }
 
-bool Enemy::CollidingWithPlayer()
+void Enemy::Move(float deltaTime) 
 {
-	sf::Vector2f distanceVector = _player->GetPosition() - _position;
-	float distance = Magnitude(distanceVector);
-	if (distance <= (_radius + _player->GetRadius())) 
+	if (Distance(_position, _nextPosition) > 0.5f) 
 	{
-		return true;
+		sf::Vector2f direction = _nextPosition - _position;
+		Normalize(direction);
+		_position = _position + direction * _speed * deltaTime;
 	}
-	return false;
 }
+
+CircleCollider Enemy::GetCollider() 
+{
+	CircleCollider collider = { _position, _radius };
+	return collider;
+}
+
 
 void Enemy::Draw(sf::RenderWindow& window)
 {
