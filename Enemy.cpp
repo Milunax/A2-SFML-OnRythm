@@ -4,23 +4,39 @@ Enemy::Enemy(float radius, sf::Color color, sf::Vector2f startPos,float maxHealt
 {
 	_radius = radius;
 	_color = color;
-	_target = nullptr;
+	_player = nullptr;
 }
 
-void Enemy::SetTarget(Entity* target) 
+Enemy::~Enemy() 
 {
-	_target = target;
+	
+}
+
+void Enemy::SetTarget(Player* player) 
+{
+	_player = player;
 }
 
 void Enemy::Move() 
 {
-	if (_target != nullptr) 
+	if (_player != nullptr) 
 	{
-		sf::Vector2f direction = _target->GetPosition() - _position;
+		sf::Vector2f direction = _player->GetPosition() - _position;
 		Normalize(direction);
 		_position = _position + direction * _speed;
 	}
 	
+}
+
+bool Enemy::CollidingWithPlayer()
+{
+	sf::Vector2f distanceVector = _player->GetPosition() - _position;
+	float distance = Magnitude(distanceVector);
+	if (distance <= (_radius + _player->GetRadius())) 
+	{
+		return true;
+	}
+	return false;
 }
 
 void Enemy::Draw(sf::RenderWindow& window)

@@ -33,6 +33,7 @@ void WaveManager::Update(float deltaTime)
 		SpawnWave();
 		_timer = 0;
 	}
+	CheckCollisionAllEnemies();
 }
 
 void WaveManager::SpawnWave()
@@ -64,6 +65,24 @@ void WaveManager::MoveAllEnemies()
 		enemy->Move();
 	}
 }
+
+void WaveManager::CheckCollisionAllEnemies() 
+{
+	std::vector<Enemy*>::iterator it = _enemyList.begin();
+	while (it != _enemyList.end()) {
+		if ((*it)->CollidingWithPlayer())
+		{
+			Enemy* enemy = (*it);
+			it = _enemyList.erase(it);
+			delete enemy;
+		}
+		else 
+		{
+			it++;
+		}
+	}
+}
+
 
 void WaveManager::DrawAllEnemies(sf::RenderWindow& window)
 {
