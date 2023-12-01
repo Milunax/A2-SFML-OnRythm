@@ -1,8 +1,8 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f size, sf::Color color, sf::Vector2f startPos,float maxHealth, float speed) : Entity(startPos, maxHealth, speed)
+Enemy::Enemy(float radius, sf::Color color, sf::Vector2f startPos,float maxHealth, float speed) : Entity(startPos, maxHealth, speed)
 {
-	_size = size;
+	_radius = radius;
 	_color = color;
 	_target = nullptr;
 }
@@ -25,9 +25,9 @@ void Enemy::Move()
 
 void Enemy::Draw(sf::RenderWindow& window)
 {
-	sf::RectangleShape shape;
-	shape.setSize(_size);
-	shape.setOrigin(sf::Vector2f( (_size.x / 2), (_size.y / 2) ));
+	sf::CircleShape shape;
+	shape.setRadius(_radius);
+	shape.setOrigin(sf::Vector2f( (_radius), (_radius) ));
 	shape.setFillColor(_color);
 	shape.setPosition(_position);
 	window.draw(shape);

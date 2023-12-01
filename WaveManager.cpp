@@ -19,6 +19,8 @@ WaveManager::WaveManager(sf::RenderWindow& window, Player* player)
 
 	_timer = 0;
 	_spawnTime = 5;
+	_numberOfEnemiesToSpawn = 3;
+	_maxEnemyCount = 32;
 
 	_player = player;
 }
@@ -35,9 +37,23 @@ void WaveManager::Update(float deltaTime)
 
 void WaveManager::SpawnWave()
 {
-	for (int i = 0; i < _numberOfEnemiesToSpawn; i++)
+	int numberToSpawn = _numberOfEnemiesToSpawn;
+	for (int i = 0; i < _spawners.size(); i++)
 	{
-
+		if (numberToSpawn < _spawners.size() - (i + 1)) 
+		{
+			int random = rand() % 2;
+			if (numberToSpawn > 0 && random == 1) {
+				_enemyList.push_back(_spawners[i]->InstantiateEnemy(_player));
+				numberToSpawn--;
+			}
+		}
+		else 
+		{
+			_enemyList.push_back(_spawners[i]->InstantiateEnemy(_player));
+			numberToSpawn--;
+		}
+		if (numberToSpawn <= 0) return;
 	}
 }
 
