@@ -108,6 +108,10 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="WaveManager.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Background.frag" />
+    <None Include="bin\Background.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

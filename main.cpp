@@ -17,6 +17,8 @@ int tickCount = 0;
 
 sf::Color backgroundColor;
 
+
+
 std::map<int, State> level_1 = { {10, State::SLOW}, {30,State::NORMAL} };
 State actualState = State::NORMAL;
 
@@ -30,6 +32,19 @@ int main()
 	window.setVerticalSyncEnabled(true);
 
 	// Objects
+	sf::Shader backgroundShader;
+	backgroundShader.loadFromFile("Background.vert", "Background.frag");
+	backgroundShader.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	float iTime = 0.0;
+
+	sf::RectangleShape backgroundRect;
+	backgroundRect.setPosition(0, 0);
+	backgroundRect.setSize(sf::Vector2f(window.getSize()));
+	sf::RenderStates backgroundStates;
+	backgroundStates.shader = &backgroundShader;
+
+
+
 
 	sf::CircleShape circle;
 	circle.setFillColor(sf::Color::Transparent);
@@ -74,7 +89,8 @@ int main()
 		float deltaTime = frameClock.restart().asSeconds();
 		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
 
-
+		iTime += deltaTime;
+		backgroundShader.setUniform("iTime", iTime);
 		if (countTick < tick) {
 			countTick += deltaTime;
 			//std::cout << countTick;
@@ -118,6 +134,7 @@ int main()
 		*/
 		// Remise au noir de toute la fenêtre
 		window.clear();
+		window.draw(backgroundRect, backgroundStates);
 		// Tout le rendu va se dérouler ici
 		window.draw(circle);
 		player.Draw(window);
