@@ -5,6 +5,7 @@
 #include "Background.h"
 #include "Player.h"
 #include "WaveManager.h"
+#include "Data.h"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 151.0f;
@@ -16,13 +17,17 @@ sf::Color backgroundColor;
 // Sound
 sf::Music music;
 
-
 int main()
 {
 	// Initialisation
+	Data data;
+	
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
+
+	data.window = &window;
+	
 
 	// Objects
 
@@ -37,8 +42,8 @@ int main()
 	
 	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
 	WaveManager waveManager(window, &player);
-
 	sf::Clock frameClock;
+	
 	int tickCount = 0;
 
 	// Music buffer
@@ -66,13 +71,14 @@ int main()
 					break;
 			}
 		}
-
-		float deltaTime = frameClock.restart().asSeconds();
+		
+		data.deltaTime = frameClock.restart().asSeconds();
+		//float deltaTime = frameClock.restart().asSeconds();
 		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
 
 
 		if (countTick < tick) {
-			countTick += deltaTime;
+			countTick += data.deltaTime;
 			//std::cout << countTick;
 		}
 		else {
@@ -94,8 +100,8 @@ int main()
 		}
 
 		// Logique
-		waveManager.Update(deltaTime);
-		player.Update(deltaTime);
+		waveManager.Update(data.deltaTime);
+		player.Update(data);
 
 		// Affichage
 		/*
@@ -107,10 +113,9 @@ int main()
 		window.clear();
 		// Tout le rendu va se dérouler ici
 		window.draw(circle);
-		player.Draw(window);
-		player.DrawBullets(window);
+		player.Draw(data);
+		player.DrawBullets(data);
 		waveManager.DrawAllEnemies(window);
-
 		// On présente la fenêtre sur l'écran
 		window.display();
 	}
