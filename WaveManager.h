@@ -12,15 +12,20 @@ class WaveManager
 		void Update(float deltaTime);
 		void SpawnWave();
 		void MoveAllEnemies();
+		void CheckCollisionAllEnemies();
 		void DrawAllEnemies(sf::RenderWindow& window);
+
+		void SpawnBoss();
 
 	private:
 		std::vector<EnemySpawner*> _spawners;
 		std::vector<Enemy*> _enemyList;
 		float _timer;
 		float _spawnTime;
-		int _numberOfEnemiesToSpawn = 3;
-		int _maxEnemyCount = 32;
+		int _numberOfEnemiesToSpawn;
+		int _maxEnemyCount;
+
+		Enemy* _boss;
 
 		Player* _player;
 };

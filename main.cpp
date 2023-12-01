@@ -5,7 +5,6 @@
 #include "Background.h"
 #include "Player.h"
 #include "WaveManager.h"
-#include "Data.h"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 151.0f;
@@ -17,19 +16,19 @@ sf::Color backgroundColor;
 // Sound
 sf::Music music;
 
+
 int main()
 {
 	// Initialisation
-	Data data;
-	
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
 
-	data.window = &window;
-	
-
 	// Objects
+	sf::RectangleShape rectangle;
+	rectangle.setFillColor(sf::Color::Red);
+	rectangle.setPosition(640, 360);
+	rectangle.setSize(sf::Vector2f(128, 128));
 
 	sf::CircleShape circle;
 	circle.setFillColor(sf::Color::Transparent);
@@ -42,8 +41,8 @@ int main()
 	
 	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
 	WaveManager waveManager(window, &player);
+
 	sf::Clock frameClock;
-	
 	int tickCount = 0;
 
 	// Music buffer
@@ -71,14 +70,13 @@ int main()
 					break;
 			}
 		}
-		
-		data.deltaTime = frameClock.restart().asSeconds();
-		//float deltaTime = frameClock.restart().asSeconds();
+
+		float deltaTime = frameClock.restart().asSeconds();
 		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
 
 
 		if (countTick < tick) {
-			countTick += data.deltaTime;
+			countTick += deltaTime;
 			//std::cout << countTick;
 		}
 		else {
@@ -88,20 +86,36 @@ int main()
 			std::cout << tickCount << std::endl;
 			*/
 			if (tickCount < 287) {
-
-				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Yellow) : player.SetColor(sf::Color::Magenta);
+				if (tickCount == 1) waveManager.SpawnBoss();
+				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Yellow) : rectangle.setFillColor(sf::Color::Magenta);
 				if (tickCount % 2 == 0) waveManager.MoveAllEnemies();
 				backgroundColor = ChangeBackground(tickCount % 3);
 			}
 			else {
-				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Green) : player.SetColor(sf::Color::Yellow);
+				if (tickCount == 287) waveManager.SpawnBoss();
+				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Green) : rectangle.setFillColor(sf::Color::Yellow);
 			}
 			countTick -= tick;
 		}
 
 		// Logique
-		waveManager.Update(data.deltaTime);
-		player.Update(data);
+		sf::Vector2f pos = rectangle.getPosition();
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+			pos.x = pos.x - deltaTime * cubeSpeed;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			pos.x = pos.x + deltaTime * cubeSpeed;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+			pos.y = pos.y - deltaTime * cubeSpeed;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			pos.y = pos.y + deltaTime * cubeSpeed;
+
+		rectangle.setPosition(pos);
+
+		waveManager.Update(deltaTime);
 
 		// Affichage
 		/*
@@ -112,10 +126,11 @@ int main()
 		// Remise au noir de toute la fenêtre
 		window.clear();
 		// Tout le rendu va se dérouler ici
+		window.draw(rectangle);
 		window.draw(circle);
-		player.Draw(data);
-		player.DrawBullets(data);
+		player.Draw(window);
 		waveManager.DrawAllEnemies(window);
+
 		// On présente la fenêtre sur l'écran
 		window.display();
 	}

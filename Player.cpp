@@ -104,3 +104,8 @@ void Player::UpdateBullets(Data data)
 		bullet->Move(data.deltaTime);
 	}
 }
+
+float Player::GetRadius() 
+{
+	return _radius;
+}
