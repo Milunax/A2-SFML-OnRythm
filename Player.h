@@ -19,6 +19,7 @@ class Player : public Entity {
 		Bullet* Shoot();
 		void DrawBullets(sf::RenderWindow& window);
 		void UpdateBullets(float deltaTime);
+		float GetRadius();
 	private :
 		sf::CircleShape _circle;
 		sf::Color _color;

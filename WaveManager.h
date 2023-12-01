@@ -12,6 +12,7 @@ class WaveManager
 		void Update(float deltaTime);
 		void SpawnWave();
 		void MoveAllEnemies();
+		void CheckCollisionAllEnemies();
 		void DrawAllEnemies(sf::RenderWindow& window);
 
 	private:
