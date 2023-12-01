@@ -45,13 +45,13 @@ void WaveManager::SpawnWave()
 		{
 			int random = rand() % 2;
 			if (numberToSpawn > 0 && random == 1) {
-				_enemyList.push_back(_spawners[i]->InstantiateEnemy(_player));
+				_enemyList.push_back(_spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(),_player));
 				numberToSpawn--;
 			}
 		}
 		else 
 		{
-			_enemyList.push_back(_spawners[i]->InstantiateEnemy(_player));
+			_enemyList.push_back(_spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(), _player));
 			numberToSpawn--;
 		}
 		if (numberToSpawn <= 0) return;
@@ -64,6 +64,8 @@ void WaveManager::MoveAllEnemies()
 	{
 		enemy->Move();
 	}
+
+	if(_boss !=nullptr) _boss->Move();
 }
 
 void WaveManager::CheckCollisionAllEnemies() 
@@ -81,13 +83,29 @@ void WaveManager::CheckCollisionAllEnemies()
 			it++;
 		}
 	}
-}
 
+	if (_boss != nullptr && _boss->CollidingWithPlayer())
+	{
+		delete _boss;
+		_boss = nullptr;
+	}
+}
 
 void WaveManager::DrawAllEnemies(sf::RenderWindow& window)
 {
 	for (Enemy* enemy : _enemyList) 
 	{
 		enemy->Draw(window);
+	}
+
+	if (_boss != nullptr) _boss->Draw(window);
+}
+
+void WaveManager::SpawnBoss() 
+{
+	if (_boss == nullptr) 
+	{
+		int random = rand() % _spawners.size();
+		_boss = _spawners[random]->InstantiateEnemy(bossEnemy, _spawners[random]->GetPosition(), _player);
 	}
 }

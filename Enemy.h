@@ -4,11 +4,21 @@
 #include "Math.h"
 #include <cmath>
 
+struct EnemyData
+{
+	float Radius;
+	sf::Color Color;
+	float MaxHealth;
+	float Speed;
+};
+
+extern EnemyData normalEnemy;
+extern EnemyData bossEnemy;
 
 class Enemy : public Entity 
 {
 	public :
-		Enemy(float radius, sf::Color color, sf::Vector2f startPos, float maxHealth, float speed);
+		Enemy(EnemyData data, sf::Vector2f startPos, Player* target);
 		~Enemy();
 		void SetTarget(Player* target);
 		void Move();
