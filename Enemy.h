@@ -7,12 +7,12 @@
 class Enemy : public Entity 
 {
 	public :
-		Enemy(sf::Vector2f size, sf::Color color, sf::Vector2f startPos, float maxHealth, float speed);
+		Enemy(float radius, sf::Color color, sf::Vector2f startPos, float maxHealth, float speed);
 		void Draw(sf::RenderWindow& window);
 		void SetTarget(Entity* target);
 		void Move();
 	private :
-		sf::Vector2f _size;
+		float _radius;
 		sf::Color _color;
 		Entity* _target;
 };
