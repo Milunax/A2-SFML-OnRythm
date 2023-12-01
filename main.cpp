@@ -25,6 +25,10 @@ int main()
 	window.setVerticalSyncEnabled(true);
 
 	// Objects
+	sf::RectangleShape rectangle;
+	rectangle.setFillColor(sf::Color::Red);
+	rectangle.setPosition(640, 360);
+	rectangle.setSize(sf::Vector2f(128, 128));
 
 	sf::CircleShape circle;
 	circle.setFillColor(sf::Color::Transparent);
@@ -82,20 +86,36 @@ int main()
 			std::cout << tickCount << std::endl;
 			*/
 			if (tickCount < 287) {
-
-				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Yellow) : player.SetColor(sf::Color::Magenta);
+				if (tickCount == 1) waveManager.SpawnBoss();
+				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Yellow) : rectangle.setFillColor(sf::Color::Magenta);
 				if (tickCount % 2 == 0) waveManager.MoveAllEnemies();
 				backgroundColor = ChangeBackground(tickCount % 3);
 			}
 			else {
-				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Green) : player.SetColor(sf::Color::Yellow);
+				if (tickCount == 287) waveManager.SpawnBoss();
+				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Green) : rectangle.setFillColor(sf::Color::Yellow);
 			}
 			countTick -= tick;
 		}
 
 		// Logique
+		sf::Vector2f pos = rectangle.getPosition();
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+			pos.x = pos.x - deltaTime * cubeSpeed;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			pos.x = pos.x + deltaTime * cubeSpeed;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+			pos.y = pos.y - deltaTime * cubeSpeed;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			pos.y = pos.y + deltaTime * cubeSpeed;
+
+		rectangle.setPosition(pos);
+
 		waveManager.Update(deltaTime);
-		player.Update(deltaTime);
 
 		// Affichage
 		/*
@@ -106,9 +126,9 @@ int main()
 		// Remise au noir de toute la fenêtre
 		window.clear();
 		// Tout le rendu va se dérouler ici
+		window.draw(rectangle);
 		window.draw(circle);
 		player.Draw(window);
-		player.DrawBullets(window);
 		waveManager.DrawAllEnemies(window);
 
 		// On présente la fenêtre sur l'écran

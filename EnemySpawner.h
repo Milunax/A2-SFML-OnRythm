@@ -8,7 +8,8 @@ class EnemySpawner
 {
 	public :
 		EnemySpawner(sf::Vector2f position);
-		Enemy* InstantiateEnemy(Player* enemyTarget);
+		Enemy* InstantiateEnemy(EnemyData data, sf::Vector2f position, Player* enemyTarget);
+		sf::Vector2f GetPosition();
 	private :
 		sf::Vector2f _position;
 };
