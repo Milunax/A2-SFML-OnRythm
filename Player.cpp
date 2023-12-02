@@ -109,3 +109,9 @@ float Player::GetRadius()
 {
 	return _radius;
 }
+
+CircleCollider Player::GetCollider() 
+{
+	CircleCollider collider = { _position, _radius };
+	return collider;
+}

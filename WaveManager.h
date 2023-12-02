@@ -11,11 +11,11 @@ class WaveManager
 		WaveManager(sf::RenderWindow& window, Player* player);
 		void Update(float deltaTime);
 		void SpawnWave();
-		void MoveAllEnemies();
+		void SpawnBoss();
+		void SetEnemiesNextPosition();
+		void MoveAllEnemies(float deltaTime);
 		void CheckCollisionAllEnemies();
 		void DrawAllEnemies(sf::RenderWindow& window);
-
-		void SpawnBoss();
 
 	private:
 		std::vector<EnemySpawner*> _spawners;

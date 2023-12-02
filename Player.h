@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include "Data.h"
+#include "Collider.h"
 
 class Bullet;
 
@@ -22,6 +23,7 @@ class Player : public Entity {
 		void DrawBullets(Data data);
 		void UpdateBullets(Data data);
 		float GetRadius();
+		CircleCollider GetCollider();
 	private :
 		sf::CircleShape _circle;
 		sf::Color _color;
