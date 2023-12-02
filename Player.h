@@ -5,21 +5,22 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <vector>
+#include "Data.h"
 
 class Bullet;
 
 class Player : public Entity {
 	public :
 		Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed);
-		void Draw(sf::RenderWindow& window);
+		void Draw(Data data);
 		sf::CircleShape& GetPlayerShape();
 		void SetColor(sf::Color color);
-		void Update(float deltaTime);
-		void UpdateTimer(float deltaTime);
-		void Move(float deltaTime);
+		void Update(Data data);
+		void UpdateTimer(Data data);
+		void Move(Data data);
 		Bullet* Shoot();
-		void DrawBullets(sf::RenderWindow& window);
-		void UpdateBullets(float deltaTime);
+		void DrawBullets(Data data);
+		void UpdateBullets(Data data);
 		float GetRadius();
 	private :
 		sf::CircleShape _circle;
