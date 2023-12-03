@@ -1,5 +1,5 @@
 #include "Bullet.h"
-#include "Math.h"
+
 
 
 Bullet::Bullet(sf::Color color, float radius, sf::Vector2f startPos, sf::Vector2f direction, float speed) 
@@ -36,7 +36,8 @@ bool Bullet::IsBulletOutOfWindow(Data data)
 	return false;
 }
 
-void Bullet::CheckPosition(Data data, std::vector<Bullet*>& bulletList) {
+void Bullet::CheckPosition(Data data, std::vector<Bullet*>& bulletList) 
+{
 	std::vector<Bullet*>::iterator it = bulletList.begin();
 	while (it != bulletList.end()) {
 		if ((*it)->IsBulletOutOfWindow(data))
@@ -50,4 +51,10 @@ void Bullet::CheckPosition(Data data, std::vector<Bullet*>& bulletList) {
 			it++;
 		}
 	}
+}
+
+CircleCollider Bullet::GetCollider()
+{
+	CircleCollider collider = { _position, _radius };
+	return collider;
 }

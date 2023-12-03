@@ -58,20 +58,6 @@ void Player::Update(Data data)
 {
 	//std::cout << data.deltaTime << std::endl;
 	Move(data);
-	UpdateTimer(data);
-	if (_fireTimer >= 1 / _bulletFireRate) {
-		_bulletList.push_back(Shoot());
-		std::cout << _bulletList.size() << std::endl;
-		_fireTimer = 0.0f;
-	}
-
-	UpdateBullets(data);
-}
-
-void Player::UpdateTimer(Data data) 
-{
-	_fireTimer += data.deltaTime;
-	//std::cout << _fireTimer << std::endl;
 }
 
 Bullet* Player::Shoot()
@@ -91,20 +77,6 @@ void Player::Draw(Data data)
 	data.window->draw(shape);
 }
 
-void Player::DrawBullets(Data data) {
-	for (Bullet* bullet : _bulletList) {
-		bullet->Draw(*data.window);
-	}
-}
-
-void Player::UpdateBullets(Data data) 
-{
-	for (Bullet* bullet : _bulletList) {
-		bullet->CheckPosition(data, _bulletList);
-		bullet->Move(data.deltaTime);
-	}
-}
-
 float Player::GetRadius() 
 {
 	return _radius;
@@ -114,4 +86,9 @@ CircleCollider Player::GetCollider()
 {
 	CircleCollider collider = { _position, _radius };
 	return collider;
+}
+
+sf::Vector2f Player::GetOrientationDirection()
+{
+	return _orientationDirection;
 }

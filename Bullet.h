@@ -1,7 +1,9 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
+#include "Math.h"
 #include "Data.h"
+#include "Collider.h"
 
 class Bullet {
 	public :
@@ -10,6 +12,7 @@ class Bullet {
 		void Move(float deltaTime);
 		bool IsBulletOutOfWindow(Data data);
 		void CheckPosition(Data data, std::vector<Bullet*>& bulletList);
+		CircleCollider GetCollider();
 	private :
 		sf::CircleShape _circle;
 		float _radius;
