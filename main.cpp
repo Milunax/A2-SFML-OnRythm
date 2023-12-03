@@ -46,7 +46,7 @@ int main()
 	
 	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
 	WaveManager waveManager(window, &player);
-	BulletManager bulletManager(&player, waveManager.GetEnemyList());
+	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
 
 	sf::Clock frameClock;
 	int tickCount = 0;

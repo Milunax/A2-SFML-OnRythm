@@ -135,3 +135,11 @@ std::vector<Enemy*>* WaveManager::GetEnemyList()
 {
 	return &_enemyList;
 }
+
+Enemy* WaveManager::GetBoss() {
+	return _boss;
+}
+
+void WaveManager::SetBoss(Enemy* boss) {
+	_boss = boss;
+}

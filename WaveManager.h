@@ -17,7 +17,8 @@ class WaveManager
 		void CheckCollisionAllEnemies();
 		void DrawAllEnemies(sf::RenderWindow& window);
 		std::vector<Enemy*>* GetEnemyList();
-
+		Enemy* GetBoss();
+		void SetBoss(Enemy* boss);
 	private:
 		std::vector<EnemySpawner*> _spawners;
 		std::vector<Enemy*> _enemyList;

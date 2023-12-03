@@ -1,8 +1,9 @@
 #include "BulletManager.h"
 
-BulletManager::BulletManager(Player* player, std::vector<Enemy*>* enemyList) {
+BulletManager::BulletManager(Player* player, std::vector<Enemy*>* enemyList, WaveManager* waveManager){
 	_player = player;
 	_enemyList = enemyList;
+	_waveManager = waveManager;
 }
 
 void BulletManager::Update(Data data)
@@ -17,6 +18,7 @@ void BulletManager::Update(Data data)
 		bullet->CheckPosition(data, _bulletList);
 		bullet->Move(data.deltaTime);
 	}
+	CheckIfBossExist();
 	CheckCollisionAllBullets();
 }
 
@@ -65,10 +67,30 @@ void BulletManager::CheckCollisionAllBullets()
 			}
 		}
 
+		if (_boss != nullptr) {
+			CircleCollider bossCol = _boss->GetCollider();
+			if (AreCircleCollidersOverlapping(bulletCol, bossCol)) 
+			{
+				delete _boss;
+				_boss = nullptr;
+				_waveManager->SetBoss(nullptr);
+
+				delete (*bulletIt);
+				bulletIt = _bulletList.erase(bulletIt);
+			}
+		}
+
 		if (_bulletList.size() != 0) {
 			bulletIt++;
 		}
-		
+	
+	}
+}
+
+void BulletManager::CheckIfBossExist()
+{
+	if (_boss == nullptr) {
+		_boss = _waveManager->GetBoss();
 	}
 }
 
