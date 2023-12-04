@@ -11,6 +11,7 @@ struct EnemyData
 	sf::Color Color;
 	float MaxHealth;
 	float Speed;
+	float MoveDistance;
 	float Damage;
 };
 
@@ -32,7 +33,7 @@ class Enemy : public Entity
 		float _radius;
 		sf::Color _color;
 		sf::Vector2f _nextPosition;
-		float _moveDistance = 10.0f;
+		float _moveDistance;
 
 		float _damage;
 
