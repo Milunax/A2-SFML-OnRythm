@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-EnemyData normalEnemy = { 20.0f, sf::Color::Red, 10.0f , 70.0f };
+EnemyData normalEnemy = { 20.0f, sf::Color::Red, 10.0f , 150.0f };
 EnemyData bossEnemy = { 40.0f, sf::Color::Magenta, 100.0f , 20.0f };
 
 Enemy::Enemy(EnemyData data, sf::Vector2f startPos, Player* target) : Entity(startPos, data.MaxHealth, data.Speed)
@@ -33,7 +33,7 @@ void Enemy::SetNextPosition()
 
 void Enemy::Move(float deltaTime) 
 {
-	if (Distance(_position, _nextPosition) > 0.5f) 
+	if (Distance(_position, _nextPosition) > 1.0f) 
 	{
 		sf::Vector2f direction = _nextPosition - _position;
 		Normalize(direction);
