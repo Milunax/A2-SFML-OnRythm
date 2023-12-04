@@ -10,6 +10,10 @@ Bullet::Bullet(sf::Color color, int radius, sf::Vector2f startPos, sf::Vector2f 
 	Normalize(_direction);
 }
 
+Bullet::~Bullet() {
+	 
+}
+
 void Bullet::Draw(sf::RenderWindow& window)
 {
 	sf::CircleShape shape;

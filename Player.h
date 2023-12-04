@@ -14,6 +14,7 @@ class Player : public Entity {
 		Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed);
 		void Draw(sf::RenderWindow& window);
 		sf::CircleShape& GetPlayerShape();
+		void SetColor(sf::Color color);
 		void Update(float deltaTime);
 		void UpdateTimer(float deltaTime);
 		void Move(float deltaTime);

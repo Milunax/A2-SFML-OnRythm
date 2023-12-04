@@ -14,6 +14,11 @@ sf::CircleShape& Player::GetPlayerShape()
 	return _circle;
 }
 
+void Player::SetColor(sf::Color color) 
+{
+	_color = color;
+}
+
 void Player::Move(float deltaTime) 
 {
 	// Position avant le mouvement
@@ -51,6 +56,7 @@ void Player::Move(float deltaTime)
 
 void Player::Update(float deltaTime) 
 {
+	Move(deltaTime);
 	UpdateTimer(deltaTime);
 	if (_fireTimer >= 1 / _bulletFireRate) {
 		_bulletList.push_back(Shoot());
@@ -69,7 +75,7 @@ void Player::UpdateTimer(float deltaTime)
 
 Bullet* Player::Shoot()
 {
-	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, _orientationDirection, 50);
+	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, _orientationDirection, 1000);
 	std::cout << "a tiré" << std::endl;
 	return bullet;
 }
