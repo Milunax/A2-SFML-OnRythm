@@ -2,6 +2,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+
+#include "RythmSystem.h"
 #include "Background.h"
 #include "HealthBar.h"
 #include "WaveManager.h"
@@ -10,32 +12,49 @@
 #include "GameManager.h"
 
 constexpr float cubeSpeed = 500.f;
-float bpm = 151.0f;
+float bpm = 150.0f;
 float countTick = 0.0f;
 float tick = 1 /(bpm / 60);
+int tickCount = 0;
 
 sf::Color backgroundColor;
 
+
+
+std::map<int, State> level_1 = { {10, State::SLOW}, {30,State::NORMAL} };
+State actualState = State::NORMAL;
+
 // Sound
 sf::Music music;
-
 
 int main()
 {
 	// Initialisation
 
 	Data data;
-
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
 
 	data.window = &window;
 
 	// Objects
+	sf::Shader backgroundShader;
+	backgroundShader.loadFromFile("Background.vert", "Background.frag");
+	backgroundShader.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	float iTime = 0.0;
 	sf::RectangleShape rectangle;
 	rectangle.setFillColor(sf::Color::Red);
 	rectangle.setPosition(640, 360);
 	rectangle.setSize(sf::Vector2f(128, 128));
+
+	sf::RectangleShape backgroundRect;
+	backgroundRect.setPosition(0, 0);
+	backgroundRect.setSize(sf::Vector2f(window.getSize()));
+	sf::RenderStates backgroundStates;
+	backgroundStates.shader = &backgroundShader;
+
+
+
 
 	sf::CircleShape circle;
 	circle.setFillColor(sf::Color::Transparent);
@@ -51,7 +70,6 @@ int main()
 	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
 
 	sf::Clock frameClock;
-	int tickCount = 0;
 
 	// Music buffer
 	if (!music.openFromFile("../sound/150.wav"))
@@ -69,13 +87,13 @@ int main()
 			// On gère l'événément
 			switch (event.type)
 			{
-				case sf::Event::Closed:
-					// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
-					window.close();
-					break;
+			case sf::Event::Closed:
+				// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
+				window.close();
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 
@@ -83,28 +101,39 @@ int main()
 		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
 
 
-		if (countTick < tick) {
-			countTick += data.deltaTime;
-			//std::cout << countTick;
-		}
-		else {
+
+		countTick += data.deltaTime;
+
+		if (countTick >= tick) {
 			tickCount++;
-			/*
-			std::cout << (((tickCount % 2) == 0) ? "TOP" : "TIP") << std::endl;
-			std::cout << tickCount << std::endl;
-			*/
-			if (tickCount < 287) {
-				if (tickCount == 1) waveManager.SpawnBoss();
-				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Yellow) : rectangle.setFillColor(sf::Color::Magenta);
-				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
+			std::cout << "COUNT : " << tickCount << std::endl;
+
+			actualState = GetStateOfBeat(level_1, tickCount, actualState);
+			std::cout << "STATE : " << actualState << std::endl;
+
+			switch (actualState)
+			{
+			case State::NONE:
+				std::cout << "lol" << std::endl;
+				break;
+			case State::NORMAL:
+				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
+				waveManager.MoveAllEnemies(data.deltaTime);
 				backgroundColor = ChangeBackground(tickCount % 3);
-			}
-			else {
-				(tickCount % 2 == 0) ? rectangle.setFillColor(sf::Color::Green) : rectangle.setFillColor(sf::Color::Yellow);
+				break;
+			case State::SLOW:
+				if (tickCount % 2 == 0) waveManager.MoveAllEnemies(data.deltaTime);
 				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
+				break;
+			default:
+				break;
 			}
 			countTick -= tick;
 		}
+		float NormCT = countTick / tick;
+		float TweenNCT = (1 - NormCT) * (1 - NormCT);
+		iTime += TweenNCT * 0.01f;
+		backgroundShader.setUniform("iTime", iTime);
 
 		// Logique
 		player.Update(data);
@@ -120,6 +149,7 @@ int main()
 		*/
 		// Remise au noir de toute la fenêtre
 		window.clear();
+		window.draw(backgroundRect, backgroundStates);
 		// Tout le rendu va se dérouler ici
 		window.draw(rectangle);
 		window.draw(circle);
