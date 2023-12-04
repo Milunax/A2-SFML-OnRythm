@@ -11,7 +11,7 @@
 #include "BulletManager.h"
 
 constexpr float cubeSpeed = 500.f;
-float bpm = 151.0f;
+float bpm = 150.0f;
 float countTick = 0.0f;
 float tick = 1 /(bpm / 60);
 int tickCount = 0;
@@ -85,29 +85,27 @@ int main()
 			// On gère l'événément
 			switch (event.type)
 			{
-				case sf::Event::Closed:
-					// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
-					window.close();
-					break;
+			case sf::Event::Closed:
+				// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
+				window.close();
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 
 		data.deltaTime = frameClock.restart().asSeconds();
 		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
 
-		iTime += data.deltaTime;
-		backgroundShader.setUniform("iTime", iTime);
-		if (countTick < tick) {
-			countTick += data.deltaTime;
-			//std::cout << countTick;
-		}
-		else {
+
+
+		countTick += data.deltaTime;
+
+		if (countTick >= tick) {
 			tickCount++;
 			std::cout << "COUNT : " << tickCount << std::endl;
-			
+
 			actualState = GetStateOfBeat(level_1, tickCount, actualState);
 			std::cout << "STATE : " << actualState << std::endl;
 
@@ -130,6 +128,10 @@ int main()
 			}
 			countTick -= tick;
 		}
+		float NormCT = countTick / tick;
+		float TweenNCT = (1 - NormCT) * (1 - NormCT);
+		iTime += TweenNCT * 0.01f;
+		backgroundShader.setUniform("iTime", iTime);
 
 		// Logique
 		player.Update(data);
