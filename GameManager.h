@@ -6,3 +6,12 @@ enum class GameState
 	IN_GAME,
 	PAUSE
 };
+
+class GameManager 
+{
+	public :
+		GameManager();
+		GameState GetGameState();
+	private :
+		GameState _gameState;
+};

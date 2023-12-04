@@ -10,6 +10,7 @@
 #include "Data.h"
 #include "BulletManager.h"
 #include "GameManager.h"
+#include "Button.h"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 150.0f;
@@ -42,32 +43,26 @@ int main()
 	backgroundShader.loadFromFile("Background.vert", "Background.frag");
 	backgroundShader.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	float iTime = 0.0;
-	sf::RectangleShape rectangle;
-	rectangle.setFillColor(sf::Color::Red);
-	rectangle.setPosition(640, 360);
-	rectangle.setSize(sf::Vector2f(128, 128));
 
 	sf::RectangleShape backgroundRect;
 	backgroundRect.setPosition(0, 0);
 	backgroundRect.setSize(sf::Vector2f(window.getSize()));
 	sf::RenderStates backgroundStates;
 	backgroundStates.shader = &backgroundShader;
-
-
-
-
-	sf::CircleShape circle;
-	circle.setFillColor(sf::Color::Transparent);
-	circle.setPosition(640, 360);
-	circle.setOutlineThickness(15);
-	circle.setOutlineColor(sf::Color::Blue);
-	circle.setRadius(100);
-	int goalScale = 500;
-	int resultScale = (float)circle.getRadius();
 	
 	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
+
+	// Managers
+	GameManager gameManager;
+
 	WaveManager waveManager(window, &player);
 	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
+
+	//StartMenu
+	sf::Text startText;
+	startText.setString("Start");
+	startText.setStyle(sf::Text::Bold);
+	Button startButton(basicButton, sf::Vector2f(640, 360), startText);
 
 	sf::Clock frameClock;
 
@@ -80,83 +75,114 @@ int main()
 	// Main Game
 	while (window.isOpen())
 	{
+		float NormCT;
+		float TweenNCT;
 		// Gérer les événéments survenus depuis le dernier tour de boucle
 		sf::Event event;
-		while (window.pollEvent(event))
+
+		switch (gameManager.GetGameState())
 		{
-			// On gère l'événément
-			switch (event.type)
+		case GameState::START_MENU:
+			while (window.pollEvent(event))
 			{
-			case sf::Event::Closed:
-				// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
-				window.close();
-				break;
+				// On gère l'événément
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
+					window.close();
+					break;
 
-			default:
-				break;
+				default:
+					break;
+				}
 			}
+			//Logique
+
+
+			// Affichage
+			// Remise au noir de toute la fenêtre
+			window.clear();
+			startButton.Draw(data);
+			// On présente la fenêtre sur l'écran
+			window.display();
+			break;
+
+
+		case GameState::IN_GAME:
+			while (window.pollEvent(event))
+			{
+				// On gère l'événément
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
+					window.close();
+					break;
+
+				default:
+					break;
+				}
+			}
+
+			data.deltaTime = frameClock.restart().asSeconds();
+
+			// Logique
+
+			countTick += data.deltaTime;
+
+			if (countTick >= tick) {
+				tickCount++;
+				std::cout << "COUNT : " << tickCount << std::endl;
+
+				actualState = GetStateOfBeat(level_1, tickCount, actualState);
+				std::cout << "STATE : " << actualState << std::endl;
+
+				switch (actualState)
+				{
+				case State::NONE:
+					std::cout << "lol" << std::endl;
+					break;
+				case State::NORMAL:
+					(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
+					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
+					backgroundColor = ChangeBackground(tickCount % 3);
+					break;
+				case State::SLOW:
+					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
+					break;
+				default:
+					break;
+				}
+				countTick -= tick;
+			}
+			NormCT = countTick / tick;
+			TweenNCT = (1 - NormCT) * (1 - NormCT);
+			iTime += TweenNCT * 0.01f;
+			backgroundShader.setUniform("iTime", iTime);
+
+			player.Update(data);
+			waveManager.Update(data);
+			bulletManager.Update(data);
+
+			// Affichage
+			// Remise au noir de toute la fenêtre
+			window.clear();
+			window.draw(backgroundRect, backgroundStates);
+			player.Draw(data);
+			waveManager.DrawAllEnemies(window);
+			bulletManager.DrawBullets(data);
+			// On présente la fenêtre sur l'écran
+			window.display();
+			break;
+
+
+		case GameState::PAUSE:
+			break;
+		default:
+			break;
 		}
 
-		data.deltaTime = frameClock.restart().asSeconds();
-		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
-
-
-
-		countTick += data.deltaTime;
-
-		if (countTick >= tick) {
-			tickCount++;
-			std::cout << "COUNT : " << tickCount << std::endl;
-
-			actualState = GetStateOfBeat(level_1, tickCount, actualState);
-			std::cout << "STATE : " << actualState << std::endl;
-
-			switch (actualState)
-			{
-			case State::NONE:
-				std::cout << "lol" << std::endl;
-				break;
-			case State::NORMAL:
-				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
-				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
-				backgroundColor = ChangeBackground(tickCount % 3);
-				break;
-			case State::SLOW:
-				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
-				break;
-			default:
-				break;
-			}
-			countTick -= tick;
-		}
-		float NormCT = countTick / tick;
-		float TweenNCT = (1 - NormCT) * (1 - NormCT);
-		iTime += TweenNCT * 0.01f;
-		backgroundShader.setUniform("iTime", iTime);
-
-		// Logique
-		player.Update(data);
-
-		waveManager.Update(data);
-
-		bulletManager.Update(data);
-		// Affichage
-		/*
-		resultScale = circle.getRadius();
-		resultScale += (goalScale - resultScale) / 100; // increase division for stronger easing
-		circle.setRadius(resultScale);
-		*/
-		// Remise au noir de toute la fenêtre
-		window.clear();
-		window.draw(backgroundRect, backgroundStates);
-		// Tout le rendu va se dérouler ici
-		window.draw(rectangle);
-		window.draw(circle);
-		player.Draw(data);
-		waveManager.DrawAllEnemies(window);
-		bulletManager.DrawBullets(data);
-
-		// On présente la fenêtre sur l'écran
-		window.display();
+		
 	}
 }
