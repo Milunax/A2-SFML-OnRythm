@@ -39,3 +39,8 @@ void ClampCircleOutsideCircle(CircleCollider& toClamp, CircleCollider& stayOutsi
 		toClamp.Origin.y = stayOutside.Origin.y + sin(angle) * (stayOutside.Radius + toClamp.Radius);
 	}
 }
+
+bool IsPointInsideRectangle(sf::Vector2f point, sf::RectangleShape rectangle) 
+{
+	return true;
+}
