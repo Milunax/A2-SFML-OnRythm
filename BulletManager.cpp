@@ -42,38 +42,31 @@ Bullet* BulletManager::InstanciateBullet()
 
 void BulletManager::CheckCollisionAllBullets() 
 {
-	std::vector<Bullet*>::iterator bulletIt = _bulletList.begin();
+	std::vector<Enemy*>::iterator enemyIt = _enemyList->begin();
 
-	while (bulletIt != _bulletList.end()) 
+
+	while (enemyIt != _enemyList->end())
 	{
-		CircleCollider bulletCol = (*bulletIt)->GetCollider();
-		std::vector<Enemy*>::iterator enemyIt = _enemyList->begin();
+		CircleCollider enemyCol = (*enemyIt)->GetCollider();
+		std::vector<Bullet*>::iterator bulletIt = _bulletList.begin();
 
-		while (enemyIt != _enemyList->end())
+		while (bulletIt != _bulletList.end())
 		{
-			CircleCollider enemyCol = (*enemyIt)->GetCollider();
+			CircleCollider bulletCol = (*bulletIt)->GetCollider();
 			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
 			{
+				(*enemyIt)->TakeDamage(1);
 				_player->AddExperience(5);
 
 				delete (*bulletIt);
-				delete (*enemyIt);
 				
 				bulletIt = _bulletList.erase(bulletIt);
-				enemyIt = _enemyList->erase(enemyIt);
 			}
 			else 
 			{
-				enemyIt++;
+				bulletIt++;
 			}
 		}
-
-		if (_bulletList.size() != 0) {
-			bulletIt++;
-		}
-	
+		enemyIt++;
 	}
 }
-
-
-

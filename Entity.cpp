@@ -11,6 +11,10 @@ Entity::Entity(sf::Vector2f startPos, float maxHealth, float speed) {
 
 void Entity::TakeDamage(float damage) {
 	_health = std::clamp(_health - damage, 0.0f, _maxHealth);
+	if (_health <= 0) 
+	{
+		Die();
+	}
 }
 
 void Entity::Heal(float heal) {

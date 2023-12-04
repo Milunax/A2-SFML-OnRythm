@@ -35,8 +35,7 @@ void WaveManager::Update(Data data)
 		SpawnWave();
 		_timer = 0;
 	}
-
-
+	EraseDeadEnemies();
 }
 
 void WaveManager::SpawnWave()

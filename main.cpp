@@ -118,11 +118,10 @@ int main()
 				break;
 			case State::NORMAL:
 				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
-				waveManager.MoveAllEnemies(data.deltaTime);
+				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 				backgroundColor = ChangeBackground(tickCount % 3);
 				break;
 			case State::SLOW:
-				if (tickCount % 2 == 0) waveManager.MoveAllEnemies(data.deltaTime);
 				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 				break;
 			default:
