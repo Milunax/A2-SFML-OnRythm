@@ -11,6 +11,7 @@ struct EnemyData
 	sf::Color Color;
 	float MaxHealth;
 	float Speed;
+	float Damage;
 };
 
 extern EnemyData normalEnemy;
@@ -25,12 +26,15 @@ class Enemy : public Entity
 		void SetNextPosition();
 		void Move(float deltaTime);
 		CircleCollider GetCollider();
+		float GetDamage();
 		void Draw(sf::RenderWindow& window);
 	private :
 		float _radius;
 		sf::Color _color;
 		sf::Vector2f _nextPosition;
 		float _moveDistance = 10.0f;
+
+		float _damage;
 
 		Player* _player;
 };

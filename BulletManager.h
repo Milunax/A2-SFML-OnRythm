@@ -15,7 +15,6 @@ class BulletManager
 		void DrawBullets(Data data);
 		Bullet* InstanciateBullet();
 		void CheckCollisionAllBullets();
-		void CheckIfBossExist();
 	private:
 		Player* _player;
 		WaveManager* _waveManager;

@@ -4,21 +4,21 @@
 #include <vector>
 #include <iostream>
 #include "Player.h"
+#include "Data.h"
 
 class WaveManager
 {
 	public:
 		WaveManager(sf::RenderWindow& window, Player* player);
-		void Update(float deltaTime);
+		void Update(Data data);
 		void SpawnWave();
 		void SpawnBoss();
 		void SetEnemiesNextPosition();
 		void MoveAllEnemies(float deltaTime);
 		void CheckCollisionAllEnemies();
+		void EraseDeadEnemies();
 		void DrawAllEnemies(sf::RenderWindow& window);
 		std::vector<Enemy*>* GetEnemyList();
-		Enemy* GetBoss();
-		void SetBoss(Enemy* boss);
 	private:
 		std::vector<EnemySpawner*> _spawners;
 		std::vector<Enemy*> _enemyList;
@@ -26,8 +26,6 @@ class WaveManager
 		float _spawnTime;
 		int _numberOfEnemiesToSpawn;
 		int _maxEnemyCount;
-
-		Enemy* _boss;
 
 		Player* _player;
 };

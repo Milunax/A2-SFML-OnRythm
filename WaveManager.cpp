@@ -22,21 +22,21 @@ WaveManager::WaveManager(sf::RenderWindow& window, Player* player)
 	_numberOfEnemiesToSpawn = 3;
 	_maxEnemyCount = 32;
 
-	_boss = nullptr;
-
 	_player = player;
 }
 
-void WaveManager::Update(float deltaTime) 
+void WaveManager::Update(Data data) 
 {
-	_timer += deltaTime;
+	MoveAllEnemies(data.deltaTime);
+	CheckCollisionAllEnemies();
+	_timer += data.deltaTime;
 	if (_timer > _spawnTime) 
 	{
 		SpawnWave();
 		_timer = 0;
 	}
-	MoveAllEnemies(deltaTime);
-	CheckCollisionAllEnemies();
+
+
 }
 
 void WaveManager::SpawnWave()
@@ -63,11 +63,9 @@ void WaveManager::SpawnWave()
 
 void WaveManager::SpawnBoss() 
 {
-	if (_boss == nullptr) 
-	{
-		int random = rand() % _spawners.size();
-		_boss = _spawners[random]->InstantiateEnemy(bossEnemy, _spawners[random]->GetPosition(), _player);
-	}
+
+	int random = rand() % _spawners.size();
+	_enemyList.push_back(_spawners[random]->InstantiateEnemy(bossEnemy, _spawners[random]->GetPosition(), _player));
 }
 
 void WaveManager::SetEnemiesNextPosition() 
@@ -76,8 +74,6 @@ void WaveManager::SetEnemiesNextPosition()
 	{
 		enemy->SetNextPosition();
 	}
-
-	if (_boss != nullptr) _boss->SetNextPosition();
 }
 
 
@@ -87,19 +83,30 @@ void WaveManager::MoveAllEnemies(float deltaTime)
 	{
 		enemy->Move(deltaTime);
 	}
-
-	if(_boss !=nullptr) _boss->Move(deltaTime);
 }
 
 void WaveManager::CheckCollisionAllEnemies() 
 {
 	CircleCollider playerCol = _player->GetCollider();
 
-	std::vector<Enemy*>::iterator it = _enemyList.begin();
-	while (it != _enemyList.end())
+	for (Enemy* enemy : _enemyList) 
 	{
-		CircleCollider enemyCol = (*it)->GetCollider();
-		if (AreCircleCollidersOverlapping(enemyCol, playerCol)) 
+		CircleCollider enemyCol = enemy->GetCollider();
+		if (AreCircleCollidersOverlapping(enemyCol, playerCol))
+		{
+			_player->TakeDamage(enemy->GetDamage());
+			ClampCircleOutsideCircle(enemyCol, playerCol);
+			enemy->SetPosition(enemyCol.Origin);
+		}
+	}
+}
+
+void WaveManager::EraseDeadEnemies() 
+{
+	std::vector<Enemy*>::iterator it = _enemyList.begin();
+	while (it != _enemyList.end()) 
+	{
+		if (!(*it)->IsAlive) 
 		{
 			delete (*it);
 			it = _enemyList.erase(it);
@@ -107,16 +114,6 @@ void WaveManager::CheckCollisionAllEnemies()
 		else 
 		{
 			it++;
-		}
-	}
-
-	if (_boss != nullptr)
-	{
-		CircleCollider bossCol = _boss->GetCollider();
-		if (AreCircleCollidersOverlapping(bossCol, playerCol))
-		{
-			delete _boss;
-			_boss = nullptr;
 		}
 	}
 }
@@ -128,18 +125,9 @@ void WaveManager::DrawAllEnemies(sf::RenderWindow& window)
 		enemy->Draw(window);
 	}
 
-	if (_boss != nullptr) _boss->Draw(window);
 }
 
 std::vector<Enemy*>* WaveManager::GetEnemyList()
 {
 	return &_enemyList;
-}
-
-Enemy* WaveManager::GetBoss() {
-	return _boss;
-}
-
-void WaveManager::SetBoss(Enemy* boss) {
-	_boss = boss;
 }

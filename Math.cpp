@@ -24,8 +24,18 @@ float Distance(sf::Vector2f from, sf::Vector2f to)
 
 bool AreCircleCollidersOverlapping(CircleCollider circleA, CircleCollider circleB) 
 {
-	sf::Vector2 vectorDistance = circleA.Origin - circleB.Origin;
-	float distance = Magnitude(vectorDistance);
-	if (distance < (circleA.Radius + circleB.Radius)) return true;
+	if (Distance(circleA.Origin, circleB.Origin) < (circleA.Radius + circleB.Radius)) return true;
 	return false;
+}
+
+void ClampCircleOutsideCircle(CircleCollider& toClamp, CircleCollider& stayOutside)
+{
+	float distance = Distance(toClamp.Origin, stayOutside.Origin);
+
+	if (distance < stayOutside.Radius + toClamp.Radius) 
+	{
+		float angle = atan2(toClamp.Origin.y - stayOutside.Origin.y ,toClamp.Origin.x - stayOutside.Origin.x);
+		toClamp.Origin.x = stayOutside.Origin.x + cos(angle) * (stayOutside.Radius + toClamp.Radius);
+		toClamp.Origin.y = stayOutside.Origin.y + sin(angle) * (stayOutside.Radius + toClamp.Radius);
+	}
 }

@@ -18,7 +18,6 @@ void BulletManager::Update(Data data)
 		bullet->CheckPosition(data, _bulletList);
 		bullet->Move(data.deltaTime);
 	}
-	CheckIfBossExist();
 	CheckCollisionAllBullets();
 }
 
@@ -37,7 +36,7 @@ void BulletManager::DrawBullets(Data data) {
 Bullet* BulletManager::InstanciateBullet()
 {
 	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _player->GetPosition(), _player->GetOrientationDirection(), 1000);
-	//std::cout << "a tiré" << std::endl;
+	//std::cout << "a tirï¿½" << std::endl;
 	return bullet;
 }
 
@@ -69,21 +68,6 @@ void BulletManager::CheckCollisionAllBullets()
 			}
 		}
 
-		if (_boss != nullptr) {
-			CircleCollider bossCol = _boss->GetCollider();
-			if (AreCircleCollidersOverlapping(bulletCol, bossCol)) 
-			{
-				_player->AddExperience(20);
-
-				delete _boss;
-				_boss = nullptr;
-				_waveManager->SetBoss(nullptr);
-
-				delete (*bulletIt);
-				bulletIt = _bulletList.erase(bulletIt);
-			}
-		}
-
 		if (_bulletList.size() != 0) {
 			bulletIt++;
 		}
@@ -91,10 +75,5 @@ void BulletManager::CheckCollisionAllBullets()
 	}
 }
 
-void BulletManager::CheckIfBossExist()
-{
-	if (_boss == nullptr) {
-		_boss = _waveManager->GetBoss();
-	}
-}
+
 
