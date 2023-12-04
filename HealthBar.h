@@ -11,5 +11,6 @@ class HealthBar {
 	private:
 		sf::Vector2f _position;
 		sf::Color _color;
+		sf::Vector2f _sizeMax;
 		sf::Vector2f _size;
 };

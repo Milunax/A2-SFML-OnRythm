@@ -18,7 +18,8 @@ class Entity
 		float _speed;
 		sf::Vector2f _position;
 		float _health;
-	private : 
 		float _maxHealth;
+	private : 
+		
 		
 };

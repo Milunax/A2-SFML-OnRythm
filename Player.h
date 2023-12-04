@@ -5,6 +5,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "Data.h"
 #include "Collider.h"
 #include "HealthBar.h"

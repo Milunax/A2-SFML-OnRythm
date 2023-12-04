@@ -3,6 +3,7 @@
 HealthBar::HealthBar(sf::Vector2f startPos, sf::Color color, sf::Vector2f size) {
 	_position = startPos;
 	_color = color;
+	_sizeMax = size;
 	_size = size;
 }
 
@@ -21,5 +22,6 @@ void HealthBar::UpdatePosition(sf::Vector2f newPos) {
 }
 
 void HealthBar::UpdateSize(int value) {
-	_size.x -= value / 100;
+	_size.x -= value;
+	_size.x = std::clamp(_size.x, 0.0f, _sizeMax.x);
 }

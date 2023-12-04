@@ -49,7 +49,7 @@ void Player::Move(Data data)
 	//std::cout << _moveDirection.x << " : " << _moveDirection.y << std::endl;
 
 	if (_moveDirection != sf::Vector2f(0, 0)) _orientationDirection = _moveDirection;
-
+	_health = std::clamp(_health, 0.0f, _maxHealth);
 	_position = _position + _moveDirection * _speed * data.deltaTime;
 	// Position apres le mouvement
 	//std::cout << _position.x << " : " << _position.y << std::endl;
@@ -57,9 +57,10 @@ void Player::Move(Data data)
 
 void Player::Update(Data data) 
 {
-	std::cout << _experience << std::endl;
+	//std::cout << _experience << std::endl;
 	//std::cout << data.deltaTime << std::endl;
 	Move(data);
+	
 	_playerHealthBar->UpdatePosition(sf::Vector2f(_position.x, _position.y + _radius + 20));
 }
 
@@ -85,6 +86,7 @@ void Player::Draw(Data data)
 void Player::TakeDamage(float value)
 {
 	_health -= value;
+	//std::cout << _health << std::endl;
 	_playerHealthBar->UpdateSize(value);
 }
 
