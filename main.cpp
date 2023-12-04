@@ -7,7 +7,6 @@
 #include "Background.h"
 #include "Player.h"
 #include "WaveManager.h"
-#include "RythmSystem.cpp"
 #include "Data.h"
 #include "BulletManager.h"
 
@@ -99,7 +98,7 @@ int main()
 		data.deltaTime = frameClock.restart().asSeconds();
 		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
 
-		iTime += deltaTime;
+		iTime += data.deltaTime;
 		backgroundShader.setUniform("iTime", iTime);
 		if (countTick < tick) {
 			countTick += data.deltaTime;
@@ -119,11 +118,11 @@ int main()
 				break;
 			case State::NORMAL:
 				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
-				waveManager.MoveAllEnemies();
+				waveManager.MoveAllEnemies(data.deltaTime);
 				backgroundColor = ChangeBackground(tickCount % 3);
 				break;
 			case State::SLOW:
-				if (tickCount % 2 == 0) waveManager.MoveAllEnemies();
+				if (tickCount % 2 == 0) waveManager.MoveAllEnemies(data.deltaTime);
 				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 				break;
 			default:

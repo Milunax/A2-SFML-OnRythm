@@ -1,13 +1,6 @@
 #include "RythmSystem.h"
 
-enum State
-{
-	NONE,
-	NORMAL,
-	SLOW,
-	PAUSE,
-	BOSS	
-};
+
 
 
 
