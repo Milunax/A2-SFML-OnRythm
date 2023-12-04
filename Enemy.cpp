@@ -1,12 +1,13 @@
 #include "Enemy.h"
 
-EnemyData normalEnemy = { 20.0f, sf::Color::Red, 10.0f , 150.0f };
-EnemyData bossEnemy = { 40.0f, sf::Color::Magenta, 100.0f , 20.0f };
+EnemyData normalEnemy = { 20.0f, sf::Color::Red, 10.0f , 50.0f, 5.0f};
+EnemyData bossEnemy = { 40.0f, sf::Color::Magenta, 100.0f , 20.0f, 20.0f};
 
 Enemy::Enemy(EnemyData data, sf::Vector2f startPos, Player* target) : Entity(startPos, data.MaxHealth, data.Speed)
 {
 	_radius = data.Radius;
 	_color = data.Color;
+	_damage = data.Damage;
 	_player = target;
 }
 
@@ -47,6 +48,10 @@ CircleCollider Enemy::GetCollider()
 	return collider;
 }
 
+float Enemy::GetDamage() 
+{
+	return _damage;
+}
 
 void Enemy::Draw(sf::RenderWindow& window)
 {

@@ -8,6 +8,8 @@ class Entity
 		Entity(sf::Vector2f startPos, float maxHealth, float speed);
 		void TakeDamage(float damage);
 		void Heal(float heal);
+		void Die();
+		bool IsAlive;
 		virtual void Draw(sf::RenderWindow& window);
 		sf::Vector2f GetPosition();
 		void SetPosition(sf::Vector2f pos);

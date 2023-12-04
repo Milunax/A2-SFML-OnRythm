@@ -7,6 +7,7 @@
 #include "WaveManager.h"
 #include "Data.h"
 #include "BulletManager.h"
+#include "GameManager.h"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 151.0f;
@@ -22,6 +23,7 @@ sf::Music music;
 int main()
 {
 	// Initialisation
+
 	Data data;
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
@@ -107,7 +109,7 @@ int main()
 		// Logique
 		player.Update(data);
 
-		waveManager.Update(data.deltaTime);
+		waveManager.Update(data);
 
 		bulletManager.Update(data);
 		// Affichage
