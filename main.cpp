@@ -8,6 +8,8 @@
 #include "Player.h"
 #include "WaveManager.h"
 #include "RythmSystem.cpp"
+#include "Data.h"
+#include "BulletManager.h"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 151.0f;
@@ -28,14 +30,21 @@ sf::Music music;
 int main()
 {
 	// Initialisation
+	Data data;
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
+
+	data.window = &window;
 
 	// Objects
 	sf::Shader backgroundShader;
 	backgroundShader.loadFromFile("Background.vert", "Background.frag");
 	backgroundShader.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	float iTime = 0.0;
+	sf::RectangleShape rectangle;
+	rectangle.setFillColor(sf::Color::Red);
+	rectangle.setPosition(640, 360);
+	rectangle.setSize(sf::Vector2f(128, 128));
 
 	sf::RectangleShape backgroundRect;
 	backgroundRect.setPosition(0, 0);
@@ -57,6 +66,7 @@ int main()
 	
 	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
 	WaveManager waveManager(window, &player);
+	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
 
 	sf::Clock frameClock;
 
@@ -86,13 +96,13 @@ int main()
 			}
 		}
 
-		float deltaTime = frameClock.restart().asSeconds();
+		data.deltaTime = frameClock.restart().asSeconds();
 		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
 
 		iTime += deltaTime;
 		backgroundShader.setUniform("iTime", iTime);
 		if (countTick < tick) {
-			countTick += deltaTime;
+			countTick += data.deltaTime;
 			//std::cout << countTick;
 		}
 		else {
@@ -114,7 +124,7 @@ int main()
 				break;
 			case State::SLOW:
 				if (tickCount % 2 == 0) waveManager.MoveAllEnemies();
-				(tickCount % 2 == 0) ? player.SetColor(sf::Color::Green) : player.SetColor(sf::Color::Yellow);
+				if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 				break;
 			default:
 				break;
@@ -123,9 +133,11 @@ int main()
 		}
 
 		// Logique
-		waveManager.Update(deltaTime);
-		player.Update(deltaTime);
+		player.Update(data);
 
+		waveManager.Update(data.deltaTime);
+
+		bulletManager.Update(data);
 		// Affichage
 		/*
 		resultScale = circle.getRadius();
@@ -136,10 +148,11 @@ int main()
 		window.clear();
 		window.draw(backgroundRect, backgroundStates);
 		// Tout le rendu va se dérouler ici
+		window.draw(rectangle);
 		window.draw(circle);
-		player.Draw(window);
-		player.DrawBullets(window);
+		player.Draw(data);
 		waveManager.DrawAllEnemies(window);
+		bulletManager.DrawBullets(data);
 
 		// On présente la fenêtre sur l'écran
 		window.display();

@@ -5,11 +5,14 @@ EnemySpawner::EnemySpawner(sf::Vector2f position)
 	_position = position;
 }
 
-Enemy* EnemySpawner::InstantiateEnemy(Entity* enemyTarget) 
+Enemy* EnemySpawner::InstantiateEnemy(EnemyData data, sf::Vector2f position, Player* enemyTarget)
 {
-	Enemy* enemy = new Enemy(sf::Vector2f(50, 50), sf::Color::Red, _position, 10, 20);
-	enemy->SetTarget(enemyTarget);
+	Enemy* enemy = new Enemy(data, position, enemyTarget);
 	return enemy;
 
 }
 
+sf::Vector2f EnemySpawner::GetPosition()
+{
+	return _position;
+}

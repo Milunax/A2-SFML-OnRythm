@@ -1,18 +1,36 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
+#include "Player.h"
 #include "Math.h"
+#include <cmath>
+#include "Collider.h"
 
+struct EnemyData
+{
+	float Radius;
+	sf::Color Color;
+	float MaxHealth;
+	float Speed;
+};
+
+extern EnemyData normalEnemy;
+extern EnemyData bossEnemy;
 
 class Enemy : public Entity 
 {
 	public :
-		Enemy(sf::Vector2f size, sf::Color color, sf::Vector2f startPos, float maxHealth, float speed);
+		Enemy(EnemyData data, sf::Vector2f startPos, Player* target);
+		~Enemy();
+		void SetTarget(Player* target);
+		void SetNextPosition();
+		void Move(float deltaTime);
+		CircleCollider GetCollider();
 		void Draw(sf::RenderWindow& window);
-		void SetTarget(Entity* target);
-		void Move();
 	private :
-		sf::Vector2f _size;
+		float _radius;
 		sf::Color _color;
-		Entity* _target;
+		sf::Vector2f _nextPosition;
+		float _moveDistance = 10.0f;
+
+		Player* _player;
 };

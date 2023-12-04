@@ -19,7 +19,7 @@ void Player::SetColor(sf::Color color)
 	_color = color;
 }
 
-void Player::Move(float deltaTime) 
+void Player::Move(Data data)
 {
 	// Position avant le mouvement
 	// std::cout << pos.x << " : " << pos.y << std::endl;
@@ -49,30 +49,15 @@ void Player::Move(float deltaTime)
 
 	if (_moveDirection != sf::Vector2f(0, 0)) _orientationDirection = _moveDirection;
 
-	_position = _position + _moveDirection * _speed * deltaTime;
+	_position = _position + _moveDirection * _speed * data.deltaTime;
 	// Position apres le mouvement
 	//std::cout << _position.x << " : " << _position.y << std::endl;
 }
 
-void Player::Update(float deltaTime) 
+void Player::Update(Data data) 
 {
-	Move(deltaTime);
-	UpdateTimer(deltaTime);
-	if (_fireTimer >= 1 / _bulletFireRate) {
-		_bulletList.push_back(Shoot());
-		/*
-		std::cout << _bulletList.size() << std::endl;
-		*/
-		_fireTimer = 0.0f;
-	}
-
-	UpdateBullets(deltaTime);
-}
-
-void Player::UpdateTimer(float deltaTime) 
-{
-	_fireTimer += deltaTime;
-	//std::cout << _fireTimer << std::endl;
+	//std::cout << data.deltaTime << std::endl;
+	Move(data);
 }
 
 Bullet* Player::Shoot()
@@ -82,25 +67,28 @@ Bullet* Player::Shoot()
 	return bullet;
 }
 
-void Player::Draw(sf::RenderWindow& window)
+void Player::Draw(Data data)
 {
 	sf::CircleShape shape;
 	shape.setOrigin(sf::Vector2f(_radius, _radius));
 	shape.setRadius(_radius);
 	shape.setFillColor(_color);
 	shape.setPosition(_position);
-	window.draw(shape);
+	data.window->draw(shape);
 }
 
-void Player::DrawBullets(sf::RenderWindow& window) {
-	for (Bullet* bullet : _bulletList) {
-		bullet->Draw(window);
-	}
-}
-
-void Player::UpdateBullets(float deltaTime) 
+float Player::GetRadius() 
 {
-	for (Bullet* bullet : _bulletList) {
-		bullet->Move(deltaTime);
-	}
+	return _radius;
+}
+
+CircleCollider Player::GetCollider() 
+{
+	CircleCollider collider = { _position, _radius };
+	return collider;
+}
+
+sf::Vector2f Player::GetOrientationDirection()
+{
+	return _orientationDirection;
 }
