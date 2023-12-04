@@ -7,6 +7,7 @@ Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHeal
 	_radius = radius;
 	_color = color;
 	_circle.setPosition(startPos);
+	_playerHealthBar = new HealthBar(sf::Vector2f(_position.x, _position.y + _radius + 20), sf::Color::Red, sf::Vector2f(_radius, 10));
 }
 
 sf::CircleShape& Player::GetPlayerShape() 
@@ -56,8 +57,10 @@ void Player::Move(Data data)
 
 void Player::Update(Data data) 
 {
+	std::cout << _experience << std::endl;
 	//std::cout << data.deltaTime << std::endl;
 	Move(data);
+	_playerHealthBar->UpdatePosition(sf::Vector2f(_position.x, _position.y + _radius + 20));
 }
 
 Bullet* Player::Shoot()
@@ -75,6 +78,14 @@ void Player::Draw(Data data)
 	shape.setFillColor(_color);
 	shape.setPosition(_position);
 	data.window->draw(shape);
+
+	_playerHealthBar->Draw(data);
+}
+
+void Player::TakeDamage(float value)
+{
+	_health -= value;
+	_playerHealthBar->UpdateSize(value);
 }
 
 float Player::GetRadius() 
@@ -91,4 +102,8 @@ CircleCollider Player::GetCollider()
 sf::Vector2f Player::GetOrientationDirection()
 {
 	return _orientationDirection;
+}
+
+void Player::AddExperience(int value) {
+	_experience += value;
 }

@@ -3,7 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include "Background.h"
-#include "Player.h"
+#include "HealthBar.h"
 #include "WaveManager.h"
 #include "Data.h"
 #include "BulletManager.h"

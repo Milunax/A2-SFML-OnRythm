@@ -55,6 +55,8 @@ void BulletManager::CheckCollisionAllBullets()
 			CircleCollider enemyCol = (*enemyIt)->GetCollider();
 			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
 			{
+				_player->AddExperience(5);
+
 				delete (*bulletIt);
 				delete (*enemyIt);
 				
@@ -71,6 +73,8 @@ void BulletManager::CheckCollisionAllBullets()
 			CircleCollider bossCol = _boss->GetCollider();
 			if (AreCircleCollidersOverlapping(bulletCol, bossCol)) 
 			{
+				_player->AddExperience(20);
+
 				delete _boss;
 				_boss = nullptr;
 				_waveManager->SetBoss(nullptr);

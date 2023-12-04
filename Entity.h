@@ -6,7 +6,7 @@ class Entity
 {
 	public :
 		Entity(sf::Vector2f startPos, float maxHealth, float speed);
-		void TakeDamage(float damage);
+		virtual void TakeDamage(float damage);
 		void Heal(float heal);
 		virtual void Draw(sf::RenderWindow& window);
 		sf::Vector2f GetPosition();
@@ -15,7 +15,8 @@ class Entity
 	protected:
 		float _speed;
 		sf::Vector2f _position;
+		float _health;
 	private : 
 		float _maxHealth;
-		float _health;
+		
 };
