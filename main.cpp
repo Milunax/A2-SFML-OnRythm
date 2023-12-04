@@ -5,6 +5,8 @@
 #include "Background.h"
 #include "Player.h"
 #include "WaveManager.h"
+#include "Data.h"
+#include "BulletManager.h"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 151.0f;
@@ -20,9 +22,12 @@ sf::Music music;
 int main()
 {
 	// Initialisation
+	Data data;
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
+
+	data.window = &window;
 
 	// Objects
 	sf::RectangleShape rectangle;
@@ -41,6 +46,7 @@ int main()
 	
 	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
 	WaveManager waveManager(window, &player);
+	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
 
 	sf::Clock frameClock;
 	int tickCount = 0;
@@ -71,12 +77,12 @@ int main()
 			}
 		}
 
-		float deltaTime = frameClock.restart().asSeconds();
+		data.deltaTime = frameClock.restart().asSeconds();
 		//std::cout << 1.0f / deltaTime << " FPS" << std::endl;
 
 
 		if (countTick < tick) {
-			countTick += deltaTime;
+			countTick += data.deltaTime;
 			//std::cout << countTick;
 		}
 		else {
@@ -99,24 +105,11 @@ int main()
 		}
 
 		// Logique
-		sf::Vector2f pos = rectangle.getPosition();
-		
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-			pos.x = pos.x - deltaTime * cubeSpeed;
+		player.Update(data);
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			pos.x = pos.x + deltaTime * cubeSpeed;
+		waveManager.Update(data.deltaTime);
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-			pos.y = pos.y - deltaTime * cubeSpeed;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			pos.y = pos.y + deltaTime * cubeSpeed;
-
-		rectangle.setPosition(pos);
-
-		waveManager.Update(deltaTime);
-
+		bulletManager.Update(data);
 		// Affichage
 		/*
 		resultScale = circle.getRadius();
@@ -128,8 +121,9 @@ int main()
 		// Tout le rendu va se dérouler ici
 		window.draw(rectangle);
 		window.draw(circle);
-		player.Draw(window);
+		player.Draw(data);
 		waveManager.DrawAllEnemies(window);
+		bulletManager.DrawBullets(data);
 
 		// On présente la fenêtre sur l'écran
 		window.display();

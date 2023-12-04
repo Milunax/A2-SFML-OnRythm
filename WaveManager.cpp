@@ -110,11 +110,10 @@ void WaveManager::CheckCollisionAllEnemies()
 		}
 	}
 
-	
 	if (_boss != nullptr)
 	{
 		CircleCollider bossCol = _boss->GetCollider();
-		if (AreCircleCollidersOverlapping(bossCol, playerCol)) 
+		if (AreCircleCollidersOverlapping(bossCol, playerCol))
 		{
 			delete _boss;
 			_boss = nullptr;
@@ -130,4 +129,17 @@ void WaveManager::DrawAllEnemies(sf::RenderWindow& window)
 	}
 
 	if (_boss != nullptr) _boss->Draw(window);
+}
+
+std::vector<Enemy*>* WaveManager::GetEnemyList()
+{
+	return &_enemyList;
+}
+
+Enemy* WaveManager::GetBoss() {
+	return _boss;
+}
+
+void WaveManager::SetBoss(Enemy* boss) {
+	_boss = boss;
 }
