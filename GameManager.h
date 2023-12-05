@@ -12,6 +12,7 @@ class GameManager
 	public :
 		GameManager();
 		GameState GetGameState();
+		void SetGameState(GameState state);
 	private :
 		GameState _gameState;
 };

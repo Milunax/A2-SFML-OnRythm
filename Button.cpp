@@ -2,7 +2,7 @@
 
 ButtonData basicButton = {sf::Vector2f(200, 50), sf::Color::Transparent, sf::Color::White, 5.0f};
 
-Button::Button(ButtonData buttonData, sf::Vector2f position, sf::Text buttonText)
+Button::Button(ButtonData buttonData, sf::Vector2f position, sf::Font textFont)
 {
 	_size = buttonData.Size;
 	_color = buttonData.Color;
@@ -10,7 +10,17 @@ Button::Button(ButtonData buttonData, sf::Vector2f position, sf::Text buttonText
 	_outlineThickness = buttonData.OutlineThickness;
 	_position = position;
 
-	_buttonText = buttonText;
+	_textFont = textFont;
+}
+
+RectangleCollider Button::GetCollider() 
+{
+	float xMin = _position.x - (_size.x / 2);
+	float xMax = _position.x + (_size.x / 2);
+	float yMin = _position.y - (_size.y / 2);
+	float yMax = _position.y + (_size.y / 2);
+	RectangleCollider collider = {_position, _size, xMin, xMax, yMin, yMax};
+	return collider;
 }
 
 void Button::Draw(Data data) 
@@ -23,6 +33,13 @@ void Button::Draw(Data data)
 	shape.setOutlineThickness(_outlineThickness);
 	shape.setPosition(_position);
 	data.window->draw(shape);
-
-	data.window->draw(_buttonText);
+	
+	sf::Text buttonText;
+	buttonText.setFont(_textFont);
+	buttonText.setString("START");
+	buttonText.setCharacterSize(24);
+	buttonText.setStyle(sf::Text::Bold);
+	buttonText.setOrigin(sf::Vector2f(buttonText.getGlobalBounds().width / 2.0f, buttonText.getGlobalBounds().height / 2.0f));
+	buttonText.setPosition(_position);
+	data.window->draw(buttonText);
 }

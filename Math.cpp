@@ -40,7 +40,10 @@ void ClampCircleOutsideCircle(CircleCollider& toClamp, CircleCollider& stayOutsi
 	}
 }
 
-bool IsPointInsideRectangle(sf::Vector2f point, sf::RectangleShape rectangle) 
+bool IsPointInsideRectangle(sf::Vector2f point, RectangleCollider rectangle) 
 {
-	return true;
+	return point.x > rectangle.XMin &&
+		point.x < rectangle.XMax &&
+		point.y > rectangle.YMin &&
+		point.y < rectangle.YMax;
 }

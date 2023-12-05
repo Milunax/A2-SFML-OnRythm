@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Data.h"
+#include"Collider.h"
+
 struct ButtonData 
 {
 	sf::Vector2f Size;
@@ -15,7 +17,8 @@ extern ButtonData basicButton;
 class Button
 {
 	public:
-		Button(ButtonData buttonData, sf::Vector2f position, sf::Text buttonText);
+		Button(ButtonData buttonData, sf::Vector2f position, sf::Font textFont);
+		RectangleCollider GetCollider();
 		void Draw(Data data);
 	private:
 		sf::Vector2f _size;
@@ -24,5 +27,5 @@ class Button
 		float _outlineThickness;
 		sf::Vector2f _position;
 
-		sf::Text _buttonText;
+		sf::Font _textFont;
 };

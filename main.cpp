@@ -59,10 +59,10 @@ int main()
 	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
 
 	//StartMenu
-	sf::Text startText;
-	startText.setString("Start");
-	startText.setStyle(sf::Text::Bold);
-	Button startButton(basicButton, sf::Vector2f(640, 360), startText);
+	sf::Font arial;
+	arial.loadFromFile("../Assets/ARIAL.TTF");
+
+	Button startButton(basicButton, sf::Vector2f(640, 360), arial);
 
 	sf::Clock frameClock;
 
@@ -79,6 +79,7 @@ int main()
 		float TweenNCT;
 		// Gérer les événéments survenus depuis le dernier tour de boucle
 		sf::Event event;
+		sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 
 		switch (gameManager.GetGameState())
 		{
@@ -92,7 +93,15 @@ int main()
 					// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
 					window.close();
 					break;
-
+				case sf::Event::MouseButtonPressed :
+					if (event.mouseButton.button == sf::Mouse::Left) 
+					{
+						if (IsPointInsideRectangle(mousePos, startButton.GetCollider())) 
+						{
+							gameManager.SetGameState(GameState::IN_GAME);
+						}
+					}
+					break;
 				default:
 					break;
 				}

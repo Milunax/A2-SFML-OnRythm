@@ -10,3 +10,8 @@ GameState GameManager::GetGameState()
 {
 	return _gameState;
 }
+
+void GameManager::SetGameState(GameState state) 
+{
+	_gameState = state;
+}

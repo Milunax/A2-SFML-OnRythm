@@ -10,3 +10,12 @@ struct CircleCollider : public Collider
 {
 	float Radius;
 };
+
+struct RectangleCollider : public Collider
+{
+	sf::Vector2f Size;
+	float XMin;
+	float XMax;
+	float YMin;
+	float YMax;
+};
