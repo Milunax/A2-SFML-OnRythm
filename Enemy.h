@@ -13,6 +13,8 @@ struct EnemyData
 	float Speed;
 	float MoveDistance;
 	float Damage;
+	float AttackSpeed;
+	float ExperienceDropped;
 };
 
 extern EnemyData normalEnemy;
@@ -25,9 +27,12 @@ class Enemy : public Entity
 		~Enemy();
 		void SetTarget(Player* target);
 		void SetNextPosition();
+		void Update(float deltaTime);
 		void Move(float deltaTime);
+		void Attack();
 		CircleCollider GetCollider();
 		float GetDamage();
+		float GetExperienceDropped();
 		void Draw(sf::RenderWindow& window);
 	private :
 		float _radius;
@@ -36,6 +41,10 @@ class Enemy : public Entity
 		float _moveDistance;
 
 		float _damage;
+		float _attackTimer;
+		float _attackSpeed;
+
+		float _experienceDropped;
 
 		Player* _player;
 };

@@ -63,6 +63,9 @@
     <ClCompile Include="HealthBar.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="UIBar.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -113,24 +116,15 @@
     <ClInclude Include="HealthBar.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="UIBar.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Background.frag">
       <Filter>Fichiers de ressources</Filter>
     </None>
     <None Include="bin\Background.vert">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="bin\Background2.frag">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="bin\Background2.vert">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="bin\Background3.frag">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="bin\Background4.frag">
       <Filter>Fichiers de ressources</Filter>
     </None>
   </ItemGroup>

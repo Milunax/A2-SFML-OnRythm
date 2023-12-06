@@ -14,6 +14,7 @@ class WaveManager
 		void SpawnWave();
 		void SpawnBoss();
 		void SetEnemiesNextPosition();
+		void UpdateAllEnemies(float deltaTime);
 		void MoveAllEnemies(float deltaTime);
 		void CheckCollisionAllEnemies();
 		void EraseDeadEnemies();

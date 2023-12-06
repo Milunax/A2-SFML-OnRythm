@@ -5,9 +5,12 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "Data.h"
 #include "Collider.h"
 #include "HealthBar.h"
+#include "ExperienceBar.h"
+#include "Data.h"
 
 class Bullet;
 
@@ -20,17 +23,20 @@ class Player : public Entity {
 		void SetColor(sf::Color color);
 		void Update(Data data);
 		void Move(Data data);
-		Bullet* Shoot();
 		float GetRadius();
 		CircleCollider GetCollider();
 		sf::Vector2f GetOrientationDirection();
-		void AddExperience(int value);
+		void AddExperience(float value);
+		void LevelUp();
 	private :
-		HealthBar* _playerHealthBar;
+		ExperienceBar* _experienceBar;
+		HealthBar* _healthBar;
 		sf::CircleShape _circle;
 		sf::Color _color;
 		float _radius;
 		sf::Vector2f _moveDirection = { 0, 0 };
 		sf::Vector2f _orientationDirection = { 1, 0 };
 		int _experience = 0;
+		int _experienceToNextLevel;
+		int _level;
 };

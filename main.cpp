@@ -77,7 +77,15 @@ int main()
 	sf::Font arial;
 	arial.loadFromFile("../Assets/ARIAL.TTF");
 
-	Button startButton(basicButton, sf::Vector2f(640, 360), arial);
+	sf::Text title;
+	title.setFont(arial);
+	title.setString("Epileptik Rythm");
+	title.setCharacterSize(80);
+	title.setStyle(sf::Text::Bold);
+	title.setPosition(sf::Vector2f(350,100));
+
+	Button startButton(basicButton, sf::Vector2f(640, 300), arial, "START");
+	Button quitButton(basicButton, sf::Vector2f(640, 410), arial, "QUIT");
 
 	sf::Clock frameClock;
 
@@ -115,6 +123,10 @@ int main()
 						{
 							gameManager.SetGameState(GameState::IN_GAME);
 						}
+						if (IsPointInsideRectangle(mousePos, quitButton.GetCollider()))
+						{
+							window.close();
+						}
 					}
 					break;
 				default:
@@ -127,7 +139,9 @@ int main()
 			// Affichage
 			// Remise au noir de toute la fenêtre
 			window.clear();
+			window.draw(title);
 			startButton.Draw(data);
+			quitButton.Draw(data);
 			// On présente la fenêtre sur l'écran
 			window.display();
 			break;
@@ -234,9 +248,6 @@ int main()
 			window.display();
 			break;
 
-
-		case GameState::PAUSE:
-			break;
 		default:
 			break;
 		}

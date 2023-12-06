@@ -2,7 +2,7 @@
 
 
 
-Bullet::Bullet(sf::Color color, float radius, sf::Vector2f startPos, sf::Vector2f direction, float speed) 
+Bullet::Bullet(sf::Color color, float radius, sf::Vector2f startPos, sf::Vector2f direction, float speed, float damage) 
 {
 	_color = color;
 	_position = startPos;
@@ -10,6 +10,7 @@ Bullet::Bullet(sf::Color color, float radius, sf::Vector2f startPos, sf::Vector2
 	_speed = speed;
 	_direction = direction;
 	Normalize(_direction);
+	_damage = damage;
 }
 
 void Bullet::Draw(sf::RenderWindow& window)
@@ -57,4 +58,8 @@ CircleCollider Bullet::GetCollider()
 {
 	CircleCollider collider = { _position, _radius };
 	return collider;
+}
+
+float Bullet::GetDamage() {
+	return _damage;
 }
