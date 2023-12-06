@@ -27,7 +27,7 @@ WaveManager::WaveManager(sf::RenderWindow& window, Player* player)
 
 void WaveManager::Update(Data data) 
 {
-	MoveAllEnemies(data.deltaTime);
+	UpdateAllEnemies(data.deltaTime);
 	CheckCollisionAllEnemies();
 	_timer += data.deltaTime;
 	if (_timer > _spawnTime) 
@@ -75,6 +75,14 @@ void WaveManager::SetEnemiesNextPosition()
 	}
 }
 
+void WaveManager::UpdateAllEnemies(float deltaTime)
+{
+	for (Enemy* enemy : _enemyList)
+	{
+		enemy->Update(deltaTime);
+	}
+}
+
 
 void WaveManager::MoveAllEnemies(float deltaTime)
 {
@@ -93,7 +101,7 @@ void WaveManager::CheckCollisionAllEnemies()
 		CircleCollider enemyCol = enemy->GetCollider();
 		if (AreCircleCollidersOverlapping(enemyCol, playerCol))
 		{
-			_player->TakeDamage(enemy->GetDamage());
+			enemy->Attack();
 			ClampCircleOutsideCircle(enemyCol, playerCol);
 			enemy->SetPosition(enemyCol.Origin);
 		}

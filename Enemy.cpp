@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-EnemyData normalEnemy = { 20.0f, sf::Color::Red, 10.0f , 50.0f, 10.0f, 5.0f};
-EnemyData bossEnemy = { 40.0f, sf::Color::Magenta, 100.0f , 20.0f, 10.0f, 20.0f};
+EnemyData normalEnemy = { 20.0f, sf::Color::Red, 10.0f , 50.0f, 10.0f, 2.0f, 1.0f };
+EnemyData bossEnemy = { 40.0f, sf::Color::Magenta, 100.0f , 20.0f, 10.0f, 20.0f, 1.0f };
 
 Enemy::Enemy(EnemyData data, sf::Vector2f startPos, Player* target) : Entity(startPos, data.MaxHealth, data.Speed)
 {
@@ -9,6 +9,7 @@ Enemy::Enemy(EnemyData data, sf::Vector2f startPos, Player* target) : Entity(sta
 	_color = data.Color;
 	_moveDistance = data.MoveDistance;
 	_damage = data.Damage;
+	_attackSpeed = data.AttackSpeed;
 	_player = target;
 }
 
@@ -33,6 +34,13 @@ void Enemy::SetNextPosition()
 	
 }
 
+void Enemy::Update(float deltaTime) 
+{
+	Move(deltaTime);
+	if(_attackTimer < _attackSpeed) _attackTimer += deltaTime;
+}
+
+
 void Enemy::Move(float deltaTime) 
 {
 	if (Distance(_position, _nextPosition) > 1.0f) 
@@ -40,6 +48,15 @@ void Enemy::Move(float deltaTime)
 		sf::Vector2f direction = _nextPosition - _position;
 		Normalize(direction);
 		_position = _position + direction * _speed * deltaTime;
+	}
+}
+
+void Enemy::Attack() 
+{
+	if (_attackTimer >= _attackSpeed) 
+	{
+		_player->TakeDamage(_damage);
+		_attackTimer = 0.0f;
 	}
 }
 
