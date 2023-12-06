@@ -132,6 +132,7 @@
     <None Include="bin\Background2.vert" />
     <None Include="bin\Background3.frag" />
     <None Include="bin\Background4.frag" />
+    <None Include="bin\Background5.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

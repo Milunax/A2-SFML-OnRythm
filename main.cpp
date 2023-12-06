@@ -51,6 +51,7 @@ int main()
 	backgroundShaderBoss.loadFromFile("Background.vert", "Background3.frag");
 	backgroundShaderPause.loadFromFile("Background.vert", "Background4.frag");
 
+	//Nique toi antoine
 
 	//Unifom
 	backgroundShaderNormal.setUniform("iResolution", sf::Vector2f(window.getSize()));
