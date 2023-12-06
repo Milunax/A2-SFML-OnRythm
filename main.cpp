@@ -75,26 +75,30 @@ int main()
 	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
 
 	//StartMenu
-	sf::Font arial;
-	arial.loadFromFile("../Assets/ARIAL.TTF");
+	sf::Font font;
+	font.loadFromFile("../Assets/Technocra.ttf");
 
 	sf::Text title;
-	title.setFont(arial);
+	title.setFont(font);
 	title.setString("Epileptik Rythm");
 	title.setCharacterSize(80);
 	title.setStyle(sf::Text::Bold);
-	title.setPosition(sf::Vector2f(350,100));
+	title.setOrigin(sf::Vector2f(title.getGlobalBounds().width / 2, title.getGlobalBounds().height / 2));
+	float titleX = (640.0f / 1280.0f) * window.getSize().x;
+	float titleY = (100.0f / 720.0f) * window.getSize().y;
+	title.setPosition(sf::Vector2f(titleX, titleY));
 
-	Button startButton(basicButton, sf::Vector2f(640, 300), arial, "START");
-	Button quitButton(basicButton, sf::Vector2f(640, 410), arial, "QUIT");
+	float startButtonX = (640.0f / 1280.0f) * window.getSize().x;
+	float startButtonY = (300.0f / 720.0f) * window.getSize().y;
+	Button startButton(basicButton, sf::Vector2f(startButtonX, startButtonY), font, "START");
+	
+	float quitButtonX = (640.0f / 1280.0f) * window.getSize().x;
+	float quitButtonY = (410.0f / 720.0f) * window.getSize().y;
+	Button quitButton(basicButton, sf::Vector2f(quitButtonX, quitButtonY), font, "QUIT");
 
 	sf::Clock frameClock;
 
-	// Music buffer
-	if (!music.openFromFile("../sound/150.wav"))
-		return -1; // error
-	music.play();
-	music.setLoop(true);
+	
 
 	// Main Game
 	while (window.isOpen())
@@ -123,6 +127,12 @@ int main()
 						if (IsPointInsideRectangle(mousePos, startButton.GetCollider())) 
 						{
 							gameManager.SetGameState(GameState::IN_GAME);
+							frameClock.restart().asSeconds();
+							if (!music.openFromFile("../sound/150.wav"))
+								return -1; // error
+							music.play();
+							music.setLoop(true);
+							backgroundStates.shader = &backgroundShaderSlow;
 						}
 						if (IsPointInsideRectangle(mousePos, quitButton.GetCollider()))
 						{
