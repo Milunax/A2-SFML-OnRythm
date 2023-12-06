@@ -42,10 +42,10 @@ int main()
 	backgroundShader.loadFromFile("Background.vert", "Background.frag");
 	backgroundShader.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	float iTime = 0.0;
-	sf::RectangleShape rectangle;
-	rectangle.setFillColor(sf::Color::Red);
-	rectangle.setPosition(640, 360);
-	rectangle.setSize(sf::Vector2f(128, 128));
+	//sf::RectangleShape rectangle;
+	//rectangle.setFillColor(sf::Color::Red);
+	//rectangle.setPosition(640, 360);
+	//rectangle.setSize(sf::Vector2f(128, 128));
 
 	sf::RectangleShape backgroundRect;
 	backgroundRect.setPosition(0, 0);
@@ -56,14 +56,14 @@ int main()
 
 
 
-	sf::CircleShape circle;
+	/*sf::CircleShape circle;
 	circle.setFillColor(sf::Color::Transparent);
 	circle.setPosition(640, 360);
 	circle.setOutlineThickness(15);
 	circle.setOutlineColor(sf::Color::Blue);
 	circle.setRadius(100);
 	int goalScale = 500;
-	int resultScale = (float)circle.getRadius();
+	int resultScale = (float)circle.getRadius();*/
 	
 	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
 	WaveManager waveManager(window, &player);
@@ -150,11 +150,11 @@ int main()
 		window.clear();
 		window.draw(backgroundRect, backgroundStates);
 		// Tout le rendu va se dérouler ici
-		window.draw(rectangle);
-		window.draw(circle);
-		player.Draw(data);
+		//window.draw(rectangle);
+		//window.draw(circle);
 		waveManager.DrawAllEnemies(window);
 		bulletManager.DrawBullets(data);
+		player.Draw(data);
 
 		// On présente la fenêtre sur l'écran
 		window.display();

@@ -7,7 +7,10 @@ Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHeal
 	_radius = radius;
 	_color = color;
 	_circle.setPosition(startPos);
-	_playerHealthBar = new HealthBar(sf::Vector2f(_position.x, _position.y + _radius + 20), sf::Color::Red, sf::Vector2f(_radius, 10));
+	_experienceBar = new ExperienceBar(sf::Vector2f(640, 20), sf::Color::Green, sf::Vector2f(1000, 20));
+	_healthBar = new HealthBar(sf::Vector2f(_position.x, _position.y + _radius + 20), sf::Color::Red, sf::Vector2f(_radius, 10));
+	_experienceToNextLevel = 10;
+	_level = 1;
 }
 
 sf::CircleShape& Player::GetPlayerShape() 
@@ -61,7 +64,11 @@ void Player::Update(Data data)
 	//std::cout << data.deltaTime << std::endl;
 	Move(data);
 	
-	_playerHealthBar->UpdatePosition(sf::Vector2f(_position.x, _position.y + _radius + 20));
+	_healthBar->UpdatePosition(sf::Vector2f(_position.x, _position.y + _radius + 20));
+
+	if (_experience >= _experienceToNextLevel) {
+		LevelUp();
+	}
 }
 
 Bullet* Player::Shoot()
@@ -80,14 +87,15 @@ void Player::Draw(Data data)
 	shape.setPosition(_position);
 	data.window->draw(shape);
 
-	_playerHealthBar->Draw(data);
+	_experienceBar->Draw(data);
+	_healthBar->Draw(data);
 }
 
 void Player::TakeDamage(float value)
 {
 	_health -= value;
 	//std::cout << _health << std::endl;
-	_playerHealthBar->UpdateSize(value);
+	_healthBar->UpdateSize(value);
 }
 
 float Player::GetRadius() 
@@ -108,4 +116,13 @@ sf::Vector2f Player::GetOrientationDirection()
 
 void Player::AddExperience(int value) {
 	_experience += value;
+	_experienceBar->UpdateSize(value, _experienceToNextLevel);
+	std::cout << _experience << std::endl;
+}
+
+void Player::LevelUp() {
+	_level += 1;
+	_experience = 0;
+	_experienceBar->ResetSize();
+	_experienceToNextLevel *= 2;
 }
