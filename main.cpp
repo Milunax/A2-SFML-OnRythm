@@ -22,8 +22,8 @@ sf::Color backgroundColor;
 
 
 
-std::map<int, State> level_1 = { {10, State::SLOW}, {30,State::NORMAL} };
-State actualState = State::NORMAL;
+std::map<int, State> level_1 = { {32, State::NORMAL}, {192,State::PAUSE} , {223,State::SLOW}, {288, State::BOSS} };
+State actualState = State::SLOW;
 
 // Sound
 sf::Music music;
@@ -33,27 +33,37 @@ int main()
 	// Initialisation
 
 	Data data;
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Rythm");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
 
 	data.window = &window;
 
-	// Objects
-	sf::Shader backgroundShader;
-	if (!sf::Shader::isAvailable()) {
-		std::cout << "amdn";
-	}
-	else {
-		backgroundShader.loadFromFile("Background.vert", "Background.frag");
-	}
-	backgroundShader.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	///Objects
+	//SHADERS
+	//Load
+	sf::Shader backgroundShaderNormal;
+	sf::Shader backgroundShaderSlow;
+	sf::Shader backgroundShaderBoss;
+	sf::Shader backgroundShaderPause;
+
+	backgroundShaderNormal.loadFromFile("Background.vert", "Background.frag");
+	backgroundShaderSlow.loadFromFile("Background2.vert", "Background2.frag");
+	backgroundShaderBoss.loadFromFile("Background.vert", "Background3.frag");
+	backgroundShaderPause.loadFromFile("Background.vert", "Background4.frag");
+
+
+	//Unifom
+	backgroundShaderNormal.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	backgroundShaderSlow.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	backgroundShaderBoss.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	backgroundShaderPause.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	float iTime = 0.0;
 
+	//Background
 	sf::RectangleShape backgroundRect;
 	backgroundRect.setPosition(0, 0);
 	backgroundRect.setSize(sf::Vector2f(window.getSize()));
 	sf::RenderStates backgroundStates;
-	backgroundStates.shader = &backgroundShader;
 	
 	Player player(sf::Color::Blue, sf::Vector2f(590,260), 50, 100, 200);
 
@@ -152,29 +162,62 @@ int main()
 				actualState = GetStateOfBeat(level_1, tickCount, actualState);
 				std::cout << "STATE : " << actualState << std::endl;
 
+				// MAIN SEQUENCE//
 				switch (actualState)
 				{
 				case State::NONE:
 					std::cout << "lol" << std::endl;
 					break;
+				//CASE NORMAL : ON BEAT
 				case State::NORMAL:
+					backgroundStates.shader = &backgroundShaderNormal;
 					(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
-					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
-					backgroundColor = ChangeBackground(tickCount % 3);
+					waveManager.SetEnemiesNextPosition();
 					break;
+				//CASE SLOW : ONE ON TWO
 				case State::SLOW:
+					backgroundStates.shader = &backgroundShaderSlow;
 					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
+					break;
+				//CASE SLOW : ONE ON TWO
+				case State::BOSS:
+					backgroundStates.shader = &backgroundShaderBoss;
+					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
+					break;
+				//CASE PAUSE : NO MOVEMENT
+				case State::PAUSE:
+					backgroundStates.shader = &backgroundShaderPause;
 					break;
 				default:
 					break;
 				}
+				//*MAIN SEQUENCE//
+
 				countTick -= tick;
 			}
+
+			//TweenCreation And Update
 			NormCT = countTick / tick;
 			TweenNCT = (1 - NormCT) * (1 - NormCT);
 			iTime += TweenNCT * 0.01f;
-			backgroundShader.setUniform("iTime", iTime);
+			switch (actualState) {
+			case State::NORMAL:
+				backgroundShaderNormal.setUniform("iTime", iTime);
+				break;
+			case State::SLOW:
+				backgroundShaderSlow.setUniform("iTime", iTime);
+				break;
+			case State::BOSS:
+				backgroundShaderBoss.setUniform("iTime", iTime);
+				break;
+			case State::PAUSE:
+				backgroundShaderPause.setUniform("iTime", iTime);
+				break;
+			}
+			
 
+
+			//Player/Wave/Bullet
 			player.Update(data);
 			waveManager.Update(data);
 			bulletManager.Update(data);
@@ -182,6 +225,7 @@ int main()
 			// Affichage
 			// Remise au noir de toute la fenêtre
 			window.clear();
+			//Background Shader
 			window.draw(backgroundRect, backgroundStates);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
