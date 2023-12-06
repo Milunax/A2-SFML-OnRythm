@@ -2,16 +2,18 @@
 
 float Magnitude(sf::Vector2f vector) 
 {
-	float magnitude = std::sqrt((vector.x * vector.x) + (vector.y * vector.y));
+	float magnitude = std::sqrtf((vector.x * vector.x) + (vector.y * vector.y));
 	return magnitude;
 }
 
 void Normalize(sf::Vector2f& vector) 
 {
-	if (Magnitude(vector) != 0) 
+	float magnitude = Magnitude(vector);
+
+	if(magnitude != 0)
 	{
-		vector.x = vector.x / Magnitude(vector);
-		vector.y = vector.y / Magnitude(vector);
+		vector.x = vector.x / magnitude;
+		vector.y = vector.y / magnitude;
 	}
 }
 
