@@ -56,7 +56,6 @@ void BulletManager::CheckCollisionAllBullets()
 			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
 			{
 				(*enemyIt)->TakeDamage(1);
-				_player->AddExperience(5);
 
 				delete (*bulletIt);
 				
