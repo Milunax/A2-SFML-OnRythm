@@ -2,7 +2,7 @@
 
 ButtonData basicButton = {sf::Vector2f(200, 50), sf::Color::Transparent, sf::Color::White, 5.0f};
 
-Button::Button(ButtonData buttonData, sf::Vector2f position, sf::Font textFont)
+Button::Button(ButtonData buttonData, sf::Vector2f position, sf::Font textFont, sf::String text)
 {
 	_size = buttonData.Size;
 	_color = buttonData.Color;
@@ -11,6 +11,7 @@ Button::Button(ButtonData buttonData, sf::Vector2f position, sf::Font textFont)
 	_position = position;
 
 	_textFont = textFont;
+	_text = text;
 }
 
 RectangleCollider Button::GetCollider() 
@@ -36,7 +37,7 @@ void Button::Draw(Data data)
 	
 	sf::Text buttonText;
 	buttonText.setFont(_textFont);
-	buttonText.setString("START");
+	buttonText.setString(_text);
 	buttonText.setCharacterSize(24);
 	buttonText.setStyle(sf::Text::Bold);
 	buttonText.setOrigin(sf::Vector2f(buttonText.getGlobalBounds().width / 2.0f, buttonText.getGlobalBounds().height / 2.0f));

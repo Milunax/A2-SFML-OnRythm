@@ -17,7 +17,7 @@ extern ButtonData basicButton;
 class Button
 {
 	public:
-		Button(ButtonData buttonData, sf::Vector2f position, sf::Font textFont);
+		Button(ButtonData buttonData, sf::Vector2f position, sf::Font textFont, sf::String text);
 		RectangleCollider GetCollider();
 		void Draw(Data data);
 	private:
@@ -28,4 +28,5 @@ class Button
 		sf::Vector2f _position;
 
 		sf::Font _textFont;
+		sf::String _text;
 };
