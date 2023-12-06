@@ -35,7 +35,7 @@ void BulletManager::DrawBullets(Data data) {
 
 Bullet* BulletManager::InstanciateBullet()
 {
-	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _player->GetPosition(), _player->GetOrientationDirection(), 1000);
+	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _player->GetPosition(), _player->GetOrientationDirection(), 1000, 1);
 	//std::cout << "a tir�" << std::endl;
 	return bullet;
 }
@@ -55,8 +55,8 @@ void BulletManager::CheckCollisionAllBullets()
 			CircleCollider bulletCol = (*bulletIt)->GetCollider();
 			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
 			{
-				(*enemyIt)->TakeDamage(1);
-				_player->AddExperience(5);
+				std::cout << "Bullet Collide avec Enemy" << std::endl;
+				(*enemyIt)->TakeDamage((*bulletIt)->GetDamage());
 
 				delete (*bulletIt);
 				

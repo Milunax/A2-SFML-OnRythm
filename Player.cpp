@@ -71,13 +71,6 @@ void Player::Update(Data data)
 	}
 }
 
-Bullet* Player::Shoot()
-{
-	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, _orientationDirection, 1000);
-	//std::cout << "a tiré" << std::endl;
-	return bullet;
-}
-
 void Player::Draw(Data data)
 {
 	sf::CircleShape shape;
@@ -115,7 +108,7 @@ sf::Vector2f Player::GetOrientationDirection()
 	return _orientationDirection;
 }
 
-void Player::AddExperience(int value) {
+void Player::AddExperience(float value) {
 	_experience += value;
 	_experienceBar->UpdateSize(value, _experienceToNextLevel);
 	//std::cout << _experience << std::endl;

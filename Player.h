@@ -23,11 +23,10 @@ class Player : public Entity {
 		void SetColor(sf::Color color);
 		void Update(Data data);
 		void Move(Data data);
-		Bullet* Shoot();
 		float GetRadius();
 		CircleCollider GetCollider();
 		sf::Vector2f GetOrientationDirection();
-		void AddExperience(int value);
+		void AddExperience(float value);
 		void LevelUp();
 	private :
 		ExperienceBar* _experienceBar;
