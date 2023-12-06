@@ -40,7 +40,12 @@ int main()
 
 	// Objects
 	sf::Shader backgroundShader;
-	backgroundShader.loadFromFile("Background.vert", "Background.frag");
+	if (!sf::Shader::isAvailable()) {
+		std::cout << "amdn";
+	}
+	else {
+		backgroundShader.loadFromFile("Background.vert", "Background.frag");
+	}
 	backgroundShader.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	float iTime = 0.0;
 
