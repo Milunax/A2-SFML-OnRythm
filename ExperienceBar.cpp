@@ -21,7 +21,6 @@ void ExperienceBar::Draw(Data data)
 
 void ExperienceBar::UpdateSize(int value, int maxValue)
 {
-	
 	_size.x += ((value * _sizeMax.x) / maxValue) ;
 	_size.x = std::clamp(_size.x, 0.0f, _sizeMax.x);
 }

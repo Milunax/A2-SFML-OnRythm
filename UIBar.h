@@ -9,7 +9,7 @@ class UIBar {
 		UIBar(sf::Vector2f startPos, sf::Color color, sf::Vector2f size);
 		virtual void Draw(Data data);
 		void UpdatePosition(sf::Vector2f newPos);
-		virtual void UpdateSize(int value);
+		virtual void UpdateSize(int value, int maxValue);
 		sf::Vector2f GetSizeMax();
 	protected: 
 		sf::Vector2f _position;

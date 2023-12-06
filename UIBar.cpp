@@ -23,7 +23,7 @@ void UIBar::UpdatePosition(sf::Vector2f newPos)
 	_position = newPos;
 }
 
-void UIBar::UpdateSize(int value)
+void UIBar::UpdateSize(int value, int maxValue)
 {
 }
 
