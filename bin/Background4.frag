@@ -19,5 +19,5 @@ void main()
     // multiply it by the color
     //gl_FragColor = gl_Color * pixel;
 
-    mainImage(gl_FragColor, gl_FragCoord);
+    mainImage(gl_FragColor, gl_FragCoord.xy);
 }
