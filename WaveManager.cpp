@@ -115,6 +115,7 @@ void WaveManager::EraseDeadEnemies()
 	{
 		if (!(*it)->IsAlive) 
 		{
+			_player->AddExperience((*it)->GetExperienceDropped());
 			delete (*it);
 			it = _enemyList.erase(it);
 		}
