@@ -35,6 +35,7 @@ void Enemy::SetNextPosition()
 		sf::Vector2f direction = _player->GetPosition() - _position;
 		Normalize(direction);
 		_nextPosition = _position + direction * _moveDistance;
+		//_nextPosition = _position + sf::Vector2f(3, 1) * _moveDistance;
 	}
 }
 
@@ -47,9 +48,14 @@ void Enemy::Update(float deltaTime)
 
 void Enemy::Move(float deltaTime) 
 {
-	if (Distance(_position, _nextPosition) > 1.0f) 
+	if (_speed * deltaTime > Distance(_position, _nextPosition)) 
+	{
+		_position = _nextPosition;
+	}
+	else 
 	{
 		sf::Vector2f direction = _nextPosition - _position;
+		//sf::Vector2f direction = sf::Vector2f(3, 1);
 		Normalize(direction);
 		_position = _position + direction * _speed * deltaTime;
 	}
