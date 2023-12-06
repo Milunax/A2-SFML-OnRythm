@@ -57,7 +57,7 @@ void Player::Move(Data data)
 
 void Player::Update(Data data) 
 {
-	std::cout << _experience << std::endl;
+	//std::cout << _experience << std::endl;
 	//std::cout << data.deltaTime << std::endl;
 	Move(data);
 	_playerHealthBar->UpdatePosition(sf::Vector2f(_position.x, _position.y + _radius + 20));
