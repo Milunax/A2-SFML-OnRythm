@@ -72,7 +72,6 @@ void WaveManager::SpawnWave()
 
 void WaveManager::SpawnBoss() 
 {
-
 	int random = rand() % _spawners.size();
 	_enemyList.push_back(_spawners[random]->InstantiateEnemy(bossEnemy, _spawners[random]->GetPosition(), _player));
 }

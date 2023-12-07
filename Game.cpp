@@ -13,6 +13,20 @@ void Game()
 
 	sf::Color backgroundColor;
 	std::map<int, BeatState> level_1 = { {32, BeatState::NORMAL}, {192,BeatState::PAUSE} , {223,BeatState::SLOW}, {288, BeatState::BOSS} };
+	std::map<int, BeatState> level_2 = {
+	{0, BeatState::SLOW},
+	{64, BeatState::NORMAL},
+	{124,BeatState::PAUSE} ,
+	{128,BeatState::NORMAL},
+	{224, BeatState::BOSS} ,
+	{288, BeatState::SLOW} ,
+	{320, BeatState::NORMAL} ,
+	{417, BeatState::BOSS}
+	};
+	std::map<int, BeatState> level_3 = { {32, BeatState::NORMAL}, {192,BeatState::PAUSE} , {223,BeatState::SLOW}, {288, BeatState::BOSS} };
+	std::array<std::map<int, BeatState>, 3> levelArray = { level_1, level_2, level_3 };
+	std::map<int, BeatState> actualLVL;
+	int actualLVLCount = 0;
 	BeatState actualState = BeatState::SLOW;
 
 	sf::Clock frameClock;
@@ -82,7 +96,7 @@ void Game()
 	gameManager.Init(data);
 	waveManager.Init(window, &player);
 	bulletManager.Init(&player, &waveManager);
-
+	actualLVL = level_1;
 
 
 	// Main Game
@@ -163,6 +177,33 @@ void Game()
 
 			if (countTick >= tick) {
 				tickCount++;
+
+				// Changing Song
+				if (music.getStatus() == 0) {
+					actualLVLCount++;
+					actualLVL = levelArray[actualLVLCount];
+					tickCount = 0;
+					switch (actualLVLCount)
+					{
+					case 1:
+						bpm = 145.0;
+						tick = 1 / (bpm / 60);
+						if (!music.openFromFile("../sound/145.wav"))
+							return; // error
+						music.play();
+						break;
+					case 2:
+						bpm = 145.0;
+						tick = 1 / (bpm / 60);
+						if (!music.openFromFile("../sound/145.wav"))
+							return; // error
+						music.play();
+						break;
+					default:
+						break;
+					}
+				}
+
 				std::cout << "COUNT : " << tickCount << std::endl;
 
 				actualState = GetStateOfBeat(level_1, tickCount, actualState);
