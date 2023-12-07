@@ -4,13 +4,13 @@
 #include <vector>
 #include <iostream>
 #include "Player.h"
-#include "Data.h"
+#include "RefsData.h"
 
 class WaveManager
 {
 	public:
 		WaveManager(sf::RenderWindow& window, Player* player);
-		void Update(Data data);
+		void Update(RefsData data);
 		void SpawnWave();
 		void SpawnBoss();
 		void SetEnemiesNextPosition();

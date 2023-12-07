@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Data.h"
+#include "RefsData.h"
 #include"Collider.h"
 #include "Utils.h"
 
@@ -18,15 +18,16 @@ extern ButtonData basicButton;
 class Button
 {
 	public:
-		Button(ButtonData buttonData, sf::Vector2f position, sf::Font textFont, sf::String text);
+		Button(ButtonData buttonData, RefsData data, sf::Vector2f position, sf::String text);
 		RectangleCollider GetCollider();
-		void Draw(Data data);
+		void Draw(RefsData data);
 	private:
 		sf::Vector2f _size;
 		sf::Color _color;
 		sf::Color _outlineColor;
 		float _outlineThickness;
 		sf::Vector2f _position;
+		sf::Vector2f _scaledPosition;
 
 		sf::Font _textFont;
 		sf::String _text;
