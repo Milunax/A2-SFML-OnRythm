@@ -14,19 +14,8 @@
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 150.0f;
-float countTick = 0.0f;
 float tick = 1 /(bpm / 60);
-int tickCount = 0;
 
-sf::Color backgroundColor;
-
-
-
-std::map<int, State> level_1 = { {32, State::NORMAL}, {192,State::PAUSE} , {223,State::SLOW}, {288, State::BOSS} };
-State actualState = State::SLOW;
-
-// Sound
-sf::Music music;
 
 int main()
 {
@@ -38,6 +27,18 @@ int main()
 	font.loadFromFile("../Assets/Technocra.ttf");
 	data.window = &window;
 	data.baseFont = &font;
+
+	sf::Color backgroundColor;
+	std::map<int, BeatState> level_1 = { {32, BeatState::NORMAL}, {192,BeatState::PAUSE} , {223,BeatState::SLOW}, {288, BeatState::BOSS} };
+	BeatState actualState = BeatState::SLOW;
+
+	sf::Clock frameClock;
+
+	float countTick = 0.0f;
+	int tickCount = 0;
+
+	sf::Music music;
+
 
 	///Objects
 	//SHADERS
@@ -77,17 +78,27 @@ int main()
 	Button startButton(basicButton, data, sf::Vector2f(640.0f, 300.0f), "START");
 	Button quitButton(basicButton, data, sf::Vector2f(640.0f, 410.0f), "QUIT");
 
+	//UpgradesMenu
+	sf::RectangleShape upgradeBackground;
+	upgradeBackground.setSize(sf::Vector2f((float)window.getSize().x, (float)window.getSize().y));
+	sf::Color bgColor(0, 0, 0, 120);
+	upgradeBackground.setFillColor(bgColor);
+	upgradeBackground.setPosition(sf::Vector2f(0, 0));
+	Button upgradeOneButton(basicButton, data, sf::Vector2f(640.0f, 300.0f), "UPGRADE");
+	Button upgradeTwoButton(basicButton, data, sf::Vector2f(640.0f, 410.0f), "UPGRADE");
+
+
 	//Initialisation
 	player.Init(&gameManager);
 	waveManager.Init(window, &player);
 	bulletManager.Init(&player, &waveManager);
 
 
-	sf::Clock frameClock;
 
 	// Main Game
 	while (window.isOpen())
 	{
+		
 		float NormCT;
 		float TweenNCT;
 		// Gérer les événéments survenus depuis le dernier tour de boucle
@@ -175,27 +186,27 @@ int main()
 				// MAIN SEQUENCE//
 				switch (actualState)
 				{
-				case State::NONE:
+				case BeatState::NONE:
 					std::cout << "lol" << std::endl;
 					break;
 				//CASE NORMAL : ON BEAT
-				case State::NORMAL:
+				case BeatState::NORMAL:
 					backgroundStates.shader = &backgroundShaderNormal;
 					(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
 					waveManager.SetEnemiesNextPosition();
 					break;
 				//CASE SLOW : ONE ON TWO
-				case State::SLOW:
+				case BeatState::SLOW:
 					backgroundStates.shader = &backgroundShaderSlow;
 					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 					break;
 				//CASE SLOW : ONE ON TWO
-				case State::BOSS:
+				case BeatState::BOSS:
 					backgroundStates.shader = &backgroundShaderBoss;
 					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 					break;
 				//CASE PAUSE : NO MOVEMENT
-				case State::PAUSE:
+				case BeatState::PAUSE:
 					backgroundStates.shader = &backgroundShaderPause;
 					break;
 				default:
@@ -211,22 +222,19 @@ int main()
 			TweenNCT = (1 - NormCT) * (1 - NormCT);
 			iTime += TweenNCT * 0.01f;
 			switch (actualState) {
-			case State::NORMAL:
+			case BeatState::NORMAL:
 				backgroundShaderNormal.setUniform("iTime", iTime);
 				break;
-			case State::SLOW:
+			case BeatState::SLOW:
 				backgroundShaderSlow.setUniform("iTime", iTime);
 				break;
-			case State::BOSS:
+			case BeatState::BOSS:
 				backgroundShaderBoss.setUniform("iTime", iTime);
 				break;
-			case State::PAUSE:
+			case BeatState::PAUSE:
 				backgroundShaderPause.setUniform("iTime", iTime);
 				break;
 			}
-			
-
-
 			//Player/Wave/Bullet
 			player.Update(data);
 			waveManager.Update(data);
@@ -240,6 +248,51 @@ int main()
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
+			// On présente la fenêtre sur l'écran
+			window.display();
+			break;
+
+
+
+		case GameState::UPGRADES:
+			while (window.pollEvent(event))
+			{
+				// On gère l'événément
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
+					window.close();
+					break;
+				case sf::Event::MouseButtonPressed:
+					if (event.mouseButton.button == sf::Mouse::Left)
+					{
+						if (IsPointInsideRectangle(mousePos, upgradeOneButton.GetCollider()))
+						{
+							gameManager.SetGameState(GameState::IN_GAME);
+						}
+						if (IsPointInsideRectangle(mousePos, upgradeTwoButton.GetCollider()))
+						{
+							gameManager.SetGameState(GameState::IN_GAME);
+						}
+					}
+				default:
+					break;
+				}
+			}
+			// Logique
+
+			//Affichage
+			window.clear();
+			//Background Shader
+			window.draw(backgroundRect, backgroundStates);
+			player.Draw(data);
+			waveManager.DrawAllEnemies(window);
+			bulletManager.DrawBullets(data);
+			window.draw(upgradeBackground);
+			upgradeOneButton.Draw(data);
+			upgradeTwoButton.Draw(data);
+
 			// On présente la fenêtre sur l'écran
 			window.display();
 			break;
