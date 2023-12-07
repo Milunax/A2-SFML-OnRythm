@@ -14,8 +14,9 @@ class BulletManager
 		void Update(RefsData data);
 		void UpdateTimer(RefsData data);
 		void DrawBullets(RefsData data);
-		Bullet* InstanciateBullet();
+		Bullet* InstanciateBullet(sf::Vector2f direction);
 		void CheckCollisionAllBullets();
+		void FireWeapon();
 	private:
 		Player* _player;
 		WaveManager* _waveManager;

@@ -4,6 +4,7 @@ BulletManager::BulletManager(){
 	_player = nullptr;
 	_enemyList = nullptr;
 	_waveManager = nullptr;
+	_boss = nullptr;
 }
 
 void BulletManager::Init(Player* player, WaveManager* waveManager)
@@ -17,7 +18,7 @@ void BulletManager::Update(RefsData data)
 {
 	UpdateTimer(data);
 	if (_fireTimer >= 1 / _bulletFireRate) {
-		_bulletList.push_back(InstanciateBullet());
+		FireWeapon();
 		//std::cout << _bulletList.size() << std::endl;
 		_fireTimer = 0.0f;
 	}
@@ -40,9 +41,9 @@ void BulletManager::DrawBullets(RefsData data) {
 	}
 }
 
-Bullet* BulletManager::InstanciateBullet()
+Bullet* BulletManager::InstanciateBullet(sf::Vector2f direction)
 {
-	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _player->GetPosition(), _player->GetOrientationDirection(), 1000, 1);
+	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _player->GetPosition(), direction, 1000, 1);
 	//std::cout << "a tir�" << std::endl;
 	return bullet;
 }
@@ -74,5 +75,27 @@ void BulletManager::CheckCollisionAllBullets()
 			}
 		}
 		enemyIt++;
+	}
+}
+
+void BulletManager::FireWeapon()
+{
+	std::vector<sf::Vector2f> directionList = {
+		sf::Vector2f(1,0),
+		sf::Vector2f(0,1),
+		sf::Vector2f(-1,0),
+		sf::Vector2f(0,-1)
+	};
+
+	if (_player->GetLevel() > 2) 
+	{
+		for (sf::Vector2f direction : directionList)
+		{
+			_bulletList.push_back(InstanciateBullet(direction));
+		}
+	}
+	else
+	{
+		_bulletList.push_back(InstanciateBullet(_player->GetOrientationDirection()));
 	}
 }

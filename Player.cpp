@@ -61,6 +61,8 @@ void Player::Move(RefsData data)
 	if (_moveDirection != sf::Vector2f(0, 0)) _orientationDirection = _moveDirection;
 
 	_position = _position + _moveDirection * _speed * data.deltaTime;
+	_position.x = std::clamp(_position.x, 0 + _radius, data.window->getSize().x - _radius);
+	_position.y = std::clamp(_position.y, 0 + _radius, data.window->getSize().y - _radius);
 	// Position apres le mouvement
 	//std::cout << _position.x << " : " << _position.y << std::endl;
 }
@@ -127,6 +129,12 @@ void Player::LevelUp() {
 	_experience = 0;
 	_experienceBar->ResetSize();
 	_experienceToNextLevel *= 2;
-	_experienceBar->UpdateLevelText(_level);
+	_experienceBar->UpdateLevel(_level);
 	std::cout << _level << std::endl;
+
+	_gameManager->ToUpgradeState();
+}
+
+int Player::GetLevel() {
+	return _level;
 }
