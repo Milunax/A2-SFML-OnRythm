@@ -27,7 +27,6 @@ class Button
 		sf::Color _outlineColor;
 		float _outlineThickness;
 		sf::Vector2f _position;
-		sf::Vector2f _scaledPosition;
 
 		sf::Font _textFont;
 		sf::String _text;
