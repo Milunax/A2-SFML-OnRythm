@@ -112,7 +112,6 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="Data.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
@@ -122,6 +121,7 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RefsData.h" />
     <ClInclude Include="RythmSystem.h" />
     <ClInclude Include="UIBar.h" />
     <ClInclude Include="Utils.h" />
