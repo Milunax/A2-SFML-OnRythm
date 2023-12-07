@@ -126,10 +126,6 @@ void Player::LevelUp() {
 	_experience = 0;
 	_experienceBar->ResetSize();
 	_experienceToNextLevel *= 2;
-	_experienceBar->UpdateLevel(_level);
+	_experienceBar->UpdateLevelText(_level);
 	std::cout << _level << std::endl;
-}
-
-int Player::GetLevel() {
-	return _level;
 }

@@ -8,6 +8,5 @@ class HealthBar : public UIBar {
 	public:
 		HealthBar(sf::Vector2f startPos, sf::Color color, sf::Vector2f size);
 		void UpdateSize(float value, float maxValue);
-		void Draw(RefsData data);
 	private:
 };

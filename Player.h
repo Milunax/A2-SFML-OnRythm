@@ -30,8 +30,6 @@ class Player : public Entity {
 		sf::Vector2f GetOrientationDirection();
 		void AddExperience(float value);
 		void LevelUp();
-		int GetLevel();
-		ExperienceBar* GetExperienceBar();
 
 	private :
 		ExperienceBar* _experienceBar;

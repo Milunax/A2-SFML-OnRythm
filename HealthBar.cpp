@@ -9,12 +9,3 @@ void HealthBar::UpdateSize(float value, float maxValue) {
 	std::cout << _size.x << std::endl;
 	_size.x = std::clamp(_size.x, 0.0f, _sizeMax.x);
 }
-
-void HealthBar::Draw(RefsData data) {
-	sf::RectangleShape shape;
-	shape.setOrigin(_size.x / 2, _size.y / 2);
-	shape.setSize(_size);
-	shape.setFillColor(_color);
-	shape.setPosition(_position);
-	data.window->draw(shape);
-}

@@ -10,11 +10,8 @@ class ExperienceBar : public UIBar{
 		void Draw(RefsData data);
 		void UpdateSize(int value, int maxValue);
 		void ResetSize();
-		void UpdateLevel(int level);
-		std::string GetLevelText(int level);
+		void UpdateLevelText(int level);
 	private:
 		UIBar* _experienceBarBackground;
 		sf::Text _levelText;
-		sf::Vector2f _scaledPosition;
-		int _playerLevel = 1;
 };
