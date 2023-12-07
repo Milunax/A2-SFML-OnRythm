@@ -1,0 +1,16 @@
+#pragma once
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
+#include "RythmSystem.h"
+#include "Background.h"
+#include "HealthBar.h"
+#include "WaveManager.h"
+#include "RefsData.h"
+#include "BulletManager.h"
+#include "GameManager.h"
+#include "Button.h"
+#include "Utils.h"
+
+void Game();

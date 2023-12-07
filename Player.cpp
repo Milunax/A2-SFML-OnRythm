@@ -129,5 +129,5 @@ void Player::LevelUp() {
 	_experienceBar->UpdateLevelText(_level);
 	std::cout << _level << std::endl;
 
-	_gameManager->SetGameState(GameState::UPGRADES);
+	_gameManager->ToUpgradeState();
 }
