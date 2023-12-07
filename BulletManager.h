@@ -10,9 +10,9 @@ class BulletManager
 {
 	public:
 		BulletManager(Player* player, std::vector<Enemy*>* enemyList, WaveManager* waveManager);
-		void Update(Data data);
-		void UpdateTimer(Data data);
-		void DrawBullets(Data data);
+		void Update(RefsData data);
+		void UpdateTimer(RefsData data);
+		void DrawBullets(RefsData data);
 		Bullet* InstanciateBullet();
 		void CheckCollisionAllBullets();
 	private:

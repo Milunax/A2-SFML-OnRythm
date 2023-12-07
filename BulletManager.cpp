@@ -6,7 +6,7 @@ BulletManager::BulletManager(Player* player, std::vector<Enemy*>* enemyList, Wav
 	_waveManager = waveManager;
 }
 
-void BulletManager::Update(Data data)
+void BulletManager::Update(RefsData data)
 {
 	UpdateTimer(data);
 	if (_fireTimer >= 1 / _bulletFireRate) {
@@ -21,13 +21,13 @@ void BulletManager::Update(Data data)
 	CheckCollisionAllBullets();
 }
 
-void BulletManager::UpdateTimer(Data data)
+void BulletManager::UpdateTimer(RefsData data)
 {
 	_fireTimer += data.deltaTime;
 	//std::cout << _fireTimer << std::endl;
 }
 
-void BulletManager::DrawBullets(Data data) {
+void BulletManager::DrawBullets(RefsData data) {
 	for (Bullet* bullet : _bulletList) {
 		bullet->Draw(*data.window);
 	}

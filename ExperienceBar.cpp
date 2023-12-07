@@ -13,7 +13,7 @@ ExperienceBar::ExperienceBar(sf::Vector2f startPos, sf::Color color, sf::Vector2
 	_levelText.setPosition(sf::Vector2f(_position. x - _sizeMax.x / 2, _position.y / 2));
 }
 
-void ExperienceBar::Draw(Data data)
+void ExperienceBar::Draw(RefsData data)
 {
 	_experienceBarBackground->Draw(data);
 

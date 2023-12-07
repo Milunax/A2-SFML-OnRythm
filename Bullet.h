@@ -2,7 +2,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 #include "Math.h"
-#include "Data.h"
+#include "RefsData.h"
 #include "Collider.h"
 
 class Bullet {
@@ -10,8 +10,8 @@ class Bullet {
 		Bullet(sf::Color color, float radius, sf::Vector2f startPos, sf::Vector2f direction, float speed, float damage);
 		void Draw(sf::RenderWindow& window);
 		void Move(float deltaTime);
-		bool IsBulletOutOfWindow(Data data);
-		void CheckPosition(Data data, std::vector<Bullet*>& bulletList);
+		bool IsBulletOutOfWindow(RefsData data);
+		void CheckPosition(RefsData data, std::vector<Bullet*>& bulletList);
 		CircleCollider GetCollider();
 		float GetDamage();
 	private :

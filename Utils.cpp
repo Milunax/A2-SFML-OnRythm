@@ -16,9 +16,7 @@ sf::Text CreateTextAlone(sf::Window& window, sf::Vector2f position, sf::Font& fo
 {
 	sf::Text createdText = CreateText(window, font, text, charSize, style);
 
-	float createdTextX = (640.0f / 1280.0f) * window.getSize().x;
-	float createdTextY = (100.0f / 720.0f) * window.getSize().y;
-	createdText.setPosition(sf::Vector2f(createdTextX, createdTextY));
+	createdText.setPosition(ScalePositionWithScreenSize(window, position));
 
 	return createdText;
 }
@@ -29,4 +27,11 @@ sf::Text CreateTextChild(sf::Window& window, sf::Vector2f position, sf::Font& fo
 	createdText.setPosition(position);
 
 	return createdText;
+}
+
+sf::Vector2f ScalePositionWithScreenSize(sf::Window& window, sf::Vector2f position) 
+{
+	float x = (position.x / 1280.0f) * (window.getSize().x);
+	float y = (position.y / 720.0f) * (window.getSize().y);
+	return sf::Vector2f(x, y);
 }

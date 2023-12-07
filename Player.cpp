@@ -23,7 +23,7 @@ void Player::SetColor(sf::Color color)
 	_color = color;
 }
 
-void Player::Move(Data data)
+void Player::Move(RefsData data)
 {
 	// Position avant le mouvement
 	// std::cout << pos.x << " : " << pos.y << std::endl;
@@ -58,7 +58,7 @@ void Player::Move(Data data)
 	//std::cout << _position.x << " : " << _position.y << std::endl;
 }
 
-void Player::Update(Data data) 
+void Player::Update(RefsData data) 
 {
 	//std::cout << _experience << std::endl;
 	//std::cout << data.deltaTime << std::endl;
@@ -71,7 +71,7 @@ void Player::Update(Data data)
 	}
 }
 
-void Player::Draw(Data data)
+void Player::Draw(RefsData data)
 {
 	sf::CircleShape shape;
 	shape.setOrigin(sf::Vector2f(_radius, _radius));
