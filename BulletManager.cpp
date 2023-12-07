@@ -55,7 +55,6 @@ void BulletManager::CheckCollisionAllBullets()
 			CircleCollider bulletCol = (*bulletIt)->GetCollider();
 			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
 			{
-				std::cout << "Bullet Collide avec Enemy" << std::endl;
 				(*enemyIt)->TakeDamage((*bulletIt)->GetDamage());
 
 				delete (*bulletIt);

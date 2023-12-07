@@ -1,5 +1,7 @@
 #pragma once
 #include "UIBar.h"
+#include <iostream>
+#include <sstream>
 
 class ExperienceBar : public UIBar{
 	public:
@@ -7,6 +9,9 @@ class ExperienceBar : public UIBar{
 		void Draw(Data data);
 		void UpdateSize(int value, int maxValue);
 		void ResetSize();
+		void UpdateLevelText(int level);
 	private:
 		UIBar* _experienceBarBackground;
+		sf::Font _font;
+		sf::Text _levelText;
 };
