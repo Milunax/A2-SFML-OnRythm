@@ -2,7 +2,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-
 #include "RythmSystem.h"
 #include "Background.h"
 #include "HealthBar.h"
@@ -11,6 +10,7 @@
 #include "BulletManager.h"
 #include "GameManager.h"
 #include "Button.h"
+#include "Utils.h"
 
 constexpr float cubeSpeed = 500.f;
 float bpm = 150.0f;
@@ -35,8 +35,10 @@ int main()
 	Data data;
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
-
+	sf::Font font;
+	font.loadFromFile("../Assets/Technocra.ttf");
 	data.window = &window;
+	data.baseFont = &font;
 
 	///Objects
 	//SHADERS
@@ -74,26 +76,10 @@ int main()
 	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
 
 	//StartMenu
-	sf::Font font;
-	font.loadFromFile("../Assets/Technocra.ttf");
-
-	sf::Text title;
-	title.setFont(font);
-	title.setString("Epileptik Rythm");
-	title.setCharacterSize(80);
-	title.setStyle(sf::Text::Bold);
-	title.setOrigin(sf::Vector2f(title.getGlobalBounds().width / 2, title.getGlobalBounds().height / 2));
-	float titleX = (640.0f / 1280.0f) * window.getSize().x;
-	float titleY = (100.0f / 720.0f) * window.getSize().y;
-	title.setPosition(sf::Vector2f(titleX, titleY));
-
-	float startButtonX = (640.0f / 1280.0f) * window.getSize().x;
-	float startButtonY = (300.0f / 720.0f) * window.getSize().y;
-	Button startButton(basicButton, sf::Vector2f(startButtonX, startButtonY), font, "START");
 	
-	float quitButtonX = (640.0f / 1280.0f) * window.getSize().x;
-	float quitButtonY = (410.0f / 720.0f) * window.getSize().y;
-	Button quitButton(basicButton, sf::Vector2f(quitButtonX, quitButtonY), font, "QUIT");
+	sf::Text title = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 100.0f), *data.baseFont, "Epileptik Rythm", 80, sf::Text::Bold);
+	Button startButton(basicButton, sf::Vector2f(640.0f, 300.0f), *data.baseFont, "START");
+	Button quitButton(basicButton, sf::Vector2f(640.0f, 410.0f), *data.baseFont, "QUIT");
 
 	sf::Clock frameClock;
 

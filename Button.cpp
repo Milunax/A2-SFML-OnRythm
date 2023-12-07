@@ -32,15 +32,14 @@ void Button::Draw(Data data)
 	shape.setFillColor(_color);
 	shape.setOutlineColor(_outlineColor);
 	shape.setOutlineThickness(_outlineThickness);
-	shape.setPosition(_position);
+	
+	float x = (_position.x / 1280.0f) * (data.window->getSize().x);
+	float y = (_position.y / 720.0f) * (data.window->getSize().y);
+	sf::Vector2f scaledPosition = sf::Vector2f(x, y);
+	shape.setPosition(scaledPosition);
 	data.window->draw(shape);
 	
-	sf::Text buttonText;
-	buttonText.setFont(_textFont);
-	buttonText.setString(_text);
-	buttonText.setCharacterSize(24);
-	buttonText.setStyle(sf::Text::Bold);
-	buttonText.setOrigin(sf::Vector2f(buttonText.getGlobalBounds().width / 2.0f, buttonText.getGlobalBounds().height / 2.0f));
-	buttonText.setPosition(_position);
+	sf::Text buttonText = CreateTextButton(*data.window, scaledPosition, _textFont, _text, 24, sf::Text::Bold);
+
 	data.window->draw(buttonText);
 }
