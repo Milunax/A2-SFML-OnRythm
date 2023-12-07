@@ -61,6 +61,8 @@ void Player::Move(RefsData data)
 	if (_moveDirection != sf::Vector2f(0, 0)) _orientationDirection = _moveDirection;
 
 	_position = _position + _moveDirection * _speed * data.deltaTime;
+	_position.x = std::clamp(_position.x, 0 + _radius, data.window->getSize().x - _radius);
+	_position.y = std::clamp(_position.y, 0 + _radius, data.window->getSize().y - _radius);
 	// Position apres le mouvement
 	//std::cout << _position.x << " : " << _position.y << std::endl;
 }
