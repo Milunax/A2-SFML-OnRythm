@@ -167,16 +167,16 @@ int main()
 
 			if (countTick >= tick) {
 				tickCount++;
-				std::cout << "COUNT : " << tickCount << std::endl;
+				//std::cout << "COUNT : " << tickCount << std::endl;
 
 				actualState = GetStateOfBeat(level_1, tickCount, actualState);
-				std::cout << "STATE : " << actualState << std::endl;
+				//std::cout << "STATE : " << actualState << std::endl;
 
 				// MAIN SEQUENCE//
 				switch (actualState)
 				{
 				case State::NONE:
-					std::cout << "lol" << std::endl;
+					//std::cout << "lol" << std::endl;
 					break;
 				//CASE NORMAL : ON BEAT
 				case State::NORMAL:

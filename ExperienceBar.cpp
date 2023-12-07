@@ -15,11 +15,11 @@ void ExperienceBar::Draw(RefsData data)
 	shape.setOrigin(_experienceBarBackground->GetSizeMax().x / 2, _size.y / 2);
 	shape.setSize(_size);
 	shape.setFillColor(_color);
-	sf::Vector2f scaledPosition = ScalePositionWithScreenSize((*data.window), _position);
-	shape.setPosition(scaledPosition);
+	_scaledPosition = ScalePositionWithScreenSize((*data.window), _position);
+	shape.setPosition(_scaledPosition);
 	data.window->draw(shape);
 
-	_levelText = CreateTextChild((*data.window), sf::Vector2f(scaledPosition.x, scaledPosition.y), (*data.baseFont), "Lvl. 1", 16);
+	_levelText = CreateTextChild((*data.window), sf::Vector2f(_scaledPosition.x, _scaledPosition.y), (*data.baseFont), GetLevelText(_playerLevel), 16);
 	data.window->draw(_levelText);
 }
 
@@ -34,10 +34,16 @@ void ExperienceBar::ResetSize()
 	_size.x = 0;
 }
 
-void ExperienceBar::UpdateLevelText(int level) {
+void ExperienceBar::UpdateLevel(int level) 
+{
+	_playerLevel = level;
+}
+
+std::string ExperienceBar::GetLevelText(int level) {
 	std::string result;
 	std::stringstream str;
 	str << "Lvl. " << level;
 	result = str.str();
-	_levelText.setString(result);
+	return result;
+	std::cout << "Result : " << result << std::endl;
 }
