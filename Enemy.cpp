@@ -94,5 +94,6 @@ void Enemy::Draw(sf::RenderWindow& window)
 	shape.setOrigin(sf::Vector2f( (_radius), (_radius) ));
 	shape.setFillColor(_color);
 	shape.setPosition(_position);
+	shape.setOutlineThickness(3.0f);
 	window.draw(shape);
 }

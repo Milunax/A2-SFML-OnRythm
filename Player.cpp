@@ -85,6 +85,7 @@ void Player::Draw(RefsData data)
 	shape.setRadius(_radius);
 	shape.setFillColor(_color);
 	shape.setPosition(_position);
+	shape.setOutlineThickness(-3.0f);
 	data.window->draw(shape);
 
 	_experienceBar->Draw(data);

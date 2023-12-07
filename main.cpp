@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <array>
 #include "RythmSystem.h"
 #include "Background.h"
 #include "HealthBar.h"
@@ -23,6 +24,19 @@ sf::Color backgroundColor;
 
 
 std::map<int, State> level_1 = { {32, State::NORMAL}, {192,State::PAUSE} , {223,State::SLOW}, {288, State::BOSS} };
+std::map<int, State> level_2 = { 
+	{64, State::NORMAL}, 
+	{124,State::PAUSE} , 
+	{128,State::NORMAL}, 
+	{224, State::BOSS} ,
+	{288, State::SLOW} ,
+	{320, State::NORMAL} ,
+	{417, State::BOSS}
+};
+std::map<int, State> level_3 = { {32, State::NORMAL}, {192,State::PAUSE} , {223,State::SLOW}, {288, State::BOSS} };
+std::array<std::map<int, State>, 3> levelArray = {level_1, level_2, level_3 };
+std::map<int, State> actualLVL;
+int actualLVLCount = 0;
 State actualState = State::SLOW;
 
 // Sound
@@ -81,6 +95,7 @@ int main()
 	player.Init(&gameManager);
 	waveManager.Init(window, &player);
 	bulletManager.Init(&player, &waveManager);
+	actualLVL = level_1;
 
 
 	sf::Clock frameClock;
@@ -116,7 +131,7 @@ int main()
 							if (!music.openFromFile("../sound/150.wav"))
 								return -1; // error
 							music.play();
-							music.setLoop(true);
+							music.setLoop(false);
 							backgroundStates.shader = &backgroundShaderSlow;
 						}
 						if (IsPointInsideRectangle(mousePos, quitButton.GetCollider()))
@@ -163,14 +178,43 @@ int main()
 
 			// Logique
 
+
+
 			countTick += data.deltaTime;
 
 			if (countTick >= tick) {
 				tickCount++;
-				std::cout << "COUNT : " << tickCount << std::endl;
 
-				actualState = GetStateOfBeat(level_1, tickCount, actualState);
+				// Changing Song
+				if (music.getStatus() == 0) {
+					actualLVLCount++;
+					actualLVL = levelArray[actualLVLCount];
+					tickCount = 0;
+					switch (actualLVLCount)
+					{
+					case 1:
+						bpm = 145.0;
+						tick = 1 / (bpm / 60);
+						if (!music.openFromFile("../sound/145.wav"))
+							return -1; // error
+						music.play();
+						break;
+					case 2:
+						bpm = 145.0;
+						tick = 1 / (bpm / 60);
+						if (!music.openFromFile("../sound/145.wav"))
+							return -1; // error
+						music.play();
+						break;
+					default:
+						break;
+					}
+				}
+
+				std::cout << "COUNT : " << tickCount << std::endl;
+				actualState = GetStateOfBeat(actualLVL, tickCount, actualState);
 				std::cout << "STATE : " << actualState << std::endl;
+				std::cout << "MUSICSTATE : " << music.getStatus() << std::endl;
 
 				// MAIN SEQUENCE//
 				switch (actualState)

@@ -13,6 +13,8 @@ enum State
 	PAUSE,
 	BOSS
 };
+
 State GetStateOfBeat(std::map<int, State> lvl, int beat, State actualState);
+
 
 
