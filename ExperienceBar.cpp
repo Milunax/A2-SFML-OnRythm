@@ -5,12 +5,6 @@ ExperienceBar::ExperienceBar(sf::Vector2f startPos, sf::Color color, sf::Vector2
 {
 	_size.x = 0;
 	_experienceBarBackground = new UIBar(startPos, sf::Color::Black, sf::Vector2f(1000, 20));
-	_font.loadFromFile("../Assets/ARIAL.TTF");
-	_levelText.setFont(_font);
-	_levelText.setString("Lvl. 1");
-	_levelText.setCharacterSize(16);
-	_levelText.setStyle(sf::Text::Bold);
-	_levelText.setPosition(sf::Vector2f(_position. x - _sizeMax.x / 2, _position.y / 2));
 }
 
 void ExperienceBar::Draw(RefsData data)
@@ -21,8 +15,11 @@ void ExperienceBar::Draw(RefsData data)
 	shape.setOrigin(_experienceBarBackground->GetSizeMax().x / 2, _size.y / 2);
 	shape.setSize(_size);
 	shape.setFillColor(_color);
-	shape.setPosition(_position);
+	sf::Vector2f scaledPosition = ScalePositionWithScreenSize((*data.window), _position);
+	shape.setPosition(scaledPosition);
 	data.window->draw(shape);
+
+	_levelText = CreateTextChild((*data.window), sf::Vector2f(scaledPosition.x, scaledPosition.y), (*data.baseFont), "Lvl. 1", 16);
 	data.window->draw(_levelText);
 }
 

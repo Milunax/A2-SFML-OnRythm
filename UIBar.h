@@ -3,6 +3,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window.hpp>
 #include "RefsData.h"
+#include "Utils.h"
 
 class UIBar {
 	public:

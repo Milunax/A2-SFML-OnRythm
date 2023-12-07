@@ -2,6 +2,7 @@
 #include "UIBar.h"
 #include <iostream>
 #include <sstream>
+#include "Utils.h"
 
 class ExperienceBar : public UIBar{
 	public:
@@ -12,6 +13,5 @@ class ExperienceBar : public UIBar{
 		void UpdateLevelText(int level);
 	private:
 		UIBar* _experienceBarBackground;
-		sf::Font _font;
 		sf::Text _levelText;
 };

@@ -14,7 +14,8 @@ void UIBar::Draw(RefsData data)
 	shape.setOrigin(_size.x / 2, _size.y / 2);
 	shape.setSize(_size);
 	shape.setFillColor(_color);
-	shape.setPosition(_position);
+	sf::Vector2f scaledPosition = ScalePositionWithScreenSize((*data.window), _position);
+	shape.setPosition(scaledPosition);
 	data.window->draw(shape);
 }
 
