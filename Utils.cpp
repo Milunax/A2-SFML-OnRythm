@@ -23,7 +23,7 @@ sf::Text CreateTextAlone(sf::Window& window, sf::Vector2f position, sf::Font& fo
 	return createdText;
 }
 
-sf::Text CreateTextButton(sf::Window& window, sf::Vector2f position, sf::Font& font, sf::String text, unsigned int charSize, sf::Text::Style style) 
+sf::Text CreateTextChild(sf::Window& window, sf::Vector2f position, sf::Font& font, sf::String text, unsigned int charSize, sf::Text::Style style) 
 {
 	sf::Text createdText = CreateText(window, font, text, charSize, style);
 	createdText.setPosition(position);
