@@ -6,23 +6,22 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "Data.h"
+#include "RefsData.h"
 #include "Collider.h"
 #include "HealthBar.h"
 #include "ExperienceBar.h"
-#include "Data.h"
 
 class Bullet;
 
 class Player : public Entity {
 	public :
 		Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed);
-		void Draw(Data data);
+		void Draw(RefsData data);
 		void TakeDamage(float value);
 		sf::CircleShape& GetPlayerShape();
 		void SetColor(sf::Color color);
-		void Update(Data data);
-		void Move(Data data);
+		void Update(RefsData data);
+		void Move(RefsData data);
 		float GetRadius();
 		CircleCollider GetCollider();
 		sf::Vector2f GetOrientationDirection();

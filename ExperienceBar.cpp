@@ -6,7 +6,7 @@ ExperienceBar::ExperienceBar(sf::Vector2f startPos, sf::Color color, sf::Vector2
 	_experienceBarBackground = new UIBar(sf::Vector2f(640, 20), sf::Color::Black, sf::Vector2f(1000, 20));
 }
 
-void ExperienceBar::Draw(Data data)
+void ExperienceBar::Draw(RefsData data)
 {
 	_experienceBarBackground->Draw(data);
 

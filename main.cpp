@@ -32,7 +32,7 @@ int main()
 {
 	// Initialisation
 
-	Data data;
+	RefsData data;
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
 	sf::Font font;
@@ -79,8 +79,8 @@ int main()
 	//StartMenu
 	
 	sf::Text title = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 100.0f), *data.baseFont, "Epileptik Rythm", 80, sf::Text::Bold);
-	Button startButton(basicButton, sf::Vector2f(640.0f, 300.0f), *data.baseFont, "START");
-	Button quitButton(basicButton, sf::Vector2f(640.0f, 410.0f), *data.baseFont, "QUIT");
+	Button startButton(basicButton, data, sf::Vector2f(640.0f, 300.0f), "START");
+	Button quitButton(basicButton, data, sf::Vector2f(640.0f, 410.0f), "QUIT");
 
 	sf::Clock frameClock;
 

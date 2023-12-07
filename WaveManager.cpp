@@ -25,7 +25,7 @@ WaveManager::WaveManager(sf::RenderWindow& window, Player* player)
 	_player = player;
 }
 
-void WaveManager::Update(Data data) 
+void WaveManager::Update(RefsData data) 
 {
 	UpdateAllEnemies(data.deltaTime);
 	CheckCollisionAllEnemies();

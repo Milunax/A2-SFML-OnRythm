@@ -28,7 +28,7 @@ void Bullet::Move(float deltaTime)
 	_position = _position + _direction * deltaTime * _speed;
 }
 
-bool Bullet::IsBulletOutOfWindow(Data data) 
+bool Bullet::IsBulletOutOfWindow(RefsData data) 
 {
 	if (_position.x < -50 || _position.x > data.window->getSize().x + 50 || _position.y < -50 || _position.y > data.window->getSize().y + 50) 
 	{
@@ -37,7 +37,7 @@ bool Bullet::IsBulletOutOfWindow(Data data)
 	return false;
 }
 
-void Bullet::CheckPosition(Data data, std::vector<Bullet*>& bulletList) 
+void Bullet::CheckPosition(RefsData data, std::vector<Bullet*>& bulletList) 
 {
 	std::vector<Bullet*>::iterator it = bulletList.begin();
 	while (it != bulletList.end()) {

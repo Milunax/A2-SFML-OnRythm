@@ -8,7 +8,7 @@ UIBar::UIBar(sf::Vector2f startPos, sf::Color color, sf::Vector2f size)
 	_sizeMax = size;
 }
 
-void UIBar::Draw(Data data)
+void UIBar::Draw(RefsData data)
 {
 	sf::RectangleShape shape;
 	shape.setOrigin(_size.x / 2, _size.y / 2);
