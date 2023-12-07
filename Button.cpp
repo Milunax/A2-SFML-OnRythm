@@ -39,7 +39,7 @@ void Button::Draw(Data data)
 	shape.setPosition(scaledPosition);
 	data.window->draw(shape);
 	
-	sf::Text buttonText = CreateTextButton(*data.window, scaledPosition, _textFont, _text, 24, sf::Text::Bold);
+	sf::Text buttonText = CreateTextChild(*data.window, scaledPosition, _textFont, _text, 24, sf::Text::Bold);
 
 	data.window->draw(buttonText);
 }
