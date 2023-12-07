@@ -5,7 +5,7 @@
 #include <iostream>
 #include <map>
 
-enum State
+enum BeatState
 {
 	NONE,
 	NORMAL,
@@ -14,7 +14,7 @@ enum State
 	BOSS
 };
 
-State GetStateOfBeat(std::map<int, State> lvl, int beat, State actualState);
+BeatState GetStateOfBeat(std::map<int, BeatState> lvl, int beat, BeatState actualState);
 
 
 

@@ -206,7 +206,7 @@ void Game()
 
 				std::cout << "COUNT : " << tickCount << std::endl;
 
-				actualState = GetStateOfBeat(level_1, tickCount, actualState);
+				actualState = GetStateOfBeat(actualLVL, tickCount, actualState);
 				std::cout << "STATE : " << actualState << std::endl;
 
 				// MAIN SEQUENCE//
