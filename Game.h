@@ -3,6 +3,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <array>
 #include "RythmSystem.h"
 #include "Background.h"
 #include "HealthBar.h"

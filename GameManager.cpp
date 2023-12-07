@@ -32,7 +32,7 @@ void GameManager::StartGame()
 	//	std::cout << "Wrong music file" << std::endl;
 	//	return;
 	_music->play();
-	_music->setLoop(true);
+	_music->setLoop(false);
 }
 
 void GameManager::PauseGame() 
