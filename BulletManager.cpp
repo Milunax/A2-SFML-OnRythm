@@ -1,9 +1,16 @@
 #include "BulletManager.h"
 
-BulletManager::BulletManager(Player* player, std::vector<Enemy*>* enemyList, WaveManager* waveManager){
+BulletManager::BulletManager(){
+	_player = nullptr;
+	_enemyList = nullptr;
+	_waveManager = nullptr;
+}
+
+void BulletManager::Init(Player* player, WaveManager* waveManager)
+{
 	_player = player;
-	_enemyList = enemyList;
 	_waveManager = waveManager;
+	_enemyList = waveManager->GetEnemyList();
 }
 
 void BulletManager::Update(RefsData data)

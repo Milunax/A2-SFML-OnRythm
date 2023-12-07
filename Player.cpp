@@ -11,6 +11,13 @@ Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHeal
 	_healthBar = new HealthBar(sf::Vector2f(_position.x, _position.y + _radius + 20), sf::Color::Red, sf::Vector2f(_radius * 2, 10));
 	_experienceToNextLevel = 10;
 	_level = 1;
+
+	_gameManager = nullptr;
+}
+
+void Player::Init(GameManager* gameManager) 
+{
+	_gameManager = gameManager;
 }
 
 sf::CircleShape& Player::GetPlayerShape() 

@@ -7,6 +7,7 @@ enum class GameState
 	PAUSE
 };
 
+
 class GameManager 
 {
 	public :

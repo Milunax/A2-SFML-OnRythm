@@ -30,8 +30,7 @@ sf::Music music;
 
 int main()
 {
-	// Initialisation
-
+	// SetUp
 	RefsData data;
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Rythm");
 	window.setVerticalSyncEnabled(true);
@@ -53,8 +52,6 @@ int main()
 	backgroundShaderBoss.loadFromFile("Background.vert", "Background3.frag");
 	backgroundShaderPause.loadFromFile("Background.vert", "Background4.frag");
 
-	//Nique toi antoine
-
 	//Unifom
 	backgroundShaderNormal.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	backgroundShaderSlow.setUniform("iResolution", sf::Vector2f(window.getSize()));
@@ -72,19 +69,21 @@ int main()
 
 	// Managers
 	GameManager gameManager;
-
-	WaveManager waveManager(window, &player);
-	BulletManager bulletManager(&player, waveManager.GetEnemyList(), &waveManager);
+	WaveManager waveManager(0.0f, 5.0f, 3, 32);
+	BulletManager bulletManager;
 
 	//StartMenu
-	
 	sf::Text title = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 100.0f), *data.baseFont, "Epileptik Rythm", 80, sf::Text::Bold);
 	Button startButton(basicButton, data, sf::Vector2f(640.0f, 300.0f), "START");
 	Button quitButton(basicButton, data, sf::Vector2f(640.0f, 410.0f), "QUIT");
 
-	sf::Clock frameClock;
+	//Initialisation
+	player.Init(&gameManager);
+	waveManager.Init(window, &player);
+	bulletManager.Init(&player, &waveManager);
 
-	
+
+	sf::Clock frameClock;
 
 	// Main Game
 	while (window.isOpen())

@@ -1,6 +1,16 @@
 #include "WaveManager.h"
 
-WaveManager::WaveManager(sf::RenderWindow& window, Player* player) 
+WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpawn, int maxEnemyCount)
+{
+	_timer = timer;
+	_spawnTime = spawnTime;
+	_numberOfEnemiesToSpawn = numberOfEnemiesToSpawn;
+	_maxEnemyCount = maxEnemyCount;
+
+	_player = nullptr;
+}
+
+void WaveManager::Init(sf::RenderWindow& window, Player* player)
 {
 	std::vector<sf::Vector2f> positions{
 		sf::Vector2f(-50, -50),
@@ -16,11 +26,6 @@ WaveManager::WaveManager(sf::RenderWindow& window, Player* player)
 	for (sf::Vector2f position : positions) {
 		_spawners.push_back(new EnemySpawner(position));
 	}
-
-	_timer = 0;
-	_spawnTime = 5;
-	_numberOfEnemiesToSpawn = 3;
-	_maxEnemyCount = 32;
 
 	_player = player;
 }
@@ -43,19 +48,24 @@ void WaveManager::SpawnWave()
 	int numberToSpawn = _numberOfEnemiesToSpawn;
 	for (int i = 0; i < _spawners.size(); i++)
 	{
-		if (numberToSpawn < _spawners.size() - (i + 1)) 
+		if (_enemyList.size() < _maxEnemyCount) 
 		{
-			int random = rand() % 2;
-			if (numberToSpawn > 0 && random == 1) {
-				_enemyList.push_back(_spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(),_player));
+			if (numberToSpawn < _spawners.size() - (i + 1))
+			{
+				int random = rand() % 2;
+				if (numberToSpawn > 0 && random == 1) {
+					_enemyList.push_back(_spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(), _player));
+					numberToSpawn--;
+				}
+			}
+			else
+			{
+				_enemyList.push_back(_spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(), _player));
 				numberToSpawn--;
 			}
 		}
-		else 
-		{
-			_enemyList.push_back(_spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(), _player));
-			numberToSpawn--;
-		}
+		
+		if (_enemyList.size() >= _maxEnemyCount) return;
 		if (numberToSpawn <= 0) return;
 	}
 }

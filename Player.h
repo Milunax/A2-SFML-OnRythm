@@ -10,12 +10,15 @@
 #include "Collider.h"
 #include "HealthBar.h"
 #include "ExperienceBar.h"
+#include "GameManager.h"
+
 
 class Bullet;
 
 class Player : public Entity {
 	public :
 		Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed);
+		void Init(GameManager* gameManager);
 		void Draw(RefsData data);
 		void TakeDamage(float value);
 		sf::CircleShape& GetPlayerShape();
@@ -27,6 +30,7 @@ class Player : public Entity {
 		sf::Vector2f GetOrientationDirection();
 		void AddExperience(float value);
 		void LevelUp();
+
 	private :
 		ExperienceBar* _experienceBar;
 		HealthBar* _healthBar;
@@ -38,4 +42,6 @@ class Player : public Entity {
 		int _experience = 0;
 		int _experienceToNextLevel;
 		int _level;
+
+		GameManager* _gameManager;
 };
