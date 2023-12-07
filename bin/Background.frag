@@ -26,7 +26,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
         vec3 col = palette(length(uv0) + i*.5 + iTime*.4);
         col.x *= abs(sin(iTime));
 
-        d = sin(d*8. + iTime)/8.;
+        d = sin(d*8. + iTime*1.5)/8.;
         d = abs(d);
 
         d = pow(0.01 / d, 1.2);
@@ -48,5 +48,5 @@ void main()
     // multiply it by the color
     //gl_FragColor = gl_Color * pixel;
 
-    mainImage(gl_FragColor, gl_FragCoord);
+    mainImage(gl_FragColor, gl_FragCoord.xy);
 }

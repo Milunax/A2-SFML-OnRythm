@@ -104,6 +104,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RythmSystem.cpp" />
     <ClCompile Include="UIBar.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WaveManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,11 +124,17 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RythmSystem.h" />
     <ClInclude Include="UIBar.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="WaveManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Background.frag" />
     <None Include="bin\Background.vert" />
+    <None Include="bin\Background2.frag" />
+    <None Include="bin\Background2.vert" />
+    <None Include="bin\Background3.frag" />
+    <None Include="bin\Background4.frag" />
+    <None Include="bin\Background5.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
