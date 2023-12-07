@@ -130,6 +130,8 @@ void Player::LevelUp() {
 	_experienceToNextLevel *= 2;
 	_experienceBar->UpdateLevel(_level);
 	std::cout << _level << std::endl;
+
+	_gameManager->ToUpgradeState();
 }
 
 int Player::GetLevel() {
