@@ -18,7 +18,8 @@ class Bullet;
 
 class Player : public Entity {
 	public :
-		Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed);
+		Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, 
+				float bulletFireRate, float fireRateUpgradeValue, bool isWeaponUpgradedBaseValue);
 		void Init(GameManager* gameManager);
 		void Draw(RefsData data);
 		void TakeDamage(float value);
@@ -32,7 +33,9 @@ class Player : public Entity {
 		void AddExperience(float value);
 		void LevelUp();
 		int GetLevel();
-		ExperienceBar* GetExperienceBar();
+		float GetDamages();
+		float GetFireRate();
+		bool IsWeaponUpgraded();
 		void UpgradeStat(Upgrade upgrade);
 
 	private :
@@ -46,6 +49,16 @@ class Player : public Entity {
 		int _experience = 0;
 		int _experienceToNextLevel;
 		int _level;
+
+		float _healthUpgradeValue;
+
+		float _damages;
+		float _damagesUpgradeValue;
+
+		float _bulletFireRate;
+		float _fireRateUpgradeValue;
+
+		bool _isWeaponUpgraded;
 
 		GameManager* _gameManager;
 };

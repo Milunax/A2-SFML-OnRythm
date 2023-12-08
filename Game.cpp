@@ -95,7 +95,7 @@ void Game()
 	backgroundRect.setSize(sf::Vector2f(window.getSize()));
 	sf::RenderStates backgroundStates;
 
-	Player player(sf::Color::Blue, sf::Vector2f(590, 260), 50, 100, 200);
+	Player player(sf::Color::Blue, sf::Vector2f(590, 260), 50, 100.0f, 200.0f, 10.0f, 1.0f, 1.0f, 1.0f, 2.5f, false);
 
 	// Managers
 	GameManager gameManager;
