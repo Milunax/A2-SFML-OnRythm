@@ -14,6 +14,7 @@ class WaveManager
 		void Update(RefsData data);
 		void SpawnWave();
 		void SpawnBoss();
+		void AugmentScaleFactor();
 		void SetEnemiesNextPosition();
 		void UpdateAllEnemies(float deltaTime);
 		void MoveAllEnemies(float deltaTime);
@@ -28,6 +29,9 @@ class WaveManager
 		float _spawnTime;
 		int _numberOfEnemiesToSpawn;
 		int _maxEnemyCount;
+
+		float _enemyScaleFactor;
+		float _factorAugment;
 
 		Player* _player;
 };

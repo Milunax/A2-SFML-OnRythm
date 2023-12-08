@@ -7,6 +7,9 @@ WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpaw
 	_numberOfEnemiesToSpawn = numberOfEnemiesToSpawn;
 	_maxEnemyCount = maxEnemyCount;
 
+	_enemyScaleFactor = 1.0f;
+	_factorAugment = 1.2f;
+
 	_player = nullptr;
 }
 
@@ -54,13 +57,17 @@ void WaveManager::SpawnWave()
 			{
 				int random = rand() % 2;
 				if (numberToSpawn > 0 && random == 1) {
-					_enemyList.push_back(_spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(), _player));
+					Enemy* enemy = _spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(), _player);
+					enemy->ScaleStats(_enemyScaleFactor);
+					_enemyList.push_back(enemy);
 					numberToSpawn--;
 				}
 			}
 			else
 			{
-				_enemyList.push_back(_spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(), _player));
+				Enemy* enemy = _spawners[i]->InstantiateEnemy(normalEnemy, _spawners[i]->GetPosition(), _player);
+				enemy->ScaleStats(_enemyScaleFactor);
+				_enemyList.push_back(enemy);
 				numberToSpawn--;
 			}
 		}
@@ -73,7 +80,14 @@ void WaveManager::SpawnWave()
 void WaveManager::SpawnBoss() 
 {
 	int random = rand() % _spawners.size();
-	_enemyList.push_back(_spawners[random]->InstantiateEnemy(bossEnemy, _spawners[random]->GetPosition(), _player));
+	Enemy* boss = _spawners[random]->InstantiateEnemy(bossEnemy, _spawners[random]->GetPosition(), _player);
+	boss->ScaleStats(_enemyScaleFactor);
+	_enemyList.push_back(boss);
+}
+
+void WaveManager::AugmentScaleFactor() 
+{
+	_enemyScaleFactor *= _factorAugment;
 }
 
 void WaveManager::SetEnemiesNextPosition() 

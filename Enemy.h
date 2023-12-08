@@ -30,6 +30,7 @@ class Enemy : public Entity
 		void Update(float deltaTime);
 		void Move(float deltaTime);
 		void Attack();
+		void ScaleStats(float scaleFactor);
 		CircleCollider GetCollider();
 		float GetDamage();
 		float GetExperienceDropped();

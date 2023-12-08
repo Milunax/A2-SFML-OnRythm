@@ -70,6 +70,12 @@ void Enemy::Attack()
 	}
 }
 
+void Enemy::ScaleStats(float scaleFactor)
+{
+	_health *= scaleFactor;
+	_damage *= scaleFactor;
+}
+
 CircleCollider Enemy::GetCollider() 
 {
 	CircleCollider collider = { _position, _radius };

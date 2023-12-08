@@ -289,11 +289,13 @@ void Game()
 						if (IsPointInsideRectangle(mousePos, upgradeManager.GetUpgradeOneButton()->GetCollider()))
 						{
 							player.UpgradeStat(upgradeManager.GetUpgradeOne());
+							waveManager.AugmentScaleFactor();
 							gameManager.ResumeGame();
 						}
 						if (IsPointInsideRectangle(mousePos, upgradeManager.GetUpgradeTwoButton()->GetCollider()))
 						{
 							player.UpgradeStat(upgradeManager.GetUpgradeTwo());
+							waveManager.AugmentScaleFactor();
 							gameManager.ResumeGame();
 						}
 					}
