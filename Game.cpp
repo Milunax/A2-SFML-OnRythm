@@ -12,16 +12,29 @@ void Game()
 	data.baseFont = &font;
 
 	sf::Color backgroundColor;
-	std::map<int, BeatState> level_1 = { {32, BeatState::NORMAL}, {192,BeatState::PAUSE} , {223,BeatState::SLOW}, {288, BeatState::BOSS} };
+	std::map<int, BeatState> level_1 = { 
+		{32, BeatState::NORMAL}, 
+		{64, BeatState::NORMAL1_2}, 
+		{128, BeatState::NORMAL1_3},
+		{192,BeatState::PAUSE} , 
+		{223,BeatState::SLOW}, 
+		{288, BeatState::BOSS}, 
+		{289, BeatState::BOSSSUBSTATE} ,
+		{320, BeatState::BOSS},
+		{321, BeatState::BOSSSUBSTATE} ,
+		{352, BeatState::NORMAL},
+		{384, BeatState::NORMAL1_2},
+		{416,BeatState::PAUSE}
+	};
 	std::map<int, BeatState> level_2 = {
-	{0, BeatState::SLOW},
-	{64, BeatState::NORMAL},
-	{124,BeatState::PAUSE} ,
-	{128,BeatState::NORMAL},
-	{224, BeatState::BOSS} ,
-	{288, BeatState::SLOW} ,
-	{320, BeatState::NORMAL} ,
-	{417, BeatState::BOSS}
+		{0, BeatState::NORMAL2},
+		{64, BeatState::NORMAL},
+		{124,BeatState::PAUSE} ,
+		{128,BeatState::SLOW2},
+		{224, BeatState::BOSS} ,
+		{225, BeatState::BOSSSUBSTATE} ,
+		{288, BeatState::SLOW} ,
+		{320, BeatState::NORMAL} ,
 	};
 	std::map<int, BeatState> level_3 = { {32, BeatState::NORMAL}, {192,BeatState::PAUSE} , {223,BeatState::SLOW}, {288, BeatState::BOSS} };
 	std::array<std::map<int, BeatState>, 3> levelArray = { level_1, level_2, level_3 };
@@ -46,20 +59,34 @@ void Game()
 	//SHADERS
 	//Load
 	sf::Shader backgroundShaderNormal;
+	sf::Shader backgroundShaderNormal2;
 	sf::Shader backgroundShaderSlow;
+	sf::Shader backgroundShaderSlow2;
 	sf::Shader backgroundShaderBoss;
 	sf::Shader backgroundShaderPause;
 
 	backgroundShaderNormal.loadFromFile("Background.vert", "Background.frag");
+	backgroundShaderNormal2.loadFromFile("Background.vert", "Background7.frag");
 	backgroundShaderSlow.loadFromFile("Background2.vert", "Background2.frag");
+	backgroundShaderSlow2.loadFromFile("Background2.vert", "Background6.frag");
 	backgroundShaderBoss.loadFromFile("Background.vert", "Background3.frag");
 	backgroundShaderPause.loadFromFile("Background.vert", "Background4.frag");
 
 	//Unifom
 	backgroundShaderNormal.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	backgroundShaderNormal2.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	backgroundShaderSlow.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	backgroundShaderSlow2.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	backgroundShaderBoss.setUniform("iResolution", sf::Vector2f(window.getSize()));
 	backgroundShaderPause.setUniform("iResolution", sf::Vector2f(window.getSize()));
+	sf::Vector3f NormalA = {0.172, 0.215, 0.947 };
+	sf::Vector3f NormalB = { 0.385,0.967,0.336 };
+	sf::Vector3f NormalC = { 0.813,0.299,0.804 };
+	sf::Vector3f NormalD = { 1.869,5.081,2.817 };
+	backgroundShaderNormal.setUniform("a", NormalA);
+	backgroundShaderNormal.setUniform("b", NormalB);
+	backgroundShaderNormal.setUniform("c", NormalC);
+	backgroundShaderNormal.setUniform("d", NormalD);
 	float iTime = 0.0;
 
 	//Background
@@ -221,13 +248,52 @@ void Game()
 					(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
 					waveManager.SetEnemiesNextPosition();
 					break;
+				case BeatState::NORMAL1_2:
+					NormalA = { 0.650,0.500, 0.310 };
+					NormalB = { -0.650, 0.500, 0.600 };
+					NormalC = { 0.333, 0.278, 0.278 };
+					NormalD = { 0.660, 0.000, 0.667 };
+					backgroundShaderNormal.setUniform("a", NormalA);
+					backgroundShaderNormal.setUniform("b", NormalB);
+					backgroundShaderNormal.setUniform("c", NormalC);
+					backgroundShaderNormal.setUniform("d", NormalD);
+					backgroundStates.shader = &backgroundShaderNormal;
+					(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
+					waveManager.SetEnemiesNextPosition();
+					break;
+				case BeatState::NORMAL1_3:
+					NormalA = { 0.072, 0.627, 0.463 };
+					NormalB = { 0.816, 0.756, 0.169 };
+					NormalC = { 0.055, 0.545, 0.522 };
+					NormalD = { 3.990, 4.046, 0.376 };
+					backgroundShaderNormal.setUniform("a", NormalA);
+					backgroundShaderNormal.setUniform("b", NormalB);
+					backgroundShaderNormal.setUniform("c", NormalC);
+					backgroundShaderNormal.setUniform("d", NormalD);
+					backgroundStates.shader = &backgroundShaderNormal;
+					(tickCount % 2 == 0) ? player.SetColor(sf::Color::Blue) : player.SetColor(sf::Color::Magenta);
+					waveManager.SetEnemiesNextPosition();
+					break;
+				case BeatState::NORMAL2:
+					backgroundStates.shader = &backgroundShaderNormal2;
+					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
+					break;
 					//CASE SLOW : ONE ON TWO
 				case BeatState::SLOW:
 					backgroundStates.shader = &backgroundShaderSlow;
 					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 					break;
-					//CASE SLOW : ONE ON TWO
+					//CASE SLOW 2 : ONE ON TWO WITH S6
+				case BeatState::SLOW2:
+					backgroundStates.shader = &backgroundShaderSlow2;
+					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
+					break;
+					//CASE BOSS : BOSS
 				case BeatState::BOSS:
+					backgroundStates.shader = &backgroundShaderBoss;
+					waveManager.SpawnBoss();
+					break;
+				case BeatState::BOSSSUBSTATE:
 					backgroundStates.shader = &backgroundShaderBoss;
 					if (tickCount % 2 == 0) waveManager.SetEnemiesNextPosition();
 					break;
@@ -251,10 +317,25 @@ void Game()
 			case BeatState::NORMAL:
 				backgroundShaderNormal.setUniform("iTime", iTime);
 				break;
+			case BeatState::NORMAL1_2:
+				backgroundShaderNormal.setUniform("iTime", iTime);
+				break;
+			case BeatState::NORMAL1_3:
+				backgroundShaderNormal.setUniform("iTime", iTime);
+				break;
+			case BeatState::NORMAL2:
+				backgroundShaderNormal2.setUniform("iTime", iTime);
+				break;
 			case BeatState::SLOW:
 				backgroundShaderSlow.setUniform("iTime", iTime);
 				break;
+			case BeatState::SLOW2:
+				backgroundShaderSlow2.setUniform("iTime", iTime);
+				break;
 			case BeatState::BOSS:
+				backgroundShaderBoss.setUniform("iTime", iTime);
+				break;
+			case BeatState::BOSSSUBSTATE:
 				backgroundShaderBoss.setUniform("iTime", iTime);
 				break;
 			case BeatState::PAUSE:

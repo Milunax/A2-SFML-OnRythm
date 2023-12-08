@@ -9,9 +9,14 @@ enum BeatState
 {
 	NONE,
 	NORMAL,
+	NORMAL1_2,
+	NORMAL1_3,
+	NORMAL2,
 	SLOW,
+	SLOW2,
 	PAUSE,
-	BOSS
+	BOSS,
+	BOSSSUBSTATE
 };
 
 BeatState GetStateOfBeat(std::map<int, BeatState> lvl, int beat, BeatState actualState);
