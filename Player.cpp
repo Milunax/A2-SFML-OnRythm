@@ -144,7 +144,10 @@ void Player::UpgradeStat(Upgrade upgrade)
 	switch (upgrade)
 	{
 	case Upgrade::HEALTH:
-		std::cout << "Health Upgrade" << std::endl;
+		std::cout << _maxHealth << std::endl;
+		_maxHealth += 10.0f;
+		std::cout << _maxHealth << std::endl;
+		_healthBar->UpdateSize(_health, _maxHealth);
 		break;
 	case Upgrade::ATTACK:
 		std::cout << "Attack Upgrade" << std::endl;
