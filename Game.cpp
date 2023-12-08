@@ -197,11 +197,11 @@ void Game()
 					}
 				}
 
-				std::cout << "COUNT : " << tickCount << std::endl;
+				//std::cout << "COUNT : " << tickCount << std::endl;
 
 				actualState = GetStateOfBeat(actualLVL, tickCount, actualState);
-				std::cout << "STATE : " << actualState << std::endl;
-
+				//std::cout << "STATE : " << actualState << std::endl;
+				 
 				// MAIN SEQUENCE//
 				switch (actualState)
 				{
@@ -288,10 +288,12 @@ void Game()
 					{
 						if (IsPointInsideRectangle(mousePos, upgradeManager.GetUpgradeOneButton()->GetCollider()))
 						{
+							player.UpgradeStat(upgradeManager.GetUpgradeOne());
 							gameManager.ResumeGame();
 						}
 						if (IsPointInsideRectangle(mousePos, upgradeManager.GetUpgradeTwoButton()->GetCollider()))
 						{
+							player.UpgradeStat(upgradeManager.GetUpgradeTwo());
 							gameManager.ResumeGame();
 						}
 					}

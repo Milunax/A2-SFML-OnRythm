@@ -65,6 +65,16 @@ void UpgradeManager::DrawUpgradeMenu(RefsData data)
 	_upgradeTwoButton->Draw(data);
 }
 
+Upgrade UpgradeManager::GetUpgradeOne() 
+{
+	return _upgradeOne;
+}
+
+Upgrade UpgradeManager::GetUpgradeTwo()
+{
+	return _upgradeTwo;
+}
+
 Button* UpgradeManager::GetUpgradeOneButton()
 {
 	return _upgradeOneButton;

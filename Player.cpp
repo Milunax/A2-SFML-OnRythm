@@ -141,5 +141,21 @@ int Player::GetLevel() {
 
 void Player::UpgradeStat(Upgrade upgrade)
 {
-
+	switch (upgrade)
+	{
+	case Upgrade::HEALTH:
+		std::cout << "Health Upgrade" << std::endl;
+		break;
+	case Upgrade::ATTACK:
+		std::cout << "Attack Upgrade" << std::endl;
+		break;
+	case Upgrade::ATTACKSPEED:
+		std::cout << "Attack Speed Upgrade" << std::endl;
+		break;
+	case Upgrade::WEAPON:
+		std::cout << "Weapon Upgrade" << std::endl;
+		break;
+	default:
+		break;
+	}
 }

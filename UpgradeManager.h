@@ -21,6 +21,8 @@ class UpgradeManager
 		void GenerateNewUpgrades();
 		void SetUpgradeButtonText(Button* button, Upgrade upgrade);
 		void DrawUpgradeMenu(RefsData data);
+		Upgrade GetUpgradeOne();
+		Upgrade GetUpgradeTwo();
 		Button* GetUpgradeOneButton();
 		Button* GetUpgradeTwoButton();
 	private:
