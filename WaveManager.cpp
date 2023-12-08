@@ -7,6 +7,8 @@ WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpaw
 	_numberOfEnemiesToSpawn = numberOfEnemiesToSpawn;
 	_maxEnemyCount = maxEnemyCount;
 
+	_enemyMoveMultiplier = 1.0f;
+
 	_enemyScaleFactor = 1.0f;
 	_factorAugment = factorAugment;
 
@@ -87,7 +89,12 @@ void WaveManager::SpawnBoss()
 	_enemyList.push_back(boss);
 }
 
-void WaveManager::AugmentScaleFactor() 
+void WaveManager::SetMoveMultiplier(float value)
+{
+	_enemyMoveMultiplier = value;
+}
+
+void WaveManager::AugmentScaleFactor()
 {
 	_enemyScaleFactor *= _factorAugment;
 }
@@ -96,7 +103,7 @@ void WaveManager::SetEnemiesNextPosition()
 {
 	for (Enemy* enemy : _enemyList)
 	{
-		enemy->SetNextPosition();
+		enemy->SetNextPosition(_enemyMoveMultiplier);
 	}
 }
 
@@ -104,16 +111,7 @@ void WaveManager::UpdateAllEnemies(float deltaTime)
 {
 	for (Enemy* enemy : _enemyList)
 	{
-		enemy->Update(deltaTime);
-	}
-}
-
-
-void WaveManager::MoveAllEnemies(float deltaTime)
-{
-	for (Enemy* enemy : _enemyList)
-	{
-		enemy->Move(deltaTime);
+		enemy->Update(deltaTime, _enemyMoveMultiplier);
 	}
 }
 

@@ -20,35 +20,30 @@ Enemy::Enemy(EnemyData data, sf::Vector2f startPos, Player* target) : Entity(sta
 	_scoreToAdd = data.ScoreToAdd;
 }
 
-Enemy::~Enemy() 
-{
-	
-}
-
 void Enemy::SetTarget(Player* player) 
 {
 	_player = player;
 }
 
-void Enemy::SetNextPosition() 
+void Enemy::SetNextPosition(float moveMultiplier)
 {
 	if (_player != nullptr)
 	{
 		sf::Vector2f direction = _player->GetPosition() - _position;
 		Normalize(direction);
-		_nextPosition = _position + direction * _moveDistance;
+		_nextPosition = _position + direction * _moveDistance * moveMultiplier;
 		//_nextPosition = _position + sf::Vector2f(3, 1) * _moveDistance;
 	}
 }
 
-void Enemy::Update(float deltaTime) 
+void Enemy::Update(float deltaTime, float moveMultiplier) 
 {
-	Move(deltaTime);
+	Move(deltaTime, moveMultiplier);
 	if(_attackTimer < _attackSpeed) _attackTimer += deltaTime;
 }
 
 
-void Enemy::Move(float deltaTime) 
+void Enemy::Move(float deltaTime, float moveMutiplier) 
 {
 	if (_speed * deltaTime > Distance(_position, _nextPosition)) 
 	{

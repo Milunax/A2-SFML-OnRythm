@@ -122,6 +122,7 @@ void RythmSystem::MainSequence(int tickCount)
 	case BeatState::NORMAL:
 		_backgroundStates.shader = &_backgroundShaderNormal;
 		(tickCount % 2 == 0) ? _player->SetColor(sf::Color::Blue) : _player->SetColor(sf::Color::Magenta);
+		_waveManager->SetMoveMultiplier(2.0f);
 		_waveManager->SetEnemiesNextPosition();
 		break;
 	case BeatState::NORMAL1_2:
@@ -135,6 +136,7 @@ void RythmSystem::MainSequence(int tickCount)
 		_backgroundShaderNormal.setUniform("d", _NormalD);
 		_backgroundStates.shader = &_backgroundShaderNormal;
 		(tickCount % 2 == 0) ? _player->SetColor(sf::Color::Blue) : _player->SetColor(sf::Color::Magenta);
+		_waveManager->SetMoveMultiplier(2.0f);
 		_waveManager->SetEnemiesNextPosition();
 		break;
 	case BeatState::NORMAL1_3:
@@ -148,20 +150,24 @@ void RythmSystem::MainSequence(int tickCount)
 		_backgroundShaderNormal.setUniform("d", _NormalD);
 		_backgroundStates.shader = &_backgroundShaderNormal;
 		(tickCount % 2 == 0) ? _player->SetColor(sf::Color::Blue) : _player->SetColor(sf::Color::Magenta);
+		_waveManager->SetMoveMultiplier(2.0f);
 		_waveManager->SetEnemiesNextPosition();
 		break;
 	case BeatState::NORMAL2:
 		_backgroundStates.shader = &_backgroundShaderNormal2;
+		_waveManager->SetMoveMultiplier(2.0f);
 		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
 		break;
 		//CASE SLOW : ONE ON TWO
 	case BeatState::SLOW:
 		_backgroundStates.shader = &_backgroundShaderSlow;
+		_waveManager->SetMoveMultiplier(1.0f);
 		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
 		break;
 		//CASE SLOW 2 : ONE ON TWO WITH S6
 	case BeatState::SLOW2:
 		_backgroundStates.shader = &_backgroundShaderSlow2;
+		_waveManager->SetMoveMultiplier(1.0f);
 		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
 		break;
 		//CASE BOSS : BOSS
@@ -171,11 +177,13 @@ void RythmSystem::MainSequence(int tickCount)
 		break;
 	case BeatState::BOSSSUBSTATE:
 		_backgroundStates.shader = &_backgroundShaderBoss;
+		_waveManager->SetMoveMultiplier(2.0f);
 		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
 		break;
 		//CASE PAUSE : NO MOVEMENT
 	case BeatState::PAUSE:
 		_backgroundStates.shader = &_backgroundShaderPause;
+		_waveManager->SetMoveMultiplier(0.0f);
 		break;
 	default:
 		break;
