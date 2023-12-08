@@ -9,11 +9,12 @@
 class WaveManager
 {
 	public:
-		WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpawn, int maxEnemyCount);
+		WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpawn, int maxEnemyCount, float factorAugment);
 		void Init(sf::RenderWindow& window, Player* player);
 		void Update(RefsData data);
 		void SpawnWave();
 		void SpawnBoss();
+		void ScaleWave();
 		void AugmentScaleFactor();
 		void SetEnemiesNextPosition();
 		void UpdateAllEnemies(float deltaTime);

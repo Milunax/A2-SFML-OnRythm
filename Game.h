@@ -14,5 +14,6 @@
 #include "Button.h"
 #include "Utils.h"
 #include "UpgradeManager.h"
+#include "RythmSystem.h"
 
 void Game();

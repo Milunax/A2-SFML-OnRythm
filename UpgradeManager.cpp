@@ -22,7 +22,11 @@ Upgrade UpgradeManager::GenerateUpgrade()
 void UpgradeManager::GenerateNewUpgrades() 
 {
 	_upgradeOne = GenerateUpgrade();
-	_upgradeTwo = GenerateUpgrade();
+	do 
+	{
+		_upgradeTwo = GenerateUpgrade();
+	} while (_upgradeTwo == _upgradeOne);
+	
 
 	SetUpgradeButtonText(_upgradeOneButton, _upgradeOne);
 	SetUpgradeButtonText(_upgradeTwoButton, _upgradeTwo);
