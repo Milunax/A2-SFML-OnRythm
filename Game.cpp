@@ -32,7 +32,7 @@ void Game()
 	// Managers
 	GameManager gameManager;
 	RythmSystem rythmSystem(data);
-	UIManager uiManager(data);
+	UIManager uiManager(data, 0.05f);
 	UpgradeManager upgradeManager(data);
 	WaveManager waveManager(0.0f, 5.0f, 3, 32, 1.2f);
 	BulletManager bulletManager;
@@ -51,7 +51,7 @@ void Game()
 	gameManager.Init(data, &upgradeManager);
 	rythmSystem.Init(&waveManager, &player);
 	waveManager.Init(window, &gameManager, &player);
-	bulletManager.Init(&player, &waveManager);
+	bulletManager.Init(&player, &waveManager, &uiManager);
 
 
 	// Main Game
@@ -147,6 +147,7 @@ void Game()
 			player.Update(data);
 			waveManager.Update(data);
 			bulletManager.Update(data);
+			uiManager.Update(data);
 
 			// Affichage
 			// Remise au noir de toute la fen�tre
@@ -156,6 +157,7 @@ void Game()
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
+			uiManager.DrawAllDamageTexts(data);
 			gameManager.Draw(data);
 			// On présente la fenétre sur l'�cran
 			window.display();
@@ -202,6 +204,7 @@ void Game()
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
+			uiManager.DrawAllDamageTexts(data);
 			gameManager.Draw(data);
 			upgradeManager.DrawUpgradeMenu(data);
 
