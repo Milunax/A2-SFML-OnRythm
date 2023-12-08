@@ -83,18 +83,44 @@ void BulletManager::FireWeapon()
 		sf::Vector2f(1,0),
 		sf::Vector2f(0,1),
 		sf::Vector2f(-1,0),
-		sf::Vector2f(0,-1)
+		sf::Vector2f(0,-1),
+		sf::Vector2f(1, 1),
+		sf::Vector2f(-1, -1),
+		sf::Vector2f(1, -1),
+		sf::Vector2f(-1, 1),
 	};
 
-	if (_player->IsWeaponUpgraded()) 
+	switch (_player->GetTimesWeaponUpgraded())
 	{
+	case 0 : 
+		_bulletList.push_back(InstanciateBullet(_player->GetOrientationDirection()));
+		std::cout << "case 0" << std::endl;
+		break;
+	case 1 :
+		_bulletList.push_back(InstanciateBullet(_player->GetOrientationDirection()));
+		_bulletList.push_back(InstanciateBullet(-_player->GetOrientationDirection()));
+		std::cout << "case 1" << std::endl;
+		break;
+	case 2 :
+		_bulletList.push_back(InstanciateBullet(directionList[0]));
+		_bulletList.push_back(InstanciateBullet(directionList[1]));
+		_bulletList.push_back(InstanciateBullet(directionList[2]));
+		_bulletList.push_back(InstanciateBullet(directionList[3]));
+		std::cout << "case 2" << std::endl;
+		break;
+	case 3 :
 		for (sf::Vector2f direction : directionList)
 		{
 			_bulletList.push_back(InstanciateBullet(direction));
 		}
-	}
-	else
-	{
-		_bulletList.push_back(InstanciateBullet(_player->GetOrientationDirection()));
+		std::cout << "case 3" << std::endl;
+		break;
+	default : 
+		for (sf::Vector2f direction : directionList)
+		{
+			_bulletList.push_back(InstanciateBullet(direction));
+		}
+		std::cout << "case default" << std::endl;
+		break;
 	}
 }

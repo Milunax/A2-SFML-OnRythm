@@ -1,4 +1,5 @@
 #include "WaveManager.h"
+#include "GameManager.h"
 
 WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpawn, int maxEnemyCount, float factorAugment)
 {

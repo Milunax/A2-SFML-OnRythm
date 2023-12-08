@@ -10,16 +10,15 @@
 #include "Collider.h"
 #include "HealthBar.h"
 #include "ExperienceBar.h"
-#include "GameManager.h"
-#include "UpgradeManager.h"
-
 
 class Bullet;
+class GameManager;
+enum class Upgrade;
 
 class Player : public Entity {
 	public :
 		Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, 
-				float bulletFireRate, float fireRateUpgradeValue, bool isWeaponUpgradedBaseValue);
+				float bulletFireRate, float fireRateUpgradeValue, int timesWeaponUpgraded);
 		void Init(GameManager* gameManager);
 		void Draw(RefsData data);
 		void TakeDamage(float value);
@@ -35,7 +34,7 @@ class Player : public Entity {
 		int GetLevel();
 		float GetDamages();
 		float GetFireRate();
-		bool IsWeaponUpgraded();
+		int GetTimesWeaponUpgraded();
 		void UpgradeStat(Upgrade upgrade);
 
 	private :
@@ -58,7 +57,7 @@ class Player : public Entity {
 		float _bulletFireRate;
 		float _fireRateUpgradeValue;
 
-		bool _isWeaponUpgraded;
+		int _timesWeaponUpgraded;
 
 		GameManager* _gameManager;
 };
