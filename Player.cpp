@@ -111,6 +111,11 @@ void Player::TakeDamage(float value)
 	_healthBar->UpdateSize(_health, _maxHealth);
 }
 
+void Player::Die() 
+{
+	_gameManager->ToEndState();
+}
+
 float Player::GetRadius() 
 {
 	return _radius;

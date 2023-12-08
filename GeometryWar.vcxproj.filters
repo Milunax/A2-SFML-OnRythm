@@ -75,6 +75,9 @@
     <ClCompile Include="UpgradeManager.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -137,6 +140,9 @@
     <ClInclude Include="UpgradeManager.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Background.frag">
@@ -150,5 +156,7 @@
     <None Include="bin\Background3.frag" />
     <None Include="bin\Background4.frag" />
     <None Include="bin\Background5.frag" />
+    <None Include="bin\Background6.frag" />
+    <None Include="bin\Background7.frag" />
   </ItemGroup>
 </Project>

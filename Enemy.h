@@ -25,11 +25,10 @@ class Enemy : public Entity
 {
 	public :
 		Enemy(EnemyData data, sf::Vector2f startPos, Player* target);
-		~Enemy();
 		void SetTarget(Player* target);
-		void SetNextPosition();
-		void Update(float deltaTime);
-		void Move(float deltaTime);
+		void SetNextPosition(float moveMultiplier);
+		void Update(float deltaTime, float moveMultiplier);
+		void Move(float deltaTime, float moveMultiplier);
 		void Attack();
 		void ScaleStats(float scaleFactor);
 		CircleCollider GetCollider();

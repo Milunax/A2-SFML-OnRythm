@@ -15,10 +15,10 @@ class WaveManager
 		void SpawnWave();
 		void SpawnBoss();
 		void ScaleWave();
+		void SetMoveMultiplier(float value);
 		void AugmentScaleFactor();
 		void SetEnemiesNextPosition();
 		void UpdateAllEnemies(float deltaTime);
-		void MoveAllEnemies(float deltaTime);
 		void CheckCollisionAllEnemies();
 		void EraseDeadEnemies();
 		void DrawAllEnemies(sf::RenderWindow& window);
@@ -31,8 +31,11 @@ class WaveManager
 		int _numberOfEnemiesToSpawn;
 		int _maxEnemyCount;
 
+		float _enemyMoveMultiplier;
+
 		float _enemyScaleFactor;
 		float _factorAugment;
+
 
 		GameManager* _gameManager;
 		Player* _player;

@@ -58,6 +58,12 @@ void GameManager::ToUpgradeState()
 	_gameState = GameState::UPGRADES;
 }
 
+void GameManager::ToEndState() 
+{
+	PauseGame();
+	_gameState = GameState::END_OF_GAME;
+}
+
 void GameManager::AddScore(int value)
 {
 	_score += value;

@@ -10,7 +10,8 @@ enum class GameState
 {
 	START_MENU,
 	IN_GAME,
-	UPGRADES
+	UPGRADES,
+	END_OF_GAME
 };
 
 class GameManager 
@@ -24,6 +25,7 @@ class GameManager
 		void PauseGame();
 		void ResumeGame();
 		void ToUpgradeState();
+		void ToEndState();
 		void AddScore(int value);
 		void Draw(RefsData data);
 	private :
