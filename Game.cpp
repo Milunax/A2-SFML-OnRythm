@@ -20,7 +20,7 @@ void Game()
 	int tickCount = 0;
 
 	sf::Music music;
-	music.openFromFile("../sound/2.wav");
+	music.openFromFile("../sound/150.wav");
 	data.music = &music;
 
 
