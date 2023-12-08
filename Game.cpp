@@ -78,7 +78,6 @@ void Game()
 						if (IsPointInsideRectangle(mousePos, startButton.GetCollider()))
 						{
 							gameManager.StartGame();
-							//backgroundStates.shader = &backgroundShaderSlow;
 						}
 						if (IsPointInsideRectangle(mousePos, quitButton.GetCollider()))
 						{
@@ -152,7 +151,6 @@ void Game()
 			window.clear();
 			//Background Shader
 			rythmSystem.Draw(data);
-			/*window.draw(backgroundRect, backgroundStates);*/
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
@@ -199,7 +197,6 @@ void Game()
 			window.clear();
 			//Background Shader
 			rythmSystem.Draw(data);
-			//window.draw(backgroundRect, backgroundStates);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
