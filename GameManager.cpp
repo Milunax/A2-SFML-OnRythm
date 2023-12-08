@@ -6,12 +6,14 @@ GameManager::GameManager()
 	_gameState = GameState::START_MENU;
 	_frameClock = nullptr;
 	_music = nullptr;
+	_upgradeManager = nullptr;
 }
 
-void GameManager::Init(RefsData data)
+void GameManager::Init(RefsData data, UpgradeManager* upgradeManager)
 {
 	_frameClock = data.frameClock;
 	_music = data.music;
+	_upgradeManager = upgradeManager;
 }
 
 GameState GameManager::GetGameState() 
@@ -50,5 +52,8 @@ void GameManager::ResumeGame()
 void GameManager::ToUpgradeState() 
 {
 	PauseGame();
+
+	_upgradeManager->GenerateNewUpgrades();
+
 	_gameState = GameState::UPGRADES;
 }

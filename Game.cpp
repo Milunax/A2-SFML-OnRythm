@@ -99,6 +99,7 @@ void Game()
 
 	// Managers
 	GameManager gameManager;
+	UpgradeManager upgradeManager(data);
 	WaveManager waveManager(0.0f, 5.0f, 3, 32);
 	BulletManager bulletManager;
 
@@ -108,19 +109,11 @@ void Game()
 	Button quitButton(basicButton, data, sf::Vector2f(640.0f, 410.0f), "QUIT");
 
 	//UpgradesMenu
-	sf::RectangleShape upgradeBackground;
-	upgradeBackground.setSize(sf::Vector2f((float)window.getSize().x, (float)window.getSize().y));
-	sf::Color bgColor(0, 0, 0, 120);
-	upgradeBackground.setFillColor(bgColor);
-	upgradeBackground.setPosition(sf::Vector2f(0, 0));
-	sf::Text upgradeTitle = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 100.0f), *data.baseFont, "Level Up !", 80, sf::Text::Bold);
-	Button upgradeOneButton(basicButton, data, sf::Vector2f(640.0f, 300.0f), "UPGRADE");
-	Button upgradeTwoButton(basicButton, data, sf::Vector2f(640.0f, 410.0f), "UPGRADE");
-
+	
 
 	//Initialisation
 	player.Init(&gameManager);
-	gameManager.Init(data);
+	gameManager.Init(data, &upgradeManager);
 	waveManager.Init(window, &player);
 	bulletManager.Init(&player, &waveManager);
 	actualLVL = level_1;
@@ -231,11 +224,11 @@ void Game()
 					}
 				}
 
-				std::cout << "COUNT : " << tickCount << std::endl;
+				//std::cout << "COUNT : " << tickCount << std::endl;
 
 				actualState = GetStateOfBeat(actualLVL, tickCount, actualState);
-				std::cout << "STATE : " << actualState << std::endl;
-
+				//std::cout << "STATE : " << actualState << std::endl;
+				 
 				// MAIN SEQUENCE//
 				switch (actualState)
 				{
@@ -374,12 +367,16 @@ void Game()
 				case sf::Event::MouseButtonPressed:
 					if (event.mouseButton.button == sf::Mouse::Left)
 					{
-						if (IsPointInsideRectangle(mousePos, upgradeOneButton.GetCollider()))
+						if (IsPointInsideRectangle(mousePos, upgradeManager.GetUpgradeOneButton()->GetCollider()))
 						{
+							player.UpgradeStat(upgradeManager.GetUpgradeOne());
+							waveManager.AugmentScaleFactor();
 							gameManager.ResumeGame();
 						}
-						if (IsPointInsideRectangle(mousePos, upgradeTwoButton.GetCollider()))
+						if (IsPointInsideRectangle(mousePos, upgradeManager.GetUpgradeTwoButton()->GetCollider()))
 						{
+							player.UpgradeStat(upgradeManager.GetUpgradeTwo());
+							waveManager.AugmentScaleFactor();
 							gameManager.ResumeGame();
 						}
 					}
@@ -396,10 +393,7 @@ void Game()
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
-			window.draw(upgradeBackground);
-			window.draw(upgradeTitle);
-			upgradeOneButton.Draw(data);
-			upgradeTwoButton.Draw(data);
+			upgradeManager.DrawUpgradeMenu(data);
 
 			// On présente la fenêtre sur l'écran
 			window.display();

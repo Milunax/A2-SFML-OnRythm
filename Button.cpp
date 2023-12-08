@@ -24,6 +24,11 @@ RectangleCollider Button::GetCollider()
 	return collider;
 }
 
+void Button::SetText(sf::String text) 
+{
+	_text = text;
+}
+
 void Button::Draw(RefsData data) 
 {
 	sf::RectangleShape shape;

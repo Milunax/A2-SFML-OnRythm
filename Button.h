@@ -20,6 +20,7 @@ class Button
 	public:
 		Button(ButtonData buttonData, RefsData data, sf::Vector2f position, sf::String text);
 		RectangleCollider GetCollider();
+		void SetText(sf::String text);
 		void Draw(RefsData data);
 	private:
 		sf::Vector2f _size;

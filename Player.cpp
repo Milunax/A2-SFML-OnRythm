@@ -138,3 +138,27 @@ void Player::LevelUp() {
 int Player::GetLevel() {
 	return _level;
 }
+
+void Player::UpgradeStat(Upgrade upgrade)
+{
+	switch (upgrade)
+	{
+	case Upgrade::HEALTH:
+		std::cout << _maxHealth << std::endl;
+		_maxHealth += 10.0f;
+		std::cout << _maxHealth << std::endl;
+		_healthBar->UpdateSize(_health, _maxHealth);
+		break;
+	case Upgrade::ATTACK:
+		std::cout << "Attack Upgrade" << std::endl;
+		break;
+	case Upgrade::ATTACKSPEED:
+		std::cout << "Attack Speed Upgrade" << std::endl;
+		break;
+	case Upgrade::WEAPON:
+		std::cout << "Weapon Upgrade" << std::endl;
+		break;
+	default:
+		break;
+	}
+}
