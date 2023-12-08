@@ -9,6 +9,7 @@
 #include "RefsData.h"
 #include "Player.h"
 #include "WaveManager.h"
+#include "GameManager.h"
 
 enum class BeatState
 {
