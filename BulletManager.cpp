@@ -5,13 +5,15 @@ BulletManager::BulletManager(){
 	_enemyList = nullptr;
 	_waveManager = nullptr;
 	_boss = nullptr;
+	_uiManager = nullptr;
 }
 
-void BulletManager::Init(Player* player, WaveManager* waveManager)
+void BulletManager::Init(Player* player, WaveManager* waveManager, UIManager* uiManager)
 {
 	_player = player;
 	_waveManager = waveManager;
 	_enemyList = waveManager->GetEnemyList();
+	_uiManager = uiManager;
 }
 
 void BulletManager::Update(RefsData data)
@@ -26,7 +28,7 @@ void BulletManager::Update(RefsData data)
 		bullet->CheckPosition(data, _bulletList);
 		bullet->Move(data.deltaTime);
 	}
-	CheckCollisionAllBullets();
+	CheckCollisionAllBullets(data);
 }
 
 void BulletManager::UpdateTimer(RefsData data)
@@ -48,7 +50,7 @@ Bullet* BulletManager::InstanciateBullet(sf::Vector2f direction)
 	return bullet;
 }
 
-void BulletManager::CheckCollisionAllBullets() 
+void BulletManager::CheckCollisionAllBullets(RefsData data)
 {
 	std::vector<Enemy*>::iterator enemyIt = _enemyList->begin();
 
@@ -64,6 +66,8 @@ void BulletManager::CheckCollisionAllBullets()
 			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
 			{
 				(*enemyIt)->TakeDamage((*bulletIt)->GetDamage());
+				sf::Text* text = CreateTextAtPosition((*data.window), (*enemyIt)->GetPosition(), (*data.baseFont), IntStringConcatenate((*bulletIt)->GetDamage(), ""), 24);
+				_uiManager->GetDamageTextList()->push_back(text);
 				delete (*bulletIt);
 				
 				bulletIt = _bulletList.erase(bulletIt);
