@@ -11,6 +11,7 @@
 #include "HealthBar.h"
 #include "ExperienceBar.h"
 #include "GameManager.h"
+#include "UpgradeManager.h"
 
 
 class Bullet;
@@ -32,6 +33,7 @@ class Player : public Entity {
 		void LevelUp();
 		int GetLevel();
 		ExperienceBar* GetExperienceBar();
+		void UpgradeStat(Upgrade upgrade);
 
 	private :
 		ExperienceBar* _experienceBar;

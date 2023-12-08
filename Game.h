@@ -13,5 +13,6 @@
 #include "GameManager.h"
 #include "Button.h"
 #include "Utils.h"
+#include "UpgradeManager.h"
 
 void Game();

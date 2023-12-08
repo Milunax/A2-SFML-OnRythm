@@ -4,6 +4,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include "RefsData.h"
+#include "UpgradeManager.h"
 
 enum class GameState
 {
@@ -12,12 +13,11 @@ enum class GameState
 	UPGRADES
 };
 
-
 class GameManager 
 {
 	public :
 		GameManager();
-		void Init(RefsData data);
+		void Init(RefsData data, UpgradeManager* upgradeManager);
 		GameState GetGameState();
 		void SetGameState(GameState state);
 		void StartGame();
@@ -28,4 +28,6 @@ class GameManager
 		GameState _gameState;
 		sf::Clock* _frameClock;
 		sf::Music* _music;
+
+		UpgradeManager* _upgradeManager;
 };

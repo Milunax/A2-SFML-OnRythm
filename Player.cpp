@@ -138,3 +138,8 @@ void Player::LevelUp() {
 int Player::GetLevel() {
 	return _level;
 }
+
+void Player::UpgradeStat(Upgrade upgrade)
+{
+
+}
