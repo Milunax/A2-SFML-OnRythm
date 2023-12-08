@@ -23,6 +23,7 @@ class Player : public Entity {
 		void Init(GameManager* gameManager);
 		void Draw(RefsData data);
 		void TakeDamage(float value);
+		void Die();
 		sf::CircleShape& GetPlayerShape();
 		void SetColor(sf::Color color);
 		void Update(RefsData data);

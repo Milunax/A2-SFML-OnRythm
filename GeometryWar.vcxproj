@@ -105,6 +105,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RythmSystem.cpp" />
     <ClCompile Include="UIBar.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UpgradeManager.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WaveManager.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="RefsData.h" />
     <ClInclude Include="RythmSystem.h" />
     <ClInclude Include="UIBar.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="UpgradeManager.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WaveManager.h" />

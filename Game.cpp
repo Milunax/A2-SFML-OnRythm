@@ -32,14 +32,19 @@ void Game()
 	// Managers
 	GameManager gameManager;
 	RythmSystem rythmSystem(data);
+	UIManager uiManager(data);
 	UpgradeManager upgradeManager(data);
 	WaveManager waveManager(0.0f, 5.0f, 3, 32, 1.2f);
 	BulletManager bulletManager;
 
-	//StartMenu
-	sf::Text title = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 100.0f), *data.baseFont, "Epileptik Rythm", 80, sf::Text::Bold);
-	Button startButton(basicButton, data, sf::Vector2f(640.0f, 300.0f), "START");
-	Button quitButton(basicButton, data, sf::Vector2f(640.0f, 410.0f), "QUIT");
+	//EndMenu
+	sf::Text endTitle = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 200.0f), *data.baseFont, "Game Over", 80, sf::Text::Bold);
+	Button exitButton(basicButton, data, sf::Vector2f(640.0f, 360.0f), "EXIT");
+	sf::RectangleShape endBackground;
+	endBackground.setSize(sf::Vector2f((float)(*data.window).getSize().x, (float)(*data.window).getSize().y));
+	sf::Color bgColor(0, 0, 0, 120);
+	endBackground.setFillColor(bgColor);
+	endBackground.setPosition(sf::Vector2f(0, 0));
 
 	//Initialisation
 	player.Init(&gameManager);
@@ -47,7 +52,6 @@ void Game()
 	rythmSystem.Init(&waveManager, &player);
 	waveManager.Init(window, &gameManager, &player);
 	bulletManager.Init(&player, &waveManager);
-	/*actualLVL = level_1;*/
 
 
 	// Main Game
@@ -75,11 +79,11 @@ void Game()
 				case sf::Event::MouseButtonPressed:
 					if (event.mouseButton.button == sf::Mouse::Left)
 					{
-						if (IsPointInsideRectangle(mousePos, startButton.GetCollider()))
+						if (IsPointInsideRectangle(mousePos, uiManager.GetStartButton()->GetCollider()))
 						{
 							gameManager.StartGame();
 						}
-						if (IsPointInsideRectangle(mousePos, quitButton.GetCollider()))
+						if (IsPointInsideRectangle(mousePos, uiManager.GetQuitButton()->GetCollider()))
 						{
 							window.close();
 						}
@@ -94,9 +98,7 @@ void Game()
 			// Affichage
 			// Remise au noir de toute la fen�tre
 			window.clear();
-			window.draw(title);
-			startButton.Draw(data);
-			quitButton.Draw(data);
+			uiManager.DrawStartMenu(data);
 			// On pr�sente la fen�tre sur l'�cran
 			window.display();
 			break;
@@ -207,6 +209,42 @@ void Game()
 			window.display();
 			break;
 
+		case GameState::END_OF_GAME:
+			while (window.pollEvent(event))
+			{
+				// On g�re l'�v�n�ment
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					// L'utilisateur a cliqu� sur la croix => on ferme la fen�tre
+					window.close();
+					break;
+				case sf::Event::MouseButtonPressed:
+					if (event.mouseButton.button == sf::Mouse::Left)
+					{
+						if (IsPointInsideRectangle(mousePos, uiManager.GetExitButton()->GetCollider()))
+						{
+							window.close();
+						}
+					}
+				default:
+					break;
+				}
+			}
+
+			// Affichage
+			// Remise au noir de toute la fen�tre
+			window.clear();
+			//Background Shader
+			rythmSystem.Draw(data);
+			player.Draw(data);
+			waveManager.DrawAllEnemies(window);
+			bulletManager.DrawBullets(data);
+			gameManager.Draw(data);
+			uiManager.DrawEndMenu(data);
+			// On pr�sente la fen�tre sur l'�cran
+			window.display();
+			break;
 		default:
 			break;
 		}
