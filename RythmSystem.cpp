@@ -77,6 +77,8 @@ void RythmSystem::Init(WaveManager* waveManager, Player* player)
 {
 	_waveManager = waveManager;
 	_player = player;
+	
+	_backgroundStates.shader = &_backgroundShaderSlow;
 }
 
 void RythmSystem::ChangeSong(RefsData data, float bpm, float tick, int tickCount)
