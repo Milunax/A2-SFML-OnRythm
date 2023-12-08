@@ -27,7 +27,7 @@ void Game()
 	///Objects
 	float iTime = 0.0;
 
-	Player player(sf::Color::Blue, sf::Vector2f(590, 260), 50, 100, 200, 10.0f, 1.0f, 1.0f, 1.0f, 2.5f, false);
+	Player player(sf::Color::Blue, sf::Vector2f(590, 260), 50, 100, 200, 10.0f, 1.0f, 1.0f, 1.0f, 1.2f, 0);
 
 	// Managers
 	GameManager gameManager;
@@ -52,6 +52,8 @@ void Game()
 	rythmSystem.Init(&waveManager, &player);
 	waveManager.Init(window, &gameManager, &player);
 	bulletManager.Init(&player, &waveManager, &uiManager);
+	upgradeManager.Init(&player);
+	/*actualLVL = level_1;*/
 
 
 	// Main Game

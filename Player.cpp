@@ -1,8 +1,10 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Math.h"
+#include "UpgradeManager.h"
+#include "GameManager.h"
 
-Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, float baseBulletFireRate, float fireRateUpgradeValue, bool isWeaponUpgradedBaseValue) : Entity(startPos, maxHealth, speed)
+Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, float baseBulletFireRate, float fireRateUpgradeValue, int timesWeaponUpgraded) : Entity(startPos, maxHealth, speed)
 {
 	_radius = radius;
 	_color = color;
@@ -21,7 +23,8 @@ Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHeal
 	_bulletFireRate = baseBulletFireRate;
 	_fireRateUpgradeValue = fireRateUpgradeValue;
 
-	_isWeaponUpgraded = isWeaponUpgradedBaseValue;
+	_timesWeaponUpgraded = timesWeaponUpgraded;
+	std::cout << _timesWeaponUpgraded << std::endl;
 }
 
 void Player::Init(GameManager* gameManager) 
@@ -144,7 +147,6 @@ void Player::LevelUp() {
 	_experienceBar->ResetSize();
 	_experienceToNextLevel *= 2;
 	_experienceBar->UpdateLevel(_level);
-	std::cout << _level << std::endl;
 
 	_gameManager->ToUpgradeState();
 }
@@ -163,9 +165,9 @@ float Player::GetFireRate()
 	return _bulletFireRate;
 }
 
-bool Player::IsWeaponUpgraded()
+int Player::GetTimesWeaponUpgraded()
 {
-	return _isWeaponUpgraded;
+	return _timesWeaponUpgraded;
 }
 
 void Player::UpgradeStat(Upgrade upgrade)
@@ -175,6 +177,7 @@ void Player::UpgradeStat(Upgrade upgrade)
 	case Upgrade::HEALTH:
 		std::cout << _maxHealth << std::endl;
 		_maxHealth += _healthUpgradeValue;
+		_health += _healthUpgradeValue;
 		std::cout << _maxHealth << std::endl;
 		_healthBar->UpdateSize(_health, _maxHealth);
 		break;
@@ -188,7 +191,7 @@ void Player::UpgradeStat(Upgrade upgrade)
 		break;
 	case Upgrade::WEAPON:
 		std::cout << "Weapon Upgrade" << std::endl;
-		_isWeaponUpgraded = true;
+		_timesWeaponUpgraded += 1;
 		break;
 	default:
 		break;

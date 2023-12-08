@@ -1,5 +1,6 @@
 #include "UpgradeManager.h"
 
+
 UpgradeManager::UpgradeManager(RefsData data)
 {
 	_upgradeOne = Upgrade::HEALTH;
@@ -9,6 +10,12 @@ UpgradeManager::UpgradeManager(RefsData data)
 	SetUpgradeButtonText(_upgradeOneButton, _upgradeOne);
 	_upgradeTwoButton = new Button(basicButton, data, sf::Vector2f(640.0f, 410.0f), "UPGRADE");
 	SetUpgradeButtonText(_upgradeTwoButton, _upgradeTwo);
+	_player = nullptr;
+}
+
+void UpgradeManager::Init(Player* player)
+{
+	_player = player;
 }
 
 Upgrade UpgradeManager::GenerateUpgrade()
@@ -21,12 +28,28 @@ Upgrade UpgradeManager::GenerateUpgrade()
 
 void UpgradeManager::GenerateNewUpgrades() 
 {
-	_upgradeOne = GenerateUpgrade();
-	do 
+	if (_player->GetTimesWeaponUpgraded() >= 3)
 	{
-		_upgradeTwo = GenerateUpgrade();
-	} while (_upgradeTwo == _upgradeOne);
-	
+
+		do
+		{
+			_upgradeOne = GenerateUpgrade();
+		} while (_upgradeOne == Upgrade::WEAPON);
+
+		do
+		{
+			_upgradeTwo = GenerateUpgrade();
+		} while (_upgradeTwo == Upgrade::WEAPON || _upgradeTwo == _upgradeOne);
+	}
+	else
+	{
+		_upgradeOne = GenerateUpgrade();
+
+		do
+		{
+			_upgradeTwo = GenerateUpgrade();
+		} while (_upgradeTwo == _upgradeOne);
+	}
 
 	SetUpgradeButtonText(_upgradeOneButton, _upgradeOne);
 	SetUpgradeButtonText(_upgradeTwoButton, _upgradeTwo);
