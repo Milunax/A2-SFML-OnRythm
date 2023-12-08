@@ -1,6 +1,6 @@
 #include "WaveManager.h"
 
-WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpawn, int maxEnemyCount)
+WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpawn, int maxEnemyCount, float factorAugment)
 {
 	_timer = timer;
 	_spawnTime = spawnTime;
@@ -8,7 +8,7 @@ WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpaw
 	_maxEnemyCount = maxEnemyCount;
 
 	_enemyScaleFactor = 1.0f;
-	_factorAugment = 1.2f;
+	_factorAugment = factorAugment;
 
 	_gameManager = nullptr;
 	_player = nullptr;
