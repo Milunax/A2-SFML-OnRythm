@@ -1,5 +1,6 @@
 uniform float iTime;
 uniform vec2 iResolution;
+uniform float cv;
 
 const float pi = 3.14159;
 
@@ -59,11 +60,8 @@ vec3 scene(float gt, vec2 uv, vec4 a0, vec4 wt0, vec4 ws0, float blur){
     float p13 = iter(uv, a0, wt0, ws0, t, p12, stereo);
     
     //colors
-    vec3 accent_color = vec3(1.,0.2,0.);//vec3(0.99,0.5,0.2);
-    /*float r = sigmoid(-1.+2.*p0+p1-max(1.*p3,0.)+p5+p7+p10+p11+p13);
-    float g = sigmoid(-1.+2.*p0-max(1.*p1,0.)-max(2.*p3,0.)-max(2.*p5,0.)+p7+p10+p11+p13);
-    float b = sigmoid(0.+1.5*p0+p1+p3+-max(2.*p5,0.)+p7+p10+p11+p13);
-    */
+    vec3 accent_color = vec3(1.,cv,0.);//vec3(0.99,0.5,0.2);
+  
     float r = sigmoid(p0+p1+p5+p7+p10+p11+p13);
     float g = sigmoid(p0-p1+p3+p7+p10+p11);
     float b = sigmoid(p0+p1+p3+p5+p11+p13);
