@@ -27,7 +27,7 @@ void Game()
 	///Objects
 	float iTime = 0.0;
 
-	Player player(sf::Color::Blue, sf::Vector2f(590, 260), 50, 100, 200);
+	Player player(sf::Color::Blue, sf::Vector2f(590, 260), 50, 100, 200, 10.0f, 1.0f, 1.0f, 1.0f, 2.5f, false);
 
 	// Managers
 	GameManager gameManager;
@@ -156,6 +156,7 @@ void Game()
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
+			gameManager.Draw(data);
 			// On pr�sente la fen�tre sur l'�cran
 			window.display();
 			break;
@@ -202,6 +203,7 @@ void Game()
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
+			gameManager.Draw(data);
 			upgradeManager.DrawUpgradeMenu(data);
 
 			// On pr�sente la fen�tre sur l'�cran
