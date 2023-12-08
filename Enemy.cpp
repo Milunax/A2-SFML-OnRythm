@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-EnemyData normalEnemy = { 20.0f, sf::Color::Red, 2.0f , 50.0f, 10.0f, 2.0f, 1.0f, 5.0f };
-EnemyData bossEnemy = { 40.0f, sf::Color::Magenta, 100.0f , 20.0f, 10.0f, 20.0f, 1.0f, 20.0f };
+EnemyData normalEnemy = { 20.0f, sf::Color::Red, 2.0f , 50.0f, 10.0f, 2.0f, 1.0f, 5.0f, 10};
+EnemyData bossEnemy = { 40.0f, sf::Color::Magenta, 100.0f , 20.0f, 10.0f, 20.0f, 1.0f, 20.0f, 100};
 
 Enemy::Enemy(EnemyData data, sf::Vector2f startPos, Player* target) : Entity(startPos, data.MaxHealth, data.Speed)
 {
@@ -16,6 +16,8 @@ Enemy::Enemy(EnemyData data, sf::Vector2f startPos, Player* target) : Entity(sta
 	_experienceDropped = data.ExperienceDropped;
 
 	_player = target;
+
+	_scoreToAdd = data.ScoreToAdd;
 }
 
 Enemy::~Enemy() 
@@ -90,6 +92,11 @@ float Enemy::GetDamage()
 float Enemy::GetExperienceDropped() 
 {
 	return _experienceDropped;
+}
+
+int Enemy::GetScore()
+{
+	return _scoreToAdd;
 }
 
 

@@ -19,7 +19,7 @@ void ExperienceBar::Draw(RefsData data)
 	shape.setPosition(_scaledPosition);
 	data.window->draw(shape);
 
-	_levelText = CreateTextChild((*data.window), sf::Vector2f(_scaledPosition.x, _scaledPosition.y), (*data.baseFont), GetLevelText(_playerLevel), 16);
+	_levelText = CreateTextChild((*data.window), sf::Vector2f(_scaledPosition.x, _scaledPosition.y), (*data.baseFont), IntStringConcatenate(_playerLevel, "Lvl. "), 16);
 	data.window->draw(_levelText);
 }
 

@@ -9,4 +9,213 @@ BeatState GetStateOfBeat(std::map<int, BeatState> lvl, int beat, BeatState actua
 }
 
 
+RythmSystem::RythmSystem(RefsData data) 
+{
+	_level_1 = {
+		{32, BeatState::NORMAL},
+		{64, BeatState::NORMAL1_2},
+		{128, BeatState::NORMAL1_3},
+		{192,BeatState::PAUSE} ,
+		{223,BeatState::SLOW},
+		{288, BeatState::BOSS},
+		{289, BeatState::BOSSSUBSTATE} ,
+		{320, BeatState::BOSS},
+		{321, BeatState::BOSSSUBSTATE} ,
+		{352, BeatState::NORMAL},
+		{384, BeatState::NORMAL1_2},
+		{416,BeatState::PAUSE}
+	};
+	_level_2 = {
+		{0, BeatState::NORMAL2},
+		{64, BeatState::NORMAL},
+		{124,BeatState::PAUSE} ,
+		{128,BeatState::SLOW2},
+		{224, BeatState::BOSS} ,
+		{225, BeatState::BOSSSUBSTATE} ,
+		{288, BeatState::SLOW} ,
+		{320, BeatState::NORMAL} ,
+	};
+	_level_3 = { {32, BeatState::NORMAL}, {192,BeatState::PAUSE} , {223,BeatState::SLOW}, {288, BeatState::BOSS} };
+	_levelArray = { _level_1, _level_2, _level_3 };
+	_actualLVL = _level_1;
+	_actualLVLCount = 0;
+	_actualState = BeatState::SLOW;
 
+
+	_backgroundShaderNormal.loadFromFile("Background.vert", "Background.frag");
+	_backgroundShaderNormal2.loadFromFile("Background.vert", "Background7.frag");
+	_backgroundShaderSlow.loadFromFile("Background2.vert", "Background2.frag");
+	_backgroundShaderSlow2.loadFromFile("Background2.vert", "Background6.frag");
+	_backgroundShaderBoss.loadFromFile("Background.vert", "Background3.frag");
+	_backgroundShaderPause.loadFromFile("Background.vert", "Background4.frag");
+
+	_backgroundShaderNormal.setUniform("iResolution", sf::Vector2f((*data.window).getSize()));
+	_backgroundShaderNormal2.setUniform("iResolution", sf::Vector2f((*data.window).getSize()));
+	_backgroundShaderSlow.setUniform("iResolution", sf::Vector2f((*data.window).getSize()));
+	_backgroundShaderSlow2.setUniform("iResolution", sf::Vector2f((*data.window).getSize()));
+	_backgroundShaderBoss.setUniform("iResolution", sf::Vector2f((*data.window).getSize()));
+	_backgroundShaderPause.setUniform("iResolution", sf::Vector2f((*data.window).getSize()));
+
+	_NormalA = { 0.172, 0.215, 0.947 };
+	_NormalB = { 0.385,0.967,0.336 };
+	_NormalC = { 0.813,0.299,0.804 };
+	_NormalD = { 1.869,5.081,2.817 };
+	_backgroundShaderNormal.setUniform("a", _NormalA);
+	_backgroundShaderNormal.setUniform("b", _NormalB);
+	_backgroundShaderNormal.setUniform("c", _NormalC);
+	_backgroundShaderNormal.setUniform("d", _NormalD);
+
+
+	_backgroundRect.setPosition(0, 0);
+	_backgroundRect.setSize(sf::Vector2f((*data.window).getSize()));
+
+	_waveManager = nullptr;
+	_player = nullptr;
+}
+
+void RythmSystem::Init(WaveManager* waveManager, Player* player)
+{
+	_waveManager = waveManager;
+	_player = player;
+	
+	_backgroundStates.shader = &_backgroundShaderSlow;
+}
+
+void RythmSystem::ChangeSong(RefsData data, float bpm, float tick, int tickCount)
+{
+	if ((*data.music).getStatus() == 0) {
+		_actualLVLCount++;
+		_actualLVL = _levelArray[_actualLVLCount];
+		tickCount = 0;
+		switch (_actualLVLCount)
+		{
+		case 1:
+			bpm = 145.0;
+			tick = 1 / (bpm / 60);
+			if (!(*data.music).openFromFile("../sound/145.wav"))
+				return; // error
+			(*data.music).play();
+			break;
+		case 2:
+			bpm = 145.0;
+			tick = 1 / (bpm / 60);
+			if (!(*data.music).openFromFile("../sound/145.wav"))
+				return; // error
+			(*data.music).play();
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void RythmSystem::MainSequence(int tickCount) 
+{
+	_actualState = GetStateOfBeat(_actualLVL, tickCount, _actualState);
+
+	switch (_actualState)
+	{
+	case BeatState::NONE:
+		std::cout << "lol" << std::endl;
+		break;
+		//CASE NORMAL : ON BEAT
+	case BeatState::NORMAL:
+		_backgroundStates.shader = &_backgroundShaderNormal;
+		(tickCount % 2 == 0) ? _player->SetColor(sf::Color::Blue) : _player->SetColor(sf::Color::Magenta);
+		_waveManager->SetEnemiesNextPosition();
+		break;
+	case BeatState::NORMAL1_2:
+		_NormalA = { 0.650,0.500, 0.310 };
+		_NormalB = { -0.650, 0.500, 0.600 };
+		_NormalC = { 0.333, 0.278, 0.278 };
+		_NormalD = { 0.660, 0.000, 0.667 };
+		_backgroundShaderNormal.setUniform("a", _NormalA);
+		_backgroundShaderNormal.setUniform("b", _NormalB);
+		_backgroundShaderNormal.setUniform("c", _NormalC);
+		_backgroundShaderNormal.setUniform("d", _NormalD);
+		_backgroundStates.shader = &_backgroundShaderNormal;
+		(tickCount % 2 == 0) ? _player->SetColor(sf::Color::Blue) : _player->SetColor(sf::Color::Magenta);
+		_waveManager->SetEnemiesNextPosition();
+		break;
+	case BeatState::NORMAL1_3:
+		_NormalA = { 0.072, 0.627, 0.463 };
+		_NormalB = { 0.816, 0.756, 0.169 };
+		_NormalC = { 0.055, 0.545, 0.522 };
+		_NormalD = { 3.990, 4.046, 0.376 };
+		_backgroundShaderNormal.setUniform("a", _NormalA);
+		_backgroundShaderNormal.setUniform("b", _NormalB);
+		_backgroundShaderNormal.setUniform("c", _NormalC);
+		_backgroundShaderNormal.setUniform("d", _NormalD);
+		_backgroundStates.shader = &_backgroundShaderNormal;
+		(tickCount % 2 == 0) ? _player->SetColor(sf::Color::Blue) : _player->SetColor(sf::Color::Magenta);
+		_waveManager->SetEnemiesNextPosition();
+		break;
+	case BeatState::NORMAL2:
+		_backgroundStates.shader = &_backgroundShaderNormal2;
+		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
+		break;
+		//CASE SLOW : ONE ON TWO
+	case BeatState::SLOW:
+		_backgroundStates.shader = &_backgroundShaderSlow;
+		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
+		break;
+		//CASE SLOW 2 : ONE ON TWO WITH S6
+	case BeatState::SLOW2:
+		_backgroundStates.shader = &_backgroundShaderSlow2;
+		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
+		break;
+		//CASE BOSS : BOSS
+	case BeatState::BOSS:
+		_backgroundStates.shader = &_backgroundShaderBoss;
+		_waveManager->SpawnBoss();
+		break;
+	case BeatState::BOSSSUBSTATE:
+		_backgroundStates.shader = &_backgroundShaderBoss;
+		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
+		break;
+		//CASE PAUSE : NO MOVEMENT
+	case BeatState::PAUSE:
+		_backgroundStates.shader = &_backgroundShaderPause;
+		break;
+	default:
+		break;
+	}
+}
+
+void RythmSystem::TweenCreationAndUpdate(float iTime) 
+{
+	switch (_actualState) {
+	case BeatState::NORMAL:
+		_backgroundShaderNormal.setUniform("iTime", iTime);
+		break;
+	case BeatState::NORMAL1_2:
+		_backgroundShaderNormal.setUniform("iTime", iTime);
+		break;
+	case BeatState::NORMAL1_3:
+		_backgroundShaderNormal.setUniform("iTime", iTime);
+		break;
+	case BeatState::NORMAL2:
+		_backgroundShaderNormal2.setUniform("iTime", iTime);
+		break;
+	case BeatState::SLOW:
+		_backgroundShaderSlow.setUniform("iTime", iTime);
+		break;
+	case BeatState::SLOW2:
+		_backgroundShaderSlow2.setUniform("iTime", iTime);
+		break;
+	case BeatState::BOSS:
+		_backgroundShaderBoss.setUniform("iTime", iTime);
+		break;
+	case BeatState::BOSSSUBSTATE:
+		_backgroundShaderBoss.setUniform("iTime", iTime);
+		break;
+	case BeatState::PAUSE:
+		_backgroundShaderPause.setUniform("iTime", iTime);
+		break;
+	}
+}
+
+void RythmSystem::Draw(RefsData data) 
+{
+	(*data.window).draw(_backgroundRect, _backgroundStates);
+}

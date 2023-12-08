@@ -24,5 +24,5 @@ class BulletManager
 		std::vector<Enemy*>* _enemyList;
 		Enemy* _boss;
 		float _fireTimer = 0.0f;
-		float _bulletFireRate = 1.0f;
+		int _score;
 };

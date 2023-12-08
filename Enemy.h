@@ -15,6 +15,7 @@ struct EnemyData
 	float Damage;
 	float AttackSpeed;
 	float ExperienceDropped;
+	int ScoreToAdd;
 };
 
 extern EnemyData normalEnemy;
@@ -34,6 +35,7 @@ class Enemy : public Entity
 		CircleCollider GetCollider();
 		float GetDamage();
 		float GetExperienceDropped();
+		int GetScore();
 		void Draw(sf::RenderWindow& window);
 	private :
 		float _radius;
@@ -46,6 +48,8 @@ class Enemy : public Entity
 		float _attackSpeed;
 
 		float _experienceDropped;
+
+		int _scoreToAdd;
 
 		Player* _player;
 };

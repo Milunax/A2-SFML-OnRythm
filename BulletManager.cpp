@@ -17,7 +17,7 @@ void BulletManager::Init(Player* player, WaveManager* waveManager)
 void BulletManager::Update(RefsData data)
 {
 	UpdateTimer(data);
-	if (_fireTimer >= 1 / _bulletFireRate) {
+	if (_fireTimer >= 1 / _player->GetFireRate()) {
 		FireWeapon();
 		//std::cout << _bulletList.size() << std::endl;
 		_fireTimer = 0.0f;
@@ -43,7 +43,7 @@ void BulletManager::DrawBullets(RefsData data) {
 
 Bullet* BulletManager::InstanciateBullet(sf::Vector2f direction)
 {
-	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _player->GetPosition(), direction, 1000, 1);
+	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _player->GetPosition(), direction, 1000, _player->GetDamages());
 	//std::cout << "a tir�" << std::endl;
 	return bullet;
 }
@@ -64,7 +64,6 @@ void BulletManager::CheckCollisionAllBullets()
 			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
 			{
 				(*enemyIt)->TakeDamage((*bulletIt)->GetDamage());
-
 				delete (*bulletIt);
 				
 				bulletIt = _bulletList.erase(bulletIt);
@@ -87,7 +86,7 @@ void BulletManager::FireWeapon()
 		sf::Vector2f(0,-1)
 	};
 
-	if (_player->GetLevel() > 2) 
+	if (_player->IsWeaponUpgraded()) 
 	{
 		for (sf::Vector2f direction : directionList)
 		{

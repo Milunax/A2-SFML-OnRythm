@@ -2,7 +2,7 @@
 #include "Bullet.h"
 #include "Math.h"
 
-Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed) : Entity(startPos, maxHealth, speed)
+Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, float baseBulletFireRate, float fireRateUpgradeValue, bool isWeaponUpgradedBaseValue) : Entity(startPos, maxHealth, speed)
 {
 	_radius = radius;
 	_color = color;
@@ -11,8 +11,17 @@ Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHeal
 	_healthBar = new HealthBar(sf::Vector2f(_position.x, _position.y + _radius + 20), sf::Color::Red, sf::Vector2f(_radius * 2, 10));
 	_experienceToNextLevel = 10;
 	_level = 1;
-
 	_gameManager = nullptr;
+
+	_healthUpgradeValue = healthUpgradeValue;
+
+	_damages = baseDamage;
+	_damagesUpgradeValue = damagesUpgradeValue;
+
+	_bulletFireRate = baseBulletFireRate;
+	_fireRateUpgradeValue = fireRateUpgradeValue;
+
+	_isWeaponUpgraded = isWeaponUpgradedBaseValue;
 }
 
 void Player::Init(GameManager* gameManager) 
@@ -139,24 +148,42 @@ int Player::GetLevel() {
 	return _level;
 }
 
+float Player::GetDamages()
+{
+	return _damages;
+}
+
+float Player::GetFireRate()
+{
+	return _bulletFireRate;
+}
+
+bool Player::IsWeaponUpgraded()
+{
+	return _isWeaponUpgraded;
+}
+
 void Player::UpgradeStat(Upgrade upgrade)
 {
 	switch (upgrade)
 	{
 	case Upgrade::HEALTH:
 		std::cout << _maxHealth << std::endl;
-		_maxHealth += 10.0f;
+		_maxHealth += _healthUpgradeValue;
 		std::cout << _maxHealth << std::endl;
 		_healthBar->UpdateSize(_health, _maxHealth);
 		break;
 	case Upgrade::ATTACK:
 		std::cout << "Attack Upgrade" << std::endl;
+		_damages += _damagesUpgradeValue;
 		break;
 	case Upgrade::ATTACKSPEED:
 		std::cout << "Attack Speed Upgrade" << std::endl;
+		_bulletFireRate += _fireRateUpgradeValue;
 		break;
 	case Upgrade::WEAPON:
 		std::cout << "Weapon Upgrade" << std::endl;
+		_isWeaponUpgraded = true;
 		break;
 	default:
 		break;
