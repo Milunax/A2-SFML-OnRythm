@@ -66,6 +66,8 @@ RythmSystem::RythmSystem(RefsData data)
 		{380, BeatState::NORMAL1_2} ,
 		{384, BeatState::SLOW} , 
 		{416, BeatState::NORMAL2},
+		{504, BeatState::BOSS} ,
+		{505, BeatState::BOSSSUBSTATE} ,
 		{536, BeatState::BOSS} ,
 		{537, BeatState::BOSSSUBSTATE} ,
 		{600, BeatState::NORMAL1_2},
@@ -105,10 +107,10 @@ RythmSystem::RythmSystem(RefsData data)
 	_backgroundShaderBoss.setUniform("iResolution", sf::Vector2f((*data.window).getSize()));
 	_backgroundShaderPause.setUniform("iResolution", sf::Vector2f((*data.window).getSize()));
 
-	_NormalA = { 0.172, 0.215, 0.947 };
-	_NormalB = { 0.385,0.967,0.336 };
-	_NormalC = { 0.813,0.299,0.804 };
-	_NormalD = { 1.869,5.081,2.817 };
+	_NormalA = { 0.172f, 0.215f, 0.947f };
+	_NormalB = { 0.385f,0.967f,0.336f };
+	_NormalC = { 0.813f,0.299f,0.804f };
+	_NormalD = { 1.869f,5.081f,2.817f };
 	_backgroundShaderNormal.setUniform("a", _NormalA);
 	_backgroundShaderNormal.setUniform("b", _NormalB);
 	_backgroundShaderNormal.setUniform("c", _NormalC);
@@ -176,10 +178,10 @@ void RythmSystem::MainSequence(int tickCount)
 		_waveManager->SetEnemiesNextPosition();
 		break;
 	case BeatState::NORMAL1_2:
-		_NormalA = { 0.650,0.500, 0.310 };
-		_NormalB = { -0.650, 0.500, 0.600 };
-		_NormalC = { 0.333, 0.278, 0.278 };
-		_NormalD = { 0.660, 0.000, 0.667 };
+		_NormalA = { 0.650f,0.500f, 0.310f };
+		_NormalB = { -0.650f, 0.500f, 0.600f };
+		_NormalC = { 0.333f, 0.278f, 0.278f };
+		_NormalD = { 0.660f, 0.000f, 0.667f };
 		_backgroundShaderNormal.setUniform("a", _NormalA);
 		_backgroundShaderNormal.setUniform("b", _NormalB);
 		_backgroundShaderNormal.setUniform("c", _NormalC);
