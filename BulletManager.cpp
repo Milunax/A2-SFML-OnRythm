@@ -64,7 +64,6 @@ void BulletManager::CheckCollisionAllBullets()
 			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
 			{
 				(*enemyIt)->TakeDamage((*bulletIt)->GetDamage());
-
 				delete (*bulletIt);
 				
 				bulletIt = _bulletList.erase(bulletIt);

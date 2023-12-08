@@ -24,10 +24,14 @@ class GameManager
 		void PauseGame();
 		void ResumeGame();
 		void ToUpgradeState();
+		void AddScore(int value);
+		void Draw(RefsData data);
 	private :
 		GameState _gameState;
 		sf::Clock* _frameClock;
 		sf::Music* _music;
+
+		int _score;
 
 		UpgradeManager* _upgradeManager;
 };

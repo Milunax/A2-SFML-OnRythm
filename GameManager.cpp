@@ -57,3 +57,26 @@ void GameManager::ToUpgradeState()
 
 	_gameState = GameState::UPGRADES;
 }
+
+void GameManager::AddScore(int value)
+{
+	_score += value;
+}
+
+void GameManager::Draw(RefsData data)
+{
+	sf::Text scoreText;
+
+	switch (_gameState)
+	{
+	case GameState::START_MENU:
+		break;
+	case GameState::IN_GAME:
+		scoreText = CreateTextAlone((*data.window), sf::Vector2f(50.0f, 20.0f), *data.baseFont, IntStringConcatenate(_score, "Score : "), 24, sf::Text::Regular);
+		break;
+	case GameState::UPGRADES:
+		break;
+	default:
+		break;
+	}
+}

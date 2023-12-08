@@ -10,10 +10,11 @@ WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpaw
 	_enemyScaleFactor = 1.0f;
 	_factorAugment = 1.2f;
 
+	_gameManager = nullptr;
 	_player = nullptr;
 }
 
-void WaveManager::Init(sf::RenderWindow& window, Player* player)
+void WaveManager::Init(sf::RenderWindow& window,GameManager* gameManager, Player* player)
 {
 	std::vector<sf::Vector2f> positions{
 		sf::Vector2f(-50, -50),
@@ -30,6 +31,7 @@ void WaveManager::Init(sf::RenderWindow& window, Player* player)
 		_spawners.push_back(new EnemySpawner(position));
 	}
 
+	_gameManager = gameManager;
 	_player = player;
 }
 
@@ -139,6 +141,7 @@ void WaveManager::EraseDeadEnemies()
 		if (!(*it)->IsAlive) 
 		{
 			_player->AddExperience((*it)->GetExperienceDropped());
+			_gameManager->AddScore((*it)->GetScore());
 			delete (*it);
 			it = _enemyList.erase(it);
 		}

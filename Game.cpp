@@ -110,11 +110,13 @@ void Game()
 
 	//UpgradesMenu
 	
+	//Score
+	sf::Text score = CreateTextAlone(*data.window, sf::Vector2f(50.0f, 20.0f), *data.baseFont, "Score : 0", 24, sf::Text::Regular);
 
 	//Initialisation
 	player.Init(&gameManager);
 	gameManager.Init(data, &upgradeManager);
-	waveManager.Init(window, &player);
+	waveManager.Init(window, &gameManager, &player);
 	bulletManager.Init(&player, &waveManager);
 	actualLVL = level_1;
 
@@ -345,6 +347,7 @@ void Game()
 			window.clear();
 			//Background Shader
 			window.draw(backgroundRect, backgroundStates);
+			window.draw(score);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);

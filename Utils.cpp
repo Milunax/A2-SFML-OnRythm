@@ -35,3 +35,12 @@ sf::Vector2f ScalePositionWithScreenSize(sf::Window& window, sf::Vector2f positi
 	float y = (position.y / 720.0f) * (window.getSize().y);
 	return sf::Vector2f(x, y);
 }
+
+std::string IntStringConcatenate(int value, std::string text)
+{
+	std::string result;
+	std::stringstream str;
+	str << text << value;
+	result = str.str();
+	return result;
+}
