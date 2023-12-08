@@ -123,6 +123,7 @@ RythmSystem::RythmSystem(RefsData data)
 	_backgroundRect.setSize(sf::Vector2f((*data.window).getSize()));
 
 	_waveManager = nullptr;
+	_gameManager = nullptr;
 	_player = nullptr;
 }
 
