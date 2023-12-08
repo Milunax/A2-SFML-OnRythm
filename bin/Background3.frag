@@ -1,6 +1,7 @@
 
 uniform float iTime;
 uniform vec2 iResolution;
+
 vec3 palette(float t) {
     vec3 a = vec3(0.6, 0.4, 0.5);
     vec3 b = vec3(0.7, 0.3, 0.5);
