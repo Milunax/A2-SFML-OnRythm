@@ -173,6 +173,14 @@ void RythmSystem::MainSequence(int tickCount)
 		break;
 		//CASE NORMAL : ON BEAT
 	case BeatState::NORMAL:
+		_NormalA = { 0.172f, 0.215f, 0.947f };
+		_NormalB = { 0.385f,0.967f,0.336f };
+		_NormalC = { 0.813f,0.299f,0.804f };
+		_NormalD = { 1.869f,5.081f,2.817f };
+		_backgroundShaderNormal.setUniform("a", _NormalA);
+		_backgroundShaderNormal.setUniform("b", _NormalB);
+		_backgroundShaderNormal.setUniform("c", _NormalC);
+		_backgroundShaderNormal.setUniform("d", _NormalD);
 		_backgroundStates.shader = &_backgroundShaderNormal;
 		(tickCount % 2 == 0) ? _player->SetColor(sf::Color::Blue) : _player->SetColor(sf::Color::Magenta);
 		_waveManager->SetMoveMultiplier(2.0f);
@@ -193,10 +201,10 @@ void RythmSystem::MainSequence(int tickCount)
 		_waveManager->SetEnemiesNextPosition();
 		break;
 	case BeatState::NORMAL1_3:
-		_NormalA = { 0.072, 0.627, 0.463 };
-		_NormalB = { 0.816, 0.756, 0.169 };
-		_NormalC = { 0.055, 0.545, 0.522 };
-		_NormalD = { 3.990, 4.046, 0.376 };
+		_NormalA = { 0.072f, 0.627f, 0.463f };
+		_NormalB = { 0.816f, 0.756f, 0.169f };
+		_NormalC = { 0.055f, 0.545f, 0.522f};
+		_NormalD = { 3.990f, 4.046f, 0.376f };
 		_backgroundShaderNormal.setUniform("a", _NormalA);
 		_backgroundShaderNormal.setUniform("b", _NormalB);
 		_backgroundShaderNormal.setUniform("c", _NormalC);
