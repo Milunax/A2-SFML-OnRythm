@@ -54,7 +54,7 @@ void Enemy::Move(float deltaTime, float moveMutiplier)
 		sf::Vector2f direction = _nextPosition - _position;
 		//sf::Vector2f direction = sf::Vector2f(3, 1);
 		Normalize(direction);
-		_position = _position + direction * _speed * deltaTime;
+		_position = _position + direction * _speed * moveMutiplier * deltaTime;
 	}
 }
 
