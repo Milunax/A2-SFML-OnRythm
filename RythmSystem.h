@@ -31,7 +31,7 @@ class RythmSystem
 	public :
 		RythmSystem(RefsData data);
 		void Init(WaveManager* waveManager, Player* player);
-		void ChangeSong(RefsData data, float bpm, float tick, int tickCount);
+		void ChangeSong(RefsData data, float bpm, float tick, int& tickCount);
 		void MainSequence(int tickCount);
 		void TweenCreationAndUpdate(float iTime);
 		void Draw(RefsData data);

@@ -14,8 +14,7 @@ void mainImage(out vec4 O, vec2 o) {
         O += vec4(.2,.1,.04,0) / (1. + d/.1),
         
         r.z += m,
-        r.xy = fract(r.xy*mat2(cos(
-               sin(r.z)*sin(m)*.3+vec4(0,33,11,0))))-.5,
+        r.xy = fract(r.xy*mat2(cos(sin(r.z)*sin(m)*.3+vec4(0,33,11,0))))-.5,
         
         t += d = min(d, length(r.xy) - .1),
         

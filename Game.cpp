@@ -20,7 +20,7 @@ void Game()
 	int tickCount = 0;
 
 	sf::Music music;
-	music.openFromFile("../sound/150.wav");
+	music.openFromFile("../sound/2.wav");
 	data.music = &music;
 
 
@@ -155,7 +155,7 @@ void Game()
 			waveManager.DrawAllEnemies(window);
 			bulletManager.DrawBullets(data);
 			gameManager.Draw(data);
-			// On pr�sente la fen�tre sur l'�cran
+			// On présente la fenétre sur l'�cran
 			window.display();
 			break;
 

@@ -33,7 +33,7 @@ RythmSystem::RythmSystem(RefsData data)
 		{224, BeatState::BOSS} ,
 		{225, BeatState::BOSSSUBSTATE} ,
 		{288, BeatState::SLOW} ,
-		{320, BeatState::NORMAL} ,
+		{320, BeatState::NORMAL}
 	};
 	_level_3 = { {32, BeatState::NORMAL}, {192,BeatState::PAUSE} , {223,BeatState::SLOW}, {288, BeatState::BOSS} };
 	_levelArray = { _level_1, _level_2, _level_3 };
@@ -81,7 +81,7 @@ void RythmSystem::Init(WaveManager* waveManager, Player* player)
 	_backgroundStates.shader = &_backgroundShaderSlow;
 }
 
-void RythmSystem::ChangeSong(RefsData data, float bpm, float tick, int tickCount)
+void RythmSystem::ChangeSong(RefsData data, float bpm, float tick, int& tickCount)
 {
 	if ((*data.music).getStatus() == 0) {
 		_actualLVLCount++;
@@ -111,6 +111,7 @@ void RythmSystem::ChangeSong(RefsData data, float bpm, float tick, int tickCount
 
 void RythmSystem::MainSequence(int tickCount) 
 {
+
 	_actualState = GetStateOfBeat(_actualLVL, tickCount, _actualState);
 
 	switch (_actualState)
