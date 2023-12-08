@@ -29,11 +29,60 @@ RythmSystem::RythmSystem(RefsData data)
 		{0, BeatState::NORMAL2},
 		{64, BeatState::NORMAL},
 		{124,BeatState::PAUSE} ,
-		{128,BeatState::SLOW2},
-		{224, BeatState::BOSS} ,
-		{225, BeatState::BOSSSUBSTATE} ,
+		{128, BeatState::BOSS} ,
+		{129, BeatState::BOSSSUBSTATE} ,
+		{224,BeatState::SLOW2},
+		{228,BeatState::SLOW2_2},
+		{232,BeatState::SLOW2},
+		{236,BeatState::SLOW2_2},
+		{240,BeatState::SLOW2},
+		{244,BeatState::SLOW2_2},
+		{248,BeatState::SLOW2},
+		{252,BeatState::SLOW2_2},
+		{256,BeatState::SLOW2},
+		{260,BeatState::SLOW2_2},
+		{264,BeatState::SLOW2},
+		{268,BeatState::SLOW2_2},
+		{272,BeatState::SLOW2},
+		{276,BeatState::SLOW2_2},
+		{280,BeatState::SLOW2},
+		{284,BeatState::SLOW2_2},
 		{288, BeatState::SLOW} ,
-		{320, BeatState::NORMAL}
+		{320, BeatState::NORMAL} ,
+		{324, BeatState::NORMAL1_2} ,
+		{328, BeatState::NORMAL} ,
+		{332, BeatState::NORMAL1_2} ,
+		{336, BeatState::NORMAL} ,
+		{340, BeatState::NORMAL1_2} ,
+		{344, BeatState::NORMAL} ,
+		{348, BeatState::NORMAL1_2} ,
+		{352, BeatState::NORMAL} ,
+		{356, BeatState::NORMAL1_2} ,
+		{360, BeatState::NORMAL} ,
+		{364, BeatState::NORMAL1_2} ,
+		{368, BeatState::NORMAL} ,
+		{372, BeatState::NORMAL1_2} ,
+		{376, BeatState::NORMAL} ,
+		{380, BeatState::NORMAL1_2} ,
+		{384, BeatState::SLOW} , 
+		{416, BeatState::NORMAL2},
+		{536, BeatState::BOSS} ,
+		{537, BeatState::BOSSSUBSTATE} ,
+		{600, BeatState::NORMAL1_2},
+		{632, BeatState::NORMAL1_3},
+		{664, BeatState::NORMAL},
+		{728,BeatState::SLOW},
+		{760,BeatState::SLOW2},
+		{764,BeatState::SLOW2_2},
+		{768,BeatState::SLOW2},
+		{772,BeatState::SLOW2_2},
+		{776,BeatState::SLOW2},
+		{780,BeatState::SLOW2_2},
+		{784,BeatState::SLOW2},
+		{788,BeatState::SLOW2_2},
+		{792,BeatState::SLOW},
+		{856,BeatState::NORMAL2},
+		{920,BeatState::PAUSE}
 	};
 	_level_3 = { {32, BeatState::NORMAL}, {192,BeatState::PAUSE} , {223,BeatState::SLOW}, {288, BeatState::BOSS} };
 	_levelArray = { _level_1, _level_2, _level_3 };
@@ -65,6 +114,8 @@ RythmSystem::RythmSystem(RefsData data)
 	_backgroundShaderNormal.setUniform("c", _NormalC);
 	_backgroundShaderNormal.setUniform("d", _NormalD);
 
+	_backgroundShaderSlow2.setUniform("cv", 0.5f);
+
 
 	_backgroundRect.setPosition(0, 0);
 	_backgroundRect.setSize(sf::Vector2f((*data.window).getSize()));
@@ -73,15 +124,16 @@ RythmSystem::RythmSystem(RefsData data)
 	_player = nullptr;
 }
 
-void RythmSystem::Init(WaveManager* waveManager, Player* player)
+void RythmSystem::Init(WaveManager* waveManager, Player* player, GameManager* gameManager)
 {
 	_waveManager = waveManager;
 	_player = player;
+	_gameManager = gameManager;
 	
 	_backgroundStates.shader = &_backgroundShaderSlow;
 }
 
-void RythmSystem::ChangeSong(RefsData data, float bpm, float tick, int& tickCount)
+void RythmSystem::ChangeSong(RefsData data, float& bpm, float& tick, int& tickCount)
 {
 	if ((*data.music).getStatus() == 0) {
 		_actualLVLCount++;
@@ -97,11 +149,7 @@ void RythmSystem::ChangeSong(RefsData data, float bpm, float tick, int& tickCoun
 			(*data.music).play();
 			break;
 		case 2:
-			bpm = 145.0;
-			tick = 1 / (bpm / 60);
-			if (!(*data.music).openFromFile("../sound/145.wav"))
-				return; // error
-			(*data.music).play();
+			_gameManager->ToEndState();
 			break;
 		default:
 			break;
@@ -113,6 +161,7 @@ void RythmSystem::MainSequence(int tickCount)
 {
 
 	_actualState = GetStateOfBeat(_actualLVL, tickCount, _actualState);
+	std::cout <<"count :" << tickCount << std::endl;
 
 	switch (_actualState)
 	{
@@ -167,9 +216,16 @@ void RythmSystem::MainSequence(int tickCount)
 		break;
 		//CASE SLOW 2 : ONE ON TWO WITH S6
 	case BeatState::SLOW2:
+		_backgroundShaderSlow2.setUniform("cv", 0.5f);
 		_backgroundStates.shader = &_backgroundShaderSlow2;
-		_waveManager->SetMoveMultiplier(1.0f);
+		_waveManager->SetMoveMultiplier(2.0f);
 		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
+		break;
+	case BeatState::SLOW2_2:
+		_backgroundShaderSlow2.setUniform("cv", 2.0f);
+		_backgroundStates.shader = &_backgroundShaderSlow2;
+		_waveManager->SetMoveMultiplier(2.0f);
+		_waveManager->SetEnemiesNextPosition();
 		break;
 		//CASE BOSS : BOSS
 	case BeatState::BOSS:
@@ -178,8 +234,8 @@ void RythmSystem::MainSequence(int tickCount)
 		break;
 	case BeatState::BOSSSUBSTATE:
 		_backgroundStates.shader = &_backgroundShaderBoss;
-		_waveManager->SetMoveMultiplier(2.0f);
-		if (tickCount % 2 == 0) _waveManager->SetEnemiesNextPosition();
+		_waveManager->SetMoveMultiplier(3.0f);
+		_waveManager->SetEnemiesNextPosition();
 		break;
 		//CASE PAUSE : NO MOVEMENT
 	case BeatState::PAUSE:
@@ -210,6 +266,9 @@ void RythmSystem::TweenCreationAndUpdate(float iTime)
 		_backgroundShaderSlow.setUniform("iTime", iTime);
 		break;
 	case BeatState::SLOW2:
+		_backgroundShaderSlow2.setUniform("iTime", iTime);
+		break;
+	case BeatState::SLOW2_2:
 		_backgroundShaderSlow2.setUniform("iTime", iTime);
 		break;
 	case BeatState::BOSS:

@@ -19,6 +19,7 @@ enum class BeatState
 	NORMAL2,
 	SLOW,
 	SLOW2,
+	SLOW2_2,
 	PAUSE,
 	BOSS,
 	BOSSSUBSTATE
@@ -30,8 +31,8 @@ class RythmSystem
 {
 	public :
 		RythmSystem(RefsData data);
-		void Init(WaveManager* waveManager, Player* player);
-		void ChangeSong(RefsData data, float bpm, float tick, int& tickCount);
+		void Init(WaveManager* waveManager, Player* player, GameManager* gameManager);
+		void ChangeSong(RefsData data, float& bpm, float& tick, int& tickCount);
 		void MainSequence(int tickCount);
 		void TweenCreationAndUpdate(float iTime);
 		void Draw(RefsData data);
@@ -63,6 +64,7 @@ class RythmSystem
 		sf::RenderStates _backgroundStates;
 
 		WaveManager* _waveManager;
+		GameManager* _gameManager;
 		Player* _player;
 };
 
