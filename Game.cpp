@@ -49,7 +49,7 @@ void Game()
 	//Initialisation
 	player.Init(&gameManager);
 	gameManager.Init(data, &upgradeManager);
-	rythmSystem.Init(&waveManager, &player);
+	rythmSystem.Init(&waveManager, &player, &gameManager);
 	waveManager.Init(window, &gameManager, &player);
 	bulletManager.Init(&player, &waveManager, &uiManager);
 	upgradeManager.Init(&player);
@@ -156,9 +156,9 @@ void Game()
 			window.clear();
 			//Background Shader
 			rythmSystem.Draw(data);
+			bulletManager.DrawBullets(data);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
-			bulletManager.DrawBullets(data);
 			uiManager.DrawAllDamageTexts(data);
 			gameManager.Draw(data);
 			// On présente la fenétre sur l'�cran
@@ -203,9 +203,9 @@ void Game()
 			window.clear();
 			//Background Shader
 			rythmSystem.Draw(data);
+			bulletManager.DrawBullets(data);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
-			bulletManager.DrawBullets(data);
 			uiManager.DrawAllDamageTexts(data);
 			gameManager.Draw(data);
 			upgradeManager.DrawUpgradeMenu(data);
@@ -242,9 +242,9 @@ void Game()
 			window.clear();
 			//Background Shader
 			rythmSystem.Draw(data);
+			bulletManager.DrawBullets(data);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
-			bulletManager.DrawBullets(data);
 			gameManager.Draw(data);
 			uiManager.DrawEndMenu(data);
 			// On pr�sente la fen�tre sur l'�cran
