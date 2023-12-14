@@ -109,6 +109,7 @@
     <ClCompile Include="UpgradeManager.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WaveManager.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
@@ -132,6 +133,7 @@
     <ClInclude Include="UpgradeManager.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WaveManager.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Background.frag" />
