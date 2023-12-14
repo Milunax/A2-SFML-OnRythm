@@ -155,7 +155,7 @@ void Game()
 			// On présente la fenétre sur l'�cran
 			window.display();
 			break;
-
+			 
 
 
 		case GameState::UPGRADES:
@@ -223,6 +223,7 @@ void Game()
 							window.close();
 						}
 					}
+					break;
 				default:
 					break;
 				}
