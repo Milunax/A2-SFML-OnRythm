@@ -36,7 +36,6 @@ class Player : public Entity {
 		float GetDamages();
 		float GetFireRate();
 		int GetTimesWeaponUpgraded();
-		void UpgradeStat(Upgrade upgrade);
 
 	private :
 		ExperienceBar* _experienceBar;

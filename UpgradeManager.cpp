@@ -3,78 +3,46 @@
 
 UpgradeManager::UpgradeManager(RefsData data)
 {
-	_upgradeOne = Upgrade::HEALTH;
-	_upgradeTwo = Upgrade::HEALTH;
-
 	_player = nullptr;
+	_weaponManager = nullptr;
+	_uiManager = nullptr;
 }
 
-void UpgradeManager::Init(Player* player)
+void UpgradeManager::Init(Player* player, WeaponManager* weaponManager, UIManager* uiManager)
 {
 	_player = player;
+	_weaponManager = weaponManager;
+	_uiManager = uiManager;
 }
 
-Upgrade UpgradeManager::GenerateUpgrade()
+WeaponData UpgradeManager::GenerateUpgrade()
 {
-	int random = rand() % 4;
-	Upgrade upgrade = (Upgrade)random;
+	int random = rand() % _weaponDatabase.max_size();
+	WeaponData weapon = _weaponDatabase[random];
 
-	return upgrade;
+	return weapon;
 }
 
 void UpgradeManager::GenerateNewUpgrades() 
 {
-	if (_player->GetTimesWeaponUpgraded() >= 3)
+	_upgradeOne = GenerateUpgrade();
+
+	do
 	{
+		_upgradeTwo = GenerateUpgrade();
+	} while (_upgradeTwo.Name == _upgradeOne.Name);
 
-		do
-		{
-			_upgradeOne = GenerateUpgrade();
-		} while (_upgradeOne == Upgrade::WEAPON);
+	_uiManager->SetButtonOneText(_upgradeOne);
+	_uiManager->SetButtonTwoText(_upgradeTwo);
 
-		do
-		{
-			_upgradeTwo = GenerateUpgrade();
-		} while (_upgradeTwo == Upgrade::WEAPON || _upgradeTwo == _upgradeOne);
-	}
-	else
-	{
-		_upgradeOne = GenerateUpgrade();
-
-		do
-		{
-			_upgradeTwo = GenerateUpgrade();
-		} while (_upgradeTwo == _upgradeOne);
-	}
 }
 
-void UpgradeManager::SetUpgradeButtonText(Button* button, Upgrade upgrade)
-{
-	switch (upgrade)
-	{
-	case Upgrade::HEALTH:
-		button->SetText("Health +");
-		break;
-	case Upgrade::ATTACK:
-		button->SetText("Attack +");
-		break;
-	case Upgrade::ATTACKSPEED:
-		button->SetText("Atk Spd +");
-		break;
-	case Upgrade::WEAPON:
-		button->SetText("Weapon +");
-		break;
-	default:
-		break;
-	}
-}
-
-Upgrade UpgradeManager::GetUpgradeOne() 
+WeaponData UpgradeManager::GetUpgradeOne() 
 {
 	return _upgradeOne;
 }
 
-Upgrade UpgradeManager::GetUpgradeTwo()
+WeaponData UpgradeManager::GetUpgradeTwo()
 {
 	return _upgradeTwo;
 }

@@ -81,7 +81,7 @@ void UIManager::EraseOldTexts()
 			it++;
 		}
 	}
-	std::cout << _allDamageTexts.size() << std::endl;
+	//std::cout << _allDamageTexts.size() << std::endl;
 }
 
 void UIManager::DrawUpgradeMenu(RefsData data)
@@ -122,9 +122,19 @@ Button* UIManager::GetUpgradeOneButton()
 	return _upgradeOneButton;
 }
 
+void UIManager::SetButtonOneText(WeaponData weaponData)
+{
+	_upgradeOneButton->SetText(weaponData.Name);
+}
+
 Button* UIManager::GetUpgradeTwoButton()
 {
 	return _upgradeTwoButton;
+}
+
+void UIManager::SetButtonTwoText(WeaponData weaponData)
+{
+	_upgradeTwoButton->SetText(weaponData.Name);
 }
 
 Button* UIManager::GetExitButton()

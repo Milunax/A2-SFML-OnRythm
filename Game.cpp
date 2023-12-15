@@ -36,6 +36,7 @@ void Game()
 	UpgradeManager upgradeManager(data);
 	WaveManager waveManager(0.0f, 5.0f, 3, 32, 1.2f);
 	BulletManager bulletManager;
+	WeaponManager weaponManager;
 
 	//Initialisation
 	player.Init(&gameManager);
@@ -43,7 +44,7 @@ void Game()
 	rythmSystem.Init(&waveManager, &player, &gameManager);
 	waveManager.Init(window, &gameManager, &player);
 	bulletManager.Init(&player, &waveManager, &uiManager);
-	upgradeManager.Init(&player);
+	upgradeManager.Init(&player, &weaponManager, &uiManager);
 	/*actualLVL = level_1;*/
 
 
@@ -173,13 +174,13 @@ void Game()
 					{
 						if (IsPointInsideRectangle(mousePos, uiManager.GetUpgradeOneButton()->GetCollider()))
 						{
-							player.UpgradeStat(upgradeManager.GetUpgradeOne());
+							weaponManager.ApplyUpgrade(upgradeManager.GetUpgradeOne());
 							waveManager.AugmentScaleFactor();
 							gameManager.ResumeGame();
 						}
 						if (IsPointInsideRectangle(mousePos, uiManager.GetUpgradeTwoButton()->GetCollider()))
 						{
-							player.UpgradeStat(upgradeManager.GetUpgradeTwo());
+							weaponManager.ApplyUpgrade(upgradeManager.GetUpgradeTwo());
 							waveManager.AugmentScaleFactor();
 							gameManager.ResumeGame();
 						}

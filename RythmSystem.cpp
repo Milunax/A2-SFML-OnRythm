@@ -164,7 +164,7 @@ void RythmSystem::MainSequence(int tickCount)
 {
 
 	_actualState = GetStateOfBeat(_actualLVL, tickCount, _actualState);
-	std::cout <<"count :" << tickCount << std::endl;
+	//std::cout <<"count :" << tickCount << std::endl;
 
 	switch (_actualState)
 	{

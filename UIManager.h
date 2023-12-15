@@ -3,6 +3,7 @@
 #include "Button.h"
 #include <vector>
 #include <algorithm>
+#include "Weapon.h"
 
 class UIManager
 {
@@ -19,7 +20,9 @@ public:
 	Button* GetStartButton();
 	Button* GetQuitButton();
 	Button* GetUpgradeOneButton();
+	void SetButtonOneText(WeaponData weaponData);
 	Button* GetUpgradeTwoButton();
+	void SetButtonTwoText(WeaponData weaponData);
 	Button* GetExitButton();
 private:
 	//StartMenu
