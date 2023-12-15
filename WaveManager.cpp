@@ -15,9 +15,10 @@ WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpaw
 
 	_gameManager = nullptr;
 	_player = nullptr;
+	_particleSystem = nullptr;
 }
 
-void WaveManager::Init(sf::RenderWindow& window,GameManager* gameManager, Player* player)
+void WaveManager::Init(sf::RenderWindow& window,GameManager* gameManager, Player* player, ParticleSystem* particleSystem)
 {
 	std::vector<sf::Vector2f> positions{
 		sf::Vector2f(-50, -50),
@@ -36,6 +37,7 @@ void WaveManager::Init(sf::RenderWindow& window,GameManager* gameManager, Player
 
 	_gameManager = gameManager;
 	_player = player;
+	_particleSystem = particleSystem;
 }
 
 void WaveManager::Update(RefsData data) 
@@ -141,6 +143,7 @@ void WaveManager::EraseDeadEnemies()
 		{
 			_player->AddExperience((*it)->GetExperienceDropped());
 			_gameManager->AddScore((*it)->GetScore());
+			_particleSystem->Explosion((*it)->GetPosition());
 			delete (*it);
 			it = _enemyList.erase(it);
 		}

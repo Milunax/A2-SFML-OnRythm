@@ -5,12 +5,13 @@
 #include <iostream>
 #include "Player.h"
 #include "RefsData.h"
+#include "ParticleSystem.h"
 
 class WaveManager
 {
 	public:
 		WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpawn, int maxEnemyCount, float factorAugment);
-		void Init(sf::RenderWindow& window, GameManager* gameManager, Player* player);
+		void Init(sf::RenderWindow& window, GameManager* gameManager, Player* player, ParticleSystem* particleSystem);
 		void Update(RefsData data);
 		void SpawnWave();
 		void SpawnBoss();
@@ -39,5 +40,6 @@ class WaveManager
 
 		GameManager* _gameManager;
 		Player* _player;
+		ParticleSystem* _particleSystem;
 };
 

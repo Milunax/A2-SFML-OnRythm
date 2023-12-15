@@ -1,4 +1,23 @@
 #include "Game.h"
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
+#include <array>
+#include "RythmSystem.h"
+#include "Background.h"
+#include "HealthBar.h"
+#include "WaveManager.h"
+#include "RefsData.h"
+#include "BulletManager.h"
+#include "GameManager.h"
+#include "Button.h"
+#include "Utils.h"
+#include "UpgradeManager.h"
+#include "RythmSystem.h"
+#include "UIManager.h"
+#include "WeaponManager.h"
+#include "ParticleSystem.h"
 
 void Game() 
 {
@@ -32,6 +51,7 @@ void Game()
 	// Managers
 	GameManager gameManager;
 	RythmSystem rythmSystem(data);
+	ParticleSystem particleSystem;
 	UIManager uiManager(data, 0.05f);
 	UpgradeManager upgradeManager(data);
 	WaveManager waveManager(0.0f, 5.0f, 3, 32, 1.2f);
@@ -42,7 +62,7 @@ void Game()
 	player.Init(&gameManager);
 	gameManager.Init(data, &upgradeManager);
 	rythmSystem.Init(&waveManager, &player, &gameManager);
-	waveManager.Init(window, &gameManager, &player);
+	waveManager.Init(window, &gameManager, &player, &particleSystem);
 	bulletManager.Init(&player, &waveManager, &uiManager);
 	upgradeManager.Init(&player, &weaponManager, &uiManager);
 	/*actualLVL = level_1;*/
@@ -142,12 +162,14 @@ void Game()
 			waveManager.Update(data);
 			bulletManager.Update(data);
 			uiManager.Update(data);
+			particleSystem.Update(data);
 
 			// Affichage
 			// Remise au noir de toute la fen�tre
 			window.clear();
 			//Background Shader
 			rythmSystem.Draw(data);
+			particleSystem.Draw(data);
 			bulletManager.DrawBullets(data);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
@@ -195,6 +217,7 @@ void Game()
 			window.clear();
 			//Background Shader
 			rythmSystem.Draw(data);
+			particleSystem.Draw(data);
 			bulletManager.DrawBullets(data);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);

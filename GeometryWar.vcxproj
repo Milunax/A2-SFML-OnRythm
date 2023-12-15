@@ -102,6 +102,8 @@
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RythmSystem.cpp" />
     <ClCompile Include="UIBar.cpp" />
@@ -126,6 +128,8 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RefsData.h" />
     <ClInclude Include="RythmSystem.h" />
