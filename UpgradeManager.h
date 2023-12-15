@@ -22,17 +22,12 @@ class UpgradeManager
 		Upgrade GenerateUpgrade();
 		void GenerateNewUpgrades();
 		void SetUpgradeButtonText(Button* button, Upgrade upgrade);
-		void DrawUpgradeMenu(RefsData data);
 		Upgrade GetUpgradeOne();
 		Upgrade GetUpgradeTwo();
-		Button* GetUpgradeOneButton();
-		Button* GetUpgradeTwoButton();
+
 	private:
 		Upgrade _upgradeOne;
 		Upgrade _upgradeTwo;
-
-		Button* _upgradeOneButton;
-		Button* _upgradeTwoButton;
 
 		Player* _player;
 };

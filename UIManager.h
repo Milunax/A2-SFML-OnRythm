@@ -14,9 +14,12 @@ public:
 	void UpdateAllDamageTexts(RefsData data);
 	void DrawAllDamageTexts(RefsData data);
 	void EraseOldTexts();
+	void DrawUpgradeMenu(RefsData data);
 	void DrawEndMenu(RefsData data);
 	Button* GetStartButton();
 	Button* GetQuitButton();
+	Button* GetUpgradeOneButton();
+	Button* GetUpgradeTwoButton();
 	Button* GetExitButton();
 private:
 	//StartMenu
@@ -28,6 +31,10 @@ private:
 	std::vector<sf::Text*> _allDamageTexts;
 	float _timer;
 	float _lowerTransparencyTime;
+
+	//UpgradeMenu
+	Button* _upgradeOneButton;
+	Button* _upgradeTwoButton;
 
 	//EndMenu
 	sf::Text _endTitle;
