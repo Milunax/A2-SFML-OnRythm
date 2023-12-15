@@ -12,6 +12,10 @@ UIManager::UIManager(RefsData data, float lowerTransparencyTime)
 	_timer = 0.0f;
 	_lowerTransparencyTime = lowerTransparencyTime;
 
+	//Upgrade Menu
+	_upgradeOneButton = new Button(basicButton, data, sf::Vector2f(640.0f, 300.0f), "UPGRADE");
+	_upgradeTwoButton = new Button(basicButton, data, sf::Vector2f(640.0f, 410.0f), "UPGRADE");
+
 	//End Menu
 	_endTitle = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 200.0f), *data.baseFont, "Game Over", 80, sf::Text::Bold);
 	_exitButton = new Button(basicButton, data, sf::Vector2f(640.0f, 360.0f), "EXIT");
@@ -77,7 +81,23 @@ void UIManager::EraseOldTexts()
 			it++;
 		}
 	}
-	std::cout << _allDamageTexts.size() << std::endl;
+	//std::cout << _allDamageTexts.size() << std::endl;
+}
+
+void UIManager::DrawUpgradeMenu(RefsData data)
+{
+	sf::RectangleShape upgradeBackground;
+	upgradeBackground.setSize(sf::Vector2f((float)(*data.window).getSize().x, (float)(*data.window).getSize().y));
+	sf::Color bgColor(0, 0, 0, 120);
+	upgradeBackground.setFillColor(bgColor);
+	upgradeBackground.setPosition(sf::Vector2f(0, 0));
+	sf::Text upgradeTitle = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 100.0f), *data.baseFont, "Level Up !", 80, sf::Text::Bold);
+
+	(*data.window).draw(upgradeBackground);
+	(*data.window).draw(upgradeTitle);
+
+	_upgradeOneButton->Draw(data);
+	_upgradeTwoButton->Draw(data);
 }
 
 void UIManager::DrawEndMenu(RefsData data)
@@ -95,6 +115,26 @@ Button* UIManager::GetStartButton()
 Button* UIManager::GetQuitButton()
 {
 	return _quitButton;
+}
+
+Button* UIManager::GetUpgradeOneButton()
+{
+	return _upgradeOneButton;
+}
+
+void UIManager::SetButtonOneText(WeaponData weaponData)
+{
+	_upgradeOneButton->SetText(weaponData.Name);
+}
+
+Button* UIManager::GetUpgradeTwoButton()
+{
+	return _upgradeTwoButton;
+}
+
+void UIManager::SetButtonTwoText(WeaponData weaponData)
+{
+	_upgradeTwoButton->SetText(weaponData.Name);
 }
 
 Button* UIManager::GetExitButton()

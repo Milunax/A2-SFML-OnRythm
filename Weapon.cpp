@@ -1,10 +1,16 @@
 #include "Weapon.h"
 
-Weapon::Weapon(float damages, float attackRate)
+WeaponData _pistol = {"Pistol"};
+WeaponData _sword = { "Sword" };
+WeaponData _garlic = { "Garlic" };
+std::array<WeaponData, 3> _weaponDatabase = { _pistol, _sword, _garlic};
+
+Weapon::Weapon(float damages, float attackRate, WeaponData weaponData)
 {
 	_damages = damages;
 	_fireTimer = 0;
 	_attackRate = attackRate;
+	_name = weaponData.Name;
 }
 
 void Weapon::Init(Player* player)
@@ -24,4 +30,13 @@ void Weapon::Update()
 
 void Weapon::Attack()
 {
+
+std::string Weapon::GetName() 
+{
+	return _name;
+}
+
+void Weapon::UpgradeWeapon() 
+{
+	std::cout << "Upgraded : " + _name << std::endl;
 }

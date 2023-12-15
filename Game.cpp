@@ -36,15 +36,7 @@ void Game()
 	UpgradeManager upgradeManager(data);
 	WaveManager waveManager(0.0f, 5.0f, 3, 32, 1.2f);
 	BulletManager bulletManager;
-
-	//EndMenu
-	sf::Text endTitle = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 200.0f), *data.baseFont, "Game Over", 80, sf::Text::Bold);
-	Button exitButton(basicButton, data, sf::Vector2f(640.0f, 360.0f), "EXIT");
-	sf::RectangleShape endBackground;
-	endBackground.setSize(sf::Vector2f((float)(*data.window).getSize().x, (float)(*data.window).getSize().y));
-	sf::Color bgColor(0, 0, 0, 120);
-	endBackground.setFillColor(bgColor);
-	endBackground.setPosition(sf::Vector2f(0, 0));
+	WeaponManager weaponManager;
 
 	//Initialisation
 	player.Init(&gameManager);
@@ -52,7 +44,7 @@ void Game()
 	rythmSystem.Init(&waveManager, &player, &gameManager);
 	waveManager.Init(window, &gameManager, &player);
 	bulletManager.Init(&player, &waveManager, &uiManager);
-	upgradeManager.Init(&player);
+	upgradeManager.Init(&player, &weaponManager, &uiManager);
 	/*actualLVL = level_1;*/
 
 
@@ -180,15 +172,15 @@ void Game()
 				case sf::Event::MouseButtonPressed:
 					if (event.mouseButton.button == sf::Mouse::Left)
 					{
-						if (IsPointInsideRectangle(mousePos, upgradeManager.GetUpgradeOneButton()->GetCollider()))
+						if (IsPointInsideRectangle(mousePos, uiManager.GetUpgradeOneButton()->GetCollider()))
 						{
-							player.UpgradeStat(upgradeManager.GetUpgradeOne());
+							weaponManager.ApplyUpgrade(upgradeManager.GetUpgradeOne());
 							waveManager.AugmentScaleFactor();
 							gameManager.ResumeGame();
 						}
-						if (IsPointInsideRectangle(mousePos, upgradeManager.GetUpgradeTwoButton()->GetCollider()))
+						if (IsPointInsideRectangle(mousePos, uiManager.GetUpgradeTwoButton()->GetCollider()))
 						{
-							player.UpgradeStat(upgradeManager.GetUpgradeTwo());
+							weaponManager.ApplyUpgrade(upgradeManager.GetUpgradeTwo());
 							waveManager.AugmentScaleFactor();
 							gameManager.ResumeGame();
 						}
@@ -208,7 +200,7 @@ void Game()
 			waveManager.DrawAllEnemies(window);
 			uiManager.DrawAllDamageTexts(data);
 			gameManager.Draw(data);
-			upgradeManager.DrawUpgradeMenu(data);
+			uiManager.DrawUpgradeMenu(data);
 
 			// On pr�sente la fen�tre sur l'�cran
 			window.display();
