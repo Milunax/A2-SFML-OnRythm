@@ -1,4 +1,5 @@
 #include "Weapon.h"
+#include "Player.h"
 
 WeaponData _pistol = {"Pistol"};
 WeaponData _sword = { "Sword" };
@@ -11,6 +12,7 @@ Weapon::Weapon(float damages, float attackRate, WeaponData weaponData)
 	_fireTimer = 0;
 	_attackRate = attackRate;
 	_name = weaponData.Name;
+	_player = nullptr;
 }
 
 void Weapon::Init(Player* player)
@@ -28,8 +30,14 @@ void Weapon::Update()
 	_orientationDirection = _player->GetOrientationDirection();
 }
 
+void Weapon::UpdateTimer(RefsData data)
+{
+	_fireTimer += data.deltaTime;
+}
+
 void Weapon::Attack()
 {
+}
 
 std::string Weapon::GetName() 
 {

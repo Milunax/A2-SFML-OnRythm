@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
 #include "RefsData.h"
-#include "Player.h"
 #include <iostream>
 #include <array>
+
+class Player;
 
 struct WeaponData {
     std::string Name;
@@ -14,12 +15,14 @@ extern WeaponData _sword;
 extern WeaponData _garlic;
 extern std::array<WeaponData, 3> _weaponDatabase;
 
-class Weapon {
+class Weapon 
+{
     public:
         Weapon(float damages, float attackRate, WeaponData weaponData);
         virtual void Init(Player* player);
         virtual void Draw(RefsData data);
         virtual void Update();
+        void UpdateTimer(RefsData data);
         virtual void Attack();
         void UpgradeWeapon();
         std::string GetName();
