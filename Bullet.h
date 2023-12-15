@@ -14,6 +14,7 @@ class Bullet {
 		void CheckPosition(RefsData data, std::vector<Bullet*>& bulletList);
 		CircleCollider GetCollider();
 		float GetDamage();
+		void SetPosition(sf::Vector2f value);
 	private :
 		sf::CircleShape _circle;
 		float _radius;

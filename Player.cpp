@@ -25,6 +25,7 @@ Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHeal
 
 	_timesWeaponUpgraded = timesWeaponUpgraded;
 	//std::cout << _timesWeaponUpgraded << std::endl;
+
 }
 
 void Player::Init(GameManager* gameManager) 

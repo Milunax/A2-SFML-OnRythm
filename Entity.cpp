@@ -26,7 +26,8 @@ void Entity::Die()
 	IsAlive = false;
 }
 
-void Entity::Draw(sf::RenderWindow& window) {
+void Entity::Draw(sf::RenderWindow& window) 
+{
 
 }
 

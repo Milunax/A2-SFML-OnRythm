@@ -1,13 +1,42 @@
 #include "Weapon.h"
+#include "Player.h"
 
 WeaponData _pistol = {"Pistol"};
 WeaponData _sword = { "Sword" };
 WeaponData _garlic = { "Garlic" };
 std::array<WeaponData, 3> _weaponDatabase = { _pistol, _sword, _garlic};
 
-Weapon::Weapon(WeaponData weaponData) 
+Weapon::Weapon(float damages, float attackRate, WeaponData weaponData)
 {
+	_damages = damages;
+	_fireTimer = 0;
+	_attackRate = attackRate;
 	_name = weaponData.Name;
+	_player = nullptr;
+}
+
+void Weapon::Init(Player* player)
+{
+	_player = player;
+}
+
+void Weapon::Draw(RefsData data)
+{
+}
+
+void Weapon::Update()
+{
+	_position = _player->GetPosition();
+	_orientationDirection = _player->GetOrientationDirection();
+}
+
+void Weapon::UpdateTimer(RefsData data)
+{
+	_fireTimer += data.deltaTime;
+}
+
+void Weapon::Attack()
+{
 }
 
 std::string Weapon::GetName() 

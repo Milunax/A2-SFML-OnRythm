@@ -63,3 +63,8 @@ CircleCollider Bullet::GetCollider()
 float Bullet::GetDamage() {
 	return _damage;
 }
+
+void Bullet::SetPosition(sf::Vector2f value)
+{
+	_position = value;
+}

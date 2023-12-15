@@ -45,7 +45,7 @@ void WeaponManager::AddWeapon(WeaponData weaponData)
 	{
 		if (weapon == nullptr)
 		{
-			weapon = new Weapon(weaponData);
+			weapon = new Weapon(10, 1 ,weaponData);
 			std::cout << "Added : " + weapon->GetName() << std::endl;
 			return;
 		}
