@@ -5,9 +5,9 @@
 
 WeaponManager::WeaponManager() 
 {
-	BasicWeapon* basic = new BasicWeapon(2.0f, 1.0f, _range);
-	CloseWeapon* close = new CloseWeapon(sf::Color(255, 255, 255, 100), 75.0f, 2.0f, 1.0f, _close);
-	CircularWeapon* circular = new CircularWeapon(125.0f, 2.0f, 1, 1.0f, _book);
+	BasicWeapon* basic = new BasicWeapon(2.0f, 1.0f, _pistol);
+	CloseWeapon* close = new CloseWeapon(sf::Color(255, 255, 255, 100), 75.0f, 2.0f, 1.0f, _area);
+	CircularWeapon* circular = new CircularWeapon(125.0f, 2.0f, 1, 1.0f, _graviton);
 	_weapons = { basic, nullptr, nullptr };
 
 	_player = nullptr;
@@ -81,9 +81,9 @@ void WeaponManager::AddWeapon(WeaponData weaponData)
 	{
 		if (weapon == nullptr)
 		{
-			if(weaponData.Name == "Range") weapon = new BasicWeapon(10, 1 ,weaponData);
-			if (weaponData.Name == "Close") weapon = new CloseWeapon(sf::Color(255, 255, 255, 100), 100.0f, 2.0f, 1.0f, _close);
-			if(weaponData.Name == "Book") weapon = new CircularWeapon(125.0f, 2.0f, 1, 10.f, _book);
+			if(weaponData.Name == "Pistol") weapon = new BasicWeapon(2.0f, 1.0f, _pistol);
+			if (weaponData.Name == "Area") weapon = new CloseWeapon(sf::Color(255, 255, 255, 100), 75.0f, 2.0f, 1.0f, _area);
+			if(weaponData.Name == "Graviton") weapon = new CircularWeapon(125.0f, 2.0f, 1, 1.0f, _graviton);
 			if (weapon != nullptr) 
 			{
 				std::cout << "Added : " + weapon->GetName() << std::endl;

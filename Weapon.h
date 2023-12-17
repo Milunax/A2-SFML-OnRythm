@@ -12,9 +12,9 @@ struct WeaponData {
     std::string Name;
 };
 
-extern WeaponData _range;
-extern WeaponData _close;
-extern WeaponData _book;
+extern WeaponData _pistol;
+extern WeaponData _area;
+extern WeaponData _graviton;
 extern std::array<WeaponData, 3> _weaponDatabase;
 
 class Weapon 

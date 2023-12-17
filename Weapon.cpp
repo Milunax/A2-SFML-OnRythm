@@ -1,10 +1,10 @@
 #include "Weapon.h"
 #include "Player.h"
 
-WeaponData _range = {"Range"};
-WeaponData _close = { "Close" };
-WeaponData _book = { "Book" };
-std::array<WeaponData, 3> _weaponDatabase = { _range, _close, _book};
+WeaponData _pistol = {"Pistol"};
+WeaponData _area = { "Area" };
+WeaponData _graviton = { "Graviton" };
+std::array<WeaponData, 3> _weaponDatabase = { _pistol, _area, _graviton };
 
 Weapon::Weapon(float damages, float attackRate, WeaponData weaponData)
 {
