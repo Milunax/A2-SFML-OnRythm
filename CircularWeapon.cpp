@@ -7,10 +7,9 @@ CircularWeapon::CircularWeapon(float radius, float damages, int baseBulletNumber
 	_baseBulletNumber = baseBulletNumber;
 
 	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, { _position.x + 50, _position.y }, { 0, 0 }, 0, _damages);
-	Bullet* bullet2 = new Bullet(sf::Color::Yellow, 10, { _position.x - 50, _position.y }, { 0, 0 }, 0, _damages);
 
 	_bulletList.push_back(bullet);
-	_bulletList.push_back(bullet2);
+	_rotationAngle = 0.0f;
 }
 
 void CircularWeapon::Draw(RefsData data)

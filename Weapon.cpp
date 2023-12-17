@@ -19,7 +19,6 @@ void Weapon::Update(RefsData data, Player* player)
 {
 	_position = player->GetPosition();
 	_orientationDirection = player->GetOrientationDirection();
-	std::cout << _level << std::endl;
 }
 
 void Weapon::Draw(RefsData data)

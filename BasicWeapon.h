@@ -14,6 +14,5 @@ class BasicWeapon : public Weapon
 		void Draw(RefsData data);
 		void ScaleStats();
 	private :
-		int _level;
 		std::vector<Bullet*> _bulletList;
 };

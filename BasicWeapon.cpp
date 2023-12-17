@@ -2,7 +2,6 @@
 
 BasicWeapon::BasicWeapon(float damages, float attackRate, WeaponData weaponData) : Weapon(damages, attackRate, weaponData)
 {
-	_level = 0;
 }
 
 void BasicWeapon::Update(RefsData data, Player* player)
@@ -22,6 +21,8 @@ void BasicWeapon::Update(RefsData data, Player* player)
 	}
 
 	CheckAllPosition(data);
+
+	//std::cout << _level << std::endl;
 }
 
 void BasicWeapon::CheckAllPosition(RefsData data)
@@ -93,32 +94,32 @@ void BasicWeapon::Attack()
 
 	switch (_level)
 	{
-	case 1:
-		_bulletList.push_back(InstanciateBullet(_orientationDirection));
-		break;
-	case 2:
-		_bulletList.push_back(InstanciateBullet(_orientationDirection));
-		_bulletList.push_back(InstanciateBullet(-_orientationDirection));
-		break;
-	case 3:
-		_bulletList.push_back(InstanciateBullet(directionList[0]));
-		_bulletList.push_back(InstanciateBullet(directionList[1]));
-		_bulletList.push_back(InstanciateBullet(directionList[2]));
-		_bulletList.push_back(InstanciateBullet(directionList[3]));
-		break;
-	case 4:
-		for (sf::Vector2f direction : directionList)
-		{
-			_bulletList.push_back(InstanciateBullet(direction));
-		}
-		break;
-	default:
-		for (sf::Vector2f direction : directionList)
-		{
-			_bulletList.push_back(InstanciateBullet(direction));
-		}
-		std::cout << "case default" << std::endl;
-		break;
+		case 1:
+			_bulletList.push_back(InstanciateBullet(_orientationDirection));
+			break;
+		case 2:
+			_bulletList.push_back(InstanciateBullet(_orientationDirection));
+			_bulletList.push_back(InstanciateBullet(-_orientationDirection));
+			break;
+		case 3:
+			_bulletList.push_back(InstanciateBullet(directionList[0]));
+			_bulletList.push_back(InstanciateBullet(directionList[1]));
+			_bulletList.push_back(InstanciateBullet(directionList[2]));
+			_bulletList.push_back(InstanciateBullet(directionList[3]));
+			break;
+		case 4:
+			for (sf::Vector2f direction : directionList)
+			{
+				_bulletList.push_back(InstanciateBullet(direction));
+			}
+			break;
+		default:
+			for (sf::Vector2f direction : directionList)
+			{
+				_bulletList.push_back(InstanciateBullet(direction));
+			}
+			std::cout << "case default" << std::endl;
+			break;
 	}
 }
 
