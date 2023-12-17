@@ -145,7 +145,7 @@ void WaveManager::ShowEnemiesDamageTaken(RefsData data)
 		{
 			sf::Text* text = CreateTextAtPosition((*data.window), (enemy)->GetPosition(), (*data.baseFont), IntStringConcatenate(enemy->GetDamageTaken(), ""), 24);
 			_uiManager->GetDamageTextList()->push_back(text);
-			enemy->HasTakenDamage = false;
+			enemy->ResetDamageTaken();
 		}
 	}
 }

@@ -28,6 +28,12 @@ float Entity::GetDamageTaken()
 	return _damageTakenToShow;
 }
 
+void Entity::ResetDamageTaken()
+{
+	HasTakenDamage = false;
+	_damageTakenToShow = 0;
+}
+
 void Entity::Heal(float heal) {
 	_health = std::clamp(_health + heal, 0.0f, _maxHealth);
 }

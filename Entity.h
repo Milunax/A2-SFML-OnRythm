@@ -9,6 +9,7 @@ class Entity
 		virtual void TakeDamage(float damage);
 		bool HasTakenDamage;
 		float GetDamageTaken();
+		void ResetDamageTaken();
 		void Heal(float heal);
 		virtual void Die();
 		bool IsAlive;
