@@ -1,4 +1,5 @@
 #include "CircularWeapon.h"
+#include "Math.h"
 
 CircularWeapon::CircularWeapon(float radius, float damages, int baseBulletNumber, float rotationSpeed, WeaponData weaponData, float attackRate) : Weapon(damages, attackRate, weaponData)
 {
@@ -6,7 +7,7 @@ CircularWeapon::CircularWeapon(float radius, float damages, int baseBulletNumber
 	_rotationSpeed = rotationSpeed;
 	_baseBulletNumber = baseBulletNumber;
 
-	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, { _position.x + 50, _position.y }, { 0, 0 }, 0, _damages);
+	Bullet* bullet = new Bullet(sf::Color(255, 165, 0), 10, {_position.x + 50, _position.y}, {0, 0}, 0, _damages);
 
 	_bulletList.push_back(bullet);
 	_rotationAngle = 0.0f;
@@ -30,11 +31,11 @@ void CircularWeapon::Update(RefsData data, Player* player)
 void CircularWeapon::MoveBullets(RefsData data)
 {
 	_rotationAngle += _rotationSpeed * data.deltaTime;
-	float angleIncrement = 360.0f / (float)_bulletList.size();
+	float angleIncrement = (2 * pi) / (float)_bulletList.size();
 	float bulletAngle = _rotationAngle;
 
 	for (Bullet* bullet : _bulletList) {
-		bullet->SetPosition(sf::Vector2f(_position.x + (_radius * cos(_rotationAngle)), _position.y + (_radius * sin(_rotationAngle))));
+		bullet->SetPosition(sf::Vector2f(_position.x - (_radius * cos(bulletAngle)), _position.y + (_radius * sin(bulletAngle))));
 		bulletAngle += angleIncrement;
 		//CheckCollision(data, bullet);
 	}
@@ -63,6 +64,15 @@ void CircularWeapon::CheckCollision(std::vector<Enemy*>* enemyList)
 		}
 		enemyIt++;
 	}
+}
+
+void CircularWeapon::UpgradeWeapon()
+{
+	Weapon::UpgradeWeapon();
+
+	Bullet* bullet = new Bullet(sf::Color(255, 165, 0), 10, { _position.x + 50, _position.y }, { 0, 0 }, 0, _damages);
+
+	_bulletList.push_back(bullet);
 }
 
 void CircularWeapon::ScaleStats()

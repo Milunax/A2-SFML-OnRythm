@@ -1,5 +1,9 @@
 #include "Math.h"
 
+# define PI 3.14159265358979323846
+
+float pi = PI;
+
 float Magnitude(sf::Vector2f vector) 
 {
 	float magnitude = std::sqrtf((vector.x * vector.x) + (vector.y * vector.y));
