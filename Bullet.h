@@ -11,7 +11,6 @@ class Bullet {
 		void Draw(sf::RenderWindow& window);
 		void Move(float deltaTime);
 		bool IsBulletOutOfWindow(RefsData data);
-		void CheckPosition(RefsData data, std::vector<Bullet*>& bulletList);
 		CircleCollider GetCollider();
 		float GetDamage();
 		void SetPosition(sf::Vector2f value);

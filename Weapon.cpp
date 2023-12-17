@@ -1,10 +1,10 @@
 #include "Weapon.h"
 #include "Player.h"
 
-WeaponData _pistol = {"Pistol"};
-WeaponData _sword = { "Sword" };
-WeaponData _garlic = { "Garlic" };
-std::array<WeaponData, 3> _weaponDatabase = { _pistol, _sword, _garlic};
+WeaponData _range = {"Range"};
+WeaponData _close = { "Close" };
+WeaponData _book = { "Book" };
+std::array<WeaponData, 3> _weaponDatabase = { _range, _close, _book};
 
 Weapon::Weapon(float damages, float attackRate, WeaponData weaponData)
 {
@@ -12,23 +12,18 @@ Weapon::Weapon(float damages, float attackRate, WeaponData weaponData)
 	_fireTimer = 0;
 	_attackRate = attackRate;
 	_name = weaponData.Name;
-	_player = nullptr;
 }
 
-void Weapon::Init(Player* player)
+void Weapon::Update(RefsData data, Player* player)
 {
-	_player = player;
+	_position = player->GetPosition();
+	_orientationDirection = player->GetOrientationDirection();
 }
 
 void Weapon::Draw(RefsData data)
 {
 }
 
-void Weapon::Update()
-{
-	_position = _player->GetPosition();
-	_orientationDirection = _player->GetOrientationDirection();
-}
 
 void Weapon::UpdateTimer(RefsData data)
 {

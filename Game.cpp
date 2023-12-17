@@ -55,7 +55,7 @@ void Game()
 	UIManager uiManager(data, 0.05f);
 	UpgradeManager upgradeManager(data);
 	WaveManager waveManager(0.0f, 5.0f, 3, 32, 1.2f);
-	BulletManager bulletManager;
+	//BulletManager bulletManager;
 	WeaponManager weaponManager;
 
 	//Initialisation
@@ -63,8 +63,9 @@ void Game()
 	gameManager.Init(data, &upgradeManager);
 	rythmSystem.Init(&waveManager, &player, &gameManager);
 	waveManager.Init(window, &gameManager, &player, &particleSystem);
-	bulletManager.Init(&player, &waveManager, &uiManager);
+	//bulletManager.Init(&player, &waveManager, &uiManager);
 	upgradeManager.Init(&player, &weaponManager, &uiManager);
+	weaponManager.Init(&player, &waveManager);
 	/*actualLVL = level_1;*/
 
 
@@ -160,7 +161,8 @@ void Game()
 			//Player/Wave/Bullet
 			player.Update(data);
 			waveManager.Update(data);
-			bulletManager.Update(data);
+			weaponManager.Update(data);
+			//bulletManager.Update(data);
 			uiManager.Update(data);
 			particleSystem.Update(data);
 
@@ -170,7 +172,8 @@ void Game()
 			//Background Shader
 			rythmSystem.Draw(data);
 			particleSystem.Draw(data);
-			bulletManager.DrawBullets(data);
+			weaponManager.Draw(data);
+			//bulletManager.DrawBullets(data);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			uiManager.DrawAllDamageTexts(data);
@@ -218,7 +221,8 @@ void Game()
 			//Background Shader
 			rythmSystem.Draw(data);
 			particleSystem.Draw(data);
-			bulletManager.DrawBullets(data);
+			weaponManager.Draw(data);
+			//bulletManager.DrawBullets(data);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			uiManager.DrawAllDamageTexts(data);
@@ -258,7 +262,8 @@ void Game()
 			window.clear();
 			//Background Shader
 			rythmSystem.Draw(data);
-			bulletManager.DrawBullets(data);
+			weaponManager.Draw(data);
+			//bulletManager.DrawBullets(data);
 			player.Draw(data);
 			waveManager.DrawAllEnemies(window);
 			gameManager.Draw(data);

@@ -6,10 +6,12 @@ class BasicWeapon : public Weapon
 {
 	public :
 		BasicWeapon(float damages, float attackRate, WeaponData weaponData);
-		void Update(RefsData data);
+		void Update(RefsData data, Player* player);
+		void CheckAllPosition(RefsData data);
+		void CheckCollision(std::vector<Enemy*>* enemyList);
 		Bullet* InstanciateBullet(sf::Vector2f direction);
 		void Attack();
-		//void CheckCollision(RefsData data);
+		void Draw(RefsData data);
 	private :
 		int _level;
 		std::vector<Bullet*> _bulletList;

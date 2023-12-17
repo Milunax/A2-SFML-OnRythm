@@ -25,7 +25,6 @@ void BulletManager::Update(RefsData data)
 		_fireTimer = 0.0f;
 	}
 	for (Bullet* bullet : _bulletList) {
-		bullet->CheckPosition(data, _bulletList);
 		bullet->Move(data.deltaTime);
 	}
 	CheckCollisionAllBullets(data);

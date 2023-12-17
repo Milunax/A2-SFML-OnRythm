@@ -7,13 +7,11 @@ CloseWeapon::CloseWeapon(sf::Color color, float radius, float damages, float att
 	_radius = radius;
 }
 
-void CloseWeapon::Update(RefsData data)
+void CloseWeapon::Update(RefsData data, Player* player)
 {
+	Weapon::Update(data, player);
+
 	UpdateTimer(data);
-	if (_fireTimer > 1 / _attackRate) {
-		CheckCollision(data);
-		_fireTimer = 0.0f;
-	}
 }
 
 void CloseWeapon::Draw(RefsData data)
@@ -26,19 +24,29 @@ void CloseWeapon::Draw(RefsData data)
 	(*data.window).draw(shape);
 }
 
-void CloseWeapon::CheckCollision(RefsData data)
+void CloseWeapon::CheckCollision(std::vector<Enemy*>* enemyList)
 {
-	/*std::vector<Enemy*>::iterator enemyIt = _enemyList->begin();
+	std::vector<Enemy*>::iterator enemyIt = enemyList->begin();
 	CircleCollider weaponCol = { _position, _radius };
 
-	while (enemyIt != _enemyList->end())
+	std::vector<Enemy*> enemyToHit;
+
+	while (enemyIt != enemyList->end())
 	{
 		CircleCollider enemyCol = (*enemyIt)->GetCollider();
 		if (AreCircleCollidersOverlapping(weaponCol, enemyCol)) 
 		{
-			(*enemyIt)->TakeDamage(_damages);
+			enemyToHit.push_back(*enemyIt);
 		}
 		enemyIt++;
-	}*/
+	}
+
+	if (_fireTimer > 1 / _attackRate) {
+		for (Enemy* enemy : enemyToHit) 
+		{
+			enemy->TakeDamage(_damages);
+		}
+		_fireTimer = 0.0f;
+	}
 }
 

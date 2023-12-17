@@ -37,23 +37,6 @@ bool Bullet::IsBulletOutOfWindow(RefsData data)
 	return false;
 }
 
-void Bullet::CheckPosition(RefsData data, std::vector<Bullet*>& bulletList) 
-{
-	std::vector<Bullet*>::iterator it = bulletList.begin();
-	while (it != bulletList.end()) {
-		if ((*it)->IsBulletOutOfWindow(data))
-		{
-			Bullet* bulletToDelete = (*it);
-			it = bulletList.erase(it);
-			delete bulletToDelete;
-		}
-		else
-		{
-			it++;
-		}
-	}
-}
-
 CircleCollider Bullet::GetCollider()
 {
 	CircleCollider collider = { _position, _radius };

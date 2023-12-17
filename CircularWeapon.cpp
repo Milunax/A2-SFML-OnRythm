@@ -20,37 +20,45 @@ void CircularWeapon::Draw(RefsData data)
 	}
 }
 
-void CircularWeapon::Update(RefsData data)
+void CircularWeapon::Update(RefsData data, Player* player)
 {
+	Weapon::Update(data, player);
+
 	MoveBullets(data);
 }
 
 void CircularWeapon::MoveBullets(RefsData data)
 {
-	_rotationAngle += _rotationAngle * data.deltaTime;
+	_rotationAngle += _rotationSpeed * data.deltaTime;
 
 	for (Bullet* bullet : _bulletList) {
 		bullet->SetPosition(sf::Vector2f(_position.x + (_radius * cos(_rotationAngle)), _position.y + (_radius * sin(_rotationAngle))));
-		CheckCollision(data, bullet);
+		//CheckCollision(data, bullet);
 	}
 }
 
-void CircularWeapon::CheckCollision(RefsData data, Bullet* bullet)
+void CircularWeapon::CheckCollision(std::vector<Enemy*>* enemyList)
 {
-	//std::vector<Enemy*>::iterator enemyIt = _enemyList->begin();
+	std::vector<Enemy*>::iterator enemyIt = enemyList->begin();
 
 
-	//while (enemyIt != _enemyList->end())
-	//{
-	//	CircleCollider enemyCol = (*enemyIt)->GetCollider();
-	//	CircleCollider bulletCol = bullet->GetCollider();
-	//	if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
-	//	{
-	//		(*enemyIt)->TakeDamage(_damages);
-	//		sf::Text* text = CreateTextAtPosition((*data.window), (*enemyIt)->GetPosition(), (*data.baseFont), IntStringConcatenate(bullet->GetDamage(), ""), 24);
-	//		_uiManager->GetDamageTextList()->push_back(text);
-	//	}
-	//}
-	//enemyIt++;
+	while (enemyIt != enemyList->end())
+	{
+		CircleCollider enemyCol = (*enemyIt)->GetCollider();
+		std::vector<Bullet*>::iterator bulletIt = _bulletList.begin();
+
+		while (bulletIt != _bulletList.end())
+		{
+			CircleCollider bulletCol = (*bulletIt)->GetCollider();
+			if (AreCircleCollidersOverlapping(bulletCol, enemyCol))
+			{
+				(*enemyIt)->TakeDamage((*bulletIt)->GetDamage());
+				//sf::Text* text = CreateTextAtPosition((*data.window), (*enemyIt)->GetPosition(), (*data.baseFont), IntStringConcatenate((*bulletIt)->GetDamage(), ""), 24);
+				//_uiManager->GetDamageTextList()->push_back(text);
+			}
+			bulletIt++;
+		}
+		enemyIt++;
+	}
 }
 

@@ -6,9 +6,9 @@ class CloseWeapon : public Weapon
 {
 	public : 
 		CloseWeapon(sf::Color color, float radius, float damages, float attackRate, WeaponData weaponData);
-		void Update(RefsData data);
+		void Update(RefsData data, Player* player);
 		void Draw(RefsData data);
-		void CheckCollision(RefsData data);
+		void CheckCollision(std::vector<Enemy*>* enemyList);
 	private :
 		sf::Color _color;
 		float _radius;

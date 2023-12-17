@@ -3,14 +3,14 @@
 #include "Bullet.h"
 #include "Enemy.h"
 
-class CircularWeapon : Weapon
+class CircularWeapon : public Weapon
 {
 	public :
 		CircularWeapon(float radius, float damages, int baseBulletNumber, float rotationSpeed, WeaponData weaponData, float attackRate = 0);
 		void Draw(RefsData data);
-		void Update(RefsData data);
+		void Update(RefsData data, Player* player);
 		void MoveBullets(RefsData data);
-		void CheckCollision(RefsData data, Bullet* bullet);
+		void CheckCollision(std::vector<Enemy*>* enemyList);
 	private :
 		float _radius;
 		float _rotationSpeed;

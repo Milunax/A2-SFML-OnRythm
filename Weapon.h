@@ -3,6 +3,8 @@
 #include "RefsData.h"
 #include <iostream>
 #include <array>
+#include <vector>
+#include "Enemy.h"
 
 class Player;
 
@@ -10,18 +12,18 @@ struct WeaponData {
     std::string Name;
 };
 
-extern WeaponData _pistol;
-extern WeaponData _sword;
-extern WeaponData _garlic;
+extern WeaponData _range;
+extern WeaponData _close;
+extern WeaponData _book;
 extern std::array<WeaponData, 3> _weaponDatabase;
 
 class Weapon 
 {
     public:
         Weapon(float damages, float attackRate, WeaponData weaponData);
-        virtual void Init(Player* player);
+        virtual void Update(RefsData data, Player* player);
+        virtual void CheckCollision(std::vector<Enemy*>* enemyList) = 0;
         virtual void Draw(RefsData data);
-        virtual void Update();
         void UpdateTimer(RefsData data);
         virtual void Attack();
         void UpgradeWeapon();
@@ -33,6 +35,4 @@ class Weapon
         float _damages;
         sf::Vector2f _position;
         sf::Vector2f _orientationDirection;
-
-        Player* _player;
 };
