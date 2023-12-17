@@ -2,6 +2,7 @@
 
 BasicWeapon::BasicWeapon(float damages, float attackRate, WeaponData weaponData) : Weapon(damages, attackRate, weaponData)
 {
+
 }
 
 void BasicWeapon::Update(RefsData data, Player* player)
@@ -75,7 +76,7 @@ void BasicWeapon::CheckCollision(std::vector<Enemy*>* enemyList)
 Bullet* BasicWeapon::InstanciateBullet(sf::Vector2f direction)
 {
 	Bullet* bullet = new Bullet(sf::Color::Yellow, 10, _position, direction, 1000, _damages);
-	//std::cout << "a tiré" << std::endl;
+	//std::cout << "a tirï¿½" << std::endl;
 	return bullet;
 }
 
