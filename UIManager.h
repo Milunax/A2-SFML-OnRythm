@@ -27,6 +27,9 @@ public:
 private:
 	//StartMenu
 	sf::Text _title;
+	sf::Image _logoImage;
+	sf::Texture _logoTexture;
+	sf::Sprite _logoSprite;
 	Button* _startButton;
 	Button* _quitButton;
 

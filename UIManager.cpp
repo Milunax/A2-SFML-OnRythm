@@ -3,10 +3,15 @@
 UIManager::UIManager(RefsData data, float lowerTransparencyTime)
 {
 	//Start Menu
-	_title = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 100.0f), *data.baseFont, "Epileptik Rythm", 80, sf::Text::Bold);
+	//_title = CreateTextAlone(*data.window, sf::Vector2f(640.0f, 100.0f), *data.baseFont, "Epileptik Rythm", 80, sf::Text::Bold);
+	_logoImage.loadFromFile("Assets/LogoRound.png");
+
+	_logoTexture.loadFromFile("../Assets/LogoRound.png");
+	_logoSprite.setTexture(_logoTexture);
+	_logoSprite.setScale(sf::Vector2f(0.5f, 0.5f));
+	_logoSprite.setPosition(sf::Vector2f(150.0f, 270.0f));
 	_startButton = new Button(basicButton, data, sf::Vector2f(640.0f, 300.0f), "START");
 	_quitButton = new Button(basicButton, data, sf::Vector2f(640.0f, 410.0f), "QUIT");
-
 	//DamageTexts Fields
 
 	_timer = 0.0f;
@@ -28,6 +33,7 @@ UIManager::UIManager(RefsData data, float lowerTransparencyTime)
 void UIManager::DrawStartMenu(RefsData data)
 {
 	data.window->draw(_title);
+	data.window->draw(_logoSprite);
 	_startButton->Draw(data);
 	_quitButton->Draw(data);
 }
