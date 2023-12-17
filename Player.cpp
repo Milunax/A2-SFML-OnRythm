@@ -4,7 +4,7 @@
 #include "UpgradeManager.h"
 #include "GameManager.h"
 
-Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, float baseBulletFireRate, float fireRateUpgradeValue, int timesWeaponUpgraded) : Entity(startPos, maxHealth, speed)
+Player::Player(sf::Color color, sf::Vector2f startPos, float radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, float baseBulletFireRate, float fireRateUpgradeValue, int timesWeaponUpgraded) : Entity(startPos, maxHealth, speed)
 {
 	_radius = radius;
 	_color = color;

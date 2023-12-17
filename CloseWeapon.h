@@ -9,6 +9,7 @@ class CloseWeapon : public Weapon
 		void Update(RefsData data, Player* player);
 		void Draw(RefsData data);
 		void CheckCollision(std::vector<Enemy*>* enemyList);
+		void ScaleStats();
 	private :
 		sf::Color _color;
 		float _radius;

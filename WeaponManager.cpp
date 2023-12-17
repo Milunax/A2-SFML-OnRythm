@@ -7,7 +7,7 @@ WeaponManager::WeaponManager()
 {
 	BasicWeapon* basic = new BasicWeapon(2.0f, 1.0f, _range);
 	sf::Color color(255, 255, 255, 100);
-	CloseWeapon* close = new CloseWeapon(color, 200.0f, 2.0f, 1.0f, _close);
+	CloseWeapon* close = new CloseWeapon(color, 75.0f, 2.0f, 1.0f, _close);
 	CircularWeapon* circular = new CircularWeapon(200.0f, 2.0f, 1, 10.0f, _book);
 	_weapons = { basic, close, circular };
 

@@ -26,10 +26,12 @@ class Weapon
         virtual void Draw(RefsData data);
         void UpdateTimer(RefsData data);
         virtual void Attack();
-        void UpgradeWeapon();
+        virtual void UpgradeWeapon();
+        virtual void ScaleStats();
         std::string GetName();
     protected:
         std::string _name;
+        int _level;
         float _fireTimer;
         float _attackRate;
         float _damages;

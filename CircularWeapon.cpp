@@ -30,9 +30,11 @@ void CircularWeapon::Update(RefsData data, Player* player)
 void CircularWeapon::MoveBullets(RefsData data)
 {
 	_rotationAngle += _rotationSpeed * data.deltaTime;
+	float angleIncrement = 360.0f / _bulletList.size();
 
 	for (Bullet* bullet : _bulletList) {
 		bullet->SetPosition(sf::Vector2f(_position.x + (_radius * cos(_rotationAngle)), _position.y + (_radius * sin(_rotationAngle))));
+		_rotationAngle += angleIncrement;
 		//CheckCollision(data, bullet);
 	}
 }
@@ -60,5 +62,13 @@ void CircularWeapon::CheckCollision(std::vector<Enemy*>* enemyList)
 		}
 		enemyIt++;
 	}
+}
+
+void CircularWeapon::ScaleStats()
+{
+	if (_level % 2 == 0) _rotationSpeed *= 1.61803398875f;
+	if (_level % 3 == 0) _damages += 1.0f;
+	if (_level % 5 == 0) _radius *= 1.35f;
+
 }
 
