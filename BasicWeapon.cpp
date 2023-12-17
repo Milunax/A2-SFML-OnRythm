@@ -2,7 +2,7 @@
 
 BasicWeapon::BasicWeapon(float damages, float attackRate, WeaponData weaponData) : Weapon(damages, attackRate, weaponData)
 {
-	_level = 0;
+
 }
 
 void BasicWeapon::Update(RefsData data, Player* player)
