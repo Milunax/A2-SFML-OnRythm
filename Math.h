@@ -3,6 +3,8 @@
 #include <cmath>
 #include "Collider.h"
 
+extern float pi;
+
 float Magnitude(sf::Vector2f vector);
 void Normalize(sf::Vector2f& vector);
 float Distance(sf::Vector2f from, sf::Vector2f to);

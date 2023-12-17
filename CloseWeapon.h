@@ -10,7 +10,10 @@ class CloseWeapon : public Weapon
 		void Draw(RefsData data);
 		void CheckCollision(std::vector<Enemy*>* enemyList);
 		void ScaleStats();
+		void BlinkTransparency();
 	private :
 		sf::Color _color;
 		float _radius;
+		bool _isTransparencyGoingDown;
+		int _transparency;
 };

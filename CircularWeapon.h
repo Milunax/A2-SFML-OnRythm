@@ -11,6 +11,7 @@ class CircularWeapon : public Weapon
 		void Update(RefsData data, Player* player);
 		void MoveBullets(RefsData data);
 		void CheckCollision(std::vector<Enemy*>* enemyList);
+		void UpgradeWeapon();
 		void ScaleStats();
 	private :
 		float _radius;
