@@ -8,7 +8,7 @@ WeaponManager::WeaponManager()
 	BasicWeapon* basic = new BasicWeapon(2.0f, 1.0f, _range);
 	CloseWeapon* close = new CloseWeapon(sf::Color(255, 255, 255, 100), 75.0f, 2.0f, 1.0f, _close);
 	CircularWeapon* circular = new CircularWeapon(125.0f, 2.0f, 1, 1.0f, _book);
-	_weapons = { circular, nullptr, nullptr };
+	_weapons = { close, nullptr, nullptr };
 
 	_player = nullptr;
 	_waveManager = nullptr;
