@@ -6,8 +6,9 @@
 WeaponManager::WeaponManager() 
 {
 	BasicWeapon* basic = new BasicWeapon(2.0f, 1.0f, _range);
-	sf::Color color(255, 255, 255, 100);
-	_weapons = { basic, nullptr, nullptr };
+	CloseWeapon* close = new CloseWeapon(sf::Color(255, 255, 255, 100), 75.0f, 2.0f, 1.0f, _close);
+	CircularWeapon* circular = new CircularWeapon(125.0f, 2.0f, 1, 10.0f, _book);
+	_weapons = { circular, nullptr, nullptr };
 
 	_player = nullptr;
 	_waveManager = nullptr;
@@ -81,11 +82,7 @@ void WeaponManager::AddWeapon(WeaponData weaponData)
 		if (weapon == nullptr)
 		{
 			if(weaponData.Name == "Range") weapon = new BasicWeapon(10, 1 ,weaponData);
-			if (weaponData.Name == "Close") 
-			{
-				sf::Color color(255, 255, 255, 80);
-				weapon = new CloseWeapon(color, 100.0f, 2.0f, 1.0f, _close);
-			}
+			if (weaponData.Name == "Close") weapon = new CloseWeapon(sf::Color(255, 255, 255, 100), 100.0f, 2.0f, 1.0f, _close);
 			if(weaponData.Name == "Book") weapon = new CircularWeapon(125.0f, 2.0f, 1, 10.f, _book);
 			if (weapon != nullptr) 
 			{

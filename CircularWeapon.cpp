@@ -10,6 +10,7 @@ CircularWeapon::CircularWeapon(float radius, float damages, int baseBulletNumber
 
 	_bulletList.push_back(bullet);
 	_rotationAngle = 0.0f;
+	_rotationSpeed = rotationSpeed;
 }
 
 void CircularWeapon::Draw(RefsData data)
@@ -29,11 +30,12 @@ void CircularWeapon::Update(RefsData data, Player* player)
 void CircularWeapon::MoveBullets(RefsData data)
 {
 	_rotationAngle += _rotationSpeed * data.deltaTime;
-	float angleIncrement = 360.0f / _bulletList.size();
+	float angleIncrement = 360.0f / (float)_bulletList.size();
+	float bulletAngle = _rotationAngle;
 
 	for (Bullet* bullet : _bulletList) {
 		bullet->SetPosition(sf::Vector2f(_position.x + (_radius * cos(_rotationAngle)), _position.y + (_radius * sin(_rotationAngle))));
-		_rotationAngle += angleIncrement;
+		bulletAngle += angleIncrement;
 		//CheckCollision(data, bullet);
 	}
 }
