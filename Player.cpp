@@ -146,7 +146,7 @@ void Player::LevelUp() {
 	_level += 1;
 	_experience = 0;
 	_experienceBar->ResetSize();
-	_experienceToNextLevel *= 2;
+	_experienceToNextLevel *= 1.5f;
 	_experienceBar->UpdateLevel(_level);
 
 	_gameManager->ToUpgradeState();

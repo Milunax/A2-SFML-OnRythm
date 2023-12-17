@@ -12,6 +12,7 @@ class BasicWeapon : public Weapon
 		Bullet* InstanciateBullet(sf::Vector2f direction);
 		void Attack();
 		void Draw(RefsData data);
+		void ScaleStats();
 	private :
 		int _level;
 		std::vector<Bullet*> _bulletList;

@@ -129,3 +129,11 @@ void BasicWeapon::Draw(RefsData data)
 		bullet->Draw(*data.window);
 	}
 }
+
+void BasicWeapon::ScaleStats()
+{
+	if (_level % 2 == 0) _damages += 1.0f;
+	if (_level % 3 == 0) _attackRate *= 2.0f;
+}
+
+

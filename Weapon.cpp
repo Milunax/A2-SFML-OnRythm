@@ -12,6 +12,7 @@ Weapon::Weapon(float damages, float attackRate, WeaponData weaponData)
 	_fireTimer = 0;
 	_attackRate = attackRate;
 	_name = weaponData.Name;
+	_level = 1;
 }
 
 void Weapon::Update(RefsData data, Player* player)
