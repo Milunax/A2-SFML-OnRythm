@@ -6,10 +6,7 @@
 WeaponManager::WeaponManager() 
 {
 	BasicWeapon* basic = new BasicWeapon(2.0f, 1.0f, _range);
-	sf::Color color(255, 255, 255, 100);
-	CloseWeapon* close = new CloseWeapon(color, 200.0f, 2.0f, 1.0f, _close);
-	CircularWeapon* circular = new CircularWeapon(200.0f, 2.0f, 1, 10.0f, _book);
-	_weapons = { basic, close, circular };
+	_weapons = { basic, nullptr, nullptr };
 
 	_player = nullptr;
 	_waveManager = nullptr;
@@ -82,8 +79,22 @@ void WeaponManager::AddWeapon(WeaponData weaponData)
 	{
 		if (weapon == nullptr)
 		{
-			//weapon = new Weapon(10, 1 ,weaponData);
-			std::cout << "Added : " + weapon->GetName() << std::endl;
+			if(weaponData.Name == "Range") weapon = new BasicWeapon(10, 1 ,weaponData);
+			if (weaponData.Name == "Close") 
+			{
+				sf::Color color(255, 255, 255, 80);
+				weapon = new CloseWeapon(color, 100.0f, 2.0f, 1.0f, _close);
+			}
+			if(weaponData.Name == "Book") weapon = new CircularWeapon(125.0f, 2.0f, 1, 10.f, _book);
+			if (weapon != nullptr) 
+			{
+				std::cout << "Added : " + weapon->GetName() << std::endl;
+			}
+			else 
+			{
+				std::cout << "Error when adding weapon"<< std::endl;
+			}
+			
 			return;
 		}
 	}
