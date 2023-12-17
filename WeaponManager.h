@@ -4,6 +4,7 @@
 #include <iostream>
 #include "RefsData.h"
 #include "WaveManager.h"
+#include "UIManager.h"
 
 class WeaponManager
 {
@@ -11,7 +12,7 @@ class WeaponManager
 		WeaponManager();
 		void Init(Player* player, WaveManager* waveManager);
 		void Update(RefsData data);
-		void CheckAllCollisions();
+		void CheckAllCollisions(RefsData data);
 		void Draw(RefsData data);
 		bool HasWeapon(WeaponData weaponData);
 		void ApplyUpgrade(WeaponData weaponData);
@@ -22,5 +23,4 @@ class WeaponManager
 
 		Player* _player;
 		WaveManager* _waveManager;
-
 };

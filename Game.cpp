@@ -62,7 +62,7 @@ void Game()
 	player.Init(&gameManager);
 	gameManager.Init(data, &upgradeManager);
 	rythmSystem.Init(&waveManager, &player, &gameManager);
-	waveManager.Init(window, &gameManager, &player, &particleSystem);
+	waveManager.Init(window, &gameManager, &player, &particleSystem, &uiManager);
 	//bulletManager.Init(&player, &waveManager, &uiManager);
 	upgradeManager.Init(&player, &weaponManager, &uiManager);
 	weaponManager.Init(&player, &waveManager);

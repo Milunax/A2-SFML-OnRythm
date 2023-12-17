@@ -6,12 +6,13 @@
 #include "Player.h"
 #include "RefsData.h"
 #include "ParticleSystem.h"
+#include "UIManager.h"
 
 class WaveManager
 {
 	public:
 		WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpawn, int maxEnemyCount, float factorAugment);
-		void Init(sf::RenderWindow& window, GameManager* gameManager, Player* player, ParticleSystem* particleSystem);
+		void Init(sf::RenderWindow& window, GameManager* gameManager, Player* player, ParticleSystem* particleSystem, UIManager* uiManager);
 		void Update(RefsData data);
 		void SpawnWave();
 		void SpawnBoss();
@@ -21,6 +22,7 @@ class WaveManager
 		void SetEnemiesNextPosition();
 		void UpdateAllEnemies(float deltaTime);
 		void CheckCollisionAllEnemies();
+		void ShowEnemiesDamageTaken(RefsData data);
 		void EraseDeadEnemies();
 		void DrawAllEnemies(sf::RenderWindow& window);
 		std::vector<Enemy*>* GetEnemyList();
@@ -41,5 +43,6 @@ class WaveManager
 		GameManager* _gameManager;
 		Player* _player;
 		ParticleSystem* _particleSystem;
+		UIManager* _uiManager;
 };
 

@@ -26,11 +26,11 @@ void WeaponManager::Update(RefsData data)
 	{
 		if(weapon != nullptr)weapon->Update(data, _player);
 	}
-	CheckAllCollisions();
+	CheckAllCollisions(data);
 
 }
 
-void WeaponManager::CheckAllCollisions()
+void WeaponManager::CheckAllCollisions(RefsData data)
 {
 	for (Weapon* weapon : _weapons) 
 	{
