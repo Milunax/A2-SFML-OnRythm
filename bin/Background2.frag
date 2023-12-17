@@ -1,16 +1,16 @@
 uniform float iTime;
 uniform vec2 iResolution;
 
+vec3 a2 = vec3(0.667,0.500,0.500);
+vec3 b = vec3(0.500,0.667,0.500);
+vec3 c = vec3(0.667,0.666,0.500);
+vec3 d = vec3(0.200,0.000,0.500);
 float plot(float r, float pct){
 	return  smoothstep( pct-0.2, pct, r) -smoothstep( pct, pct+0.2, r);
 }
 
 vec3 pal( in float t){
-    vec3 a = vec3(0.667,0.500,0.500);
-    vec3 b = vec3(0.500,0.667,0.500);
-    vec3 c = vec3(0.667,0.666,0.500);
-    vec3 d = vec3(0.200,0.000,0.500);
-    return a + b*cos( 6.28318*(c*t+d) );
+    return a2 + b*cos( 6.28318*(c*t+d) );
 }
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )

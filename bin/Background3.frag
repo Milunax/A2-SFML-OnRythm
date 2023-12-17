@@ -1,13 +1,12 @@
 
 uniform float iTime;
 uniform vec2 iResolution;
+vec3 a = vec3(0.6, 0.4, 0.5);
+vec3 b = vec3(0.7, 0.3, 0.5);
+vec3 c = vec3(0.8, 1.0, 0.6);
+vec3 d = vec3(0.76, 0.41, 0.96);
 
 vec3 palette(float t) {
-    vec3 a = vec3(0.6, 0.4, 0.5);
-    vec3 b = vec3(0.7, 0.3, 0.5);
-    vec3 c = vec3(0.8, 1.0, 0.6);
-    vec3 d = vec3(0.76, 0.41, 0.96);
-
     return a + b * cos(6.28318 * (c * t + d));
 }
 
@@ -22,10 +21,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         float d = length(uv) * exp(-length(uv0));
 
         vec3 color = palette(length(uv0) + i * 0.2 + iTime * 0.4);
-        d = sin(d * 12.0 + iTime) / 12.0;
-        d = abs(d);
+        d = abs(sin(d * 12.0 + iTime) / 12.0);
         d = pow(0.0015 / d, 1.3);
-
         finalColor += color * d;
     }
     
