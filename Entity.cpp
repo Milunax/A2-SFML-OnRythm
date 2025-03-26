@@ -7,14 +7,31 @@ Entity::Entity(sf::Vector2f startPos, float maxHealth, float speed) {
 	_health = _maxHealth;
 	_speed = speed;
 	IsAlive = true;
+	HasTakenDamage = false;
+	_damageTakenToShow = 0;
 }
 
 void Entity::TakeDamage(float damage) {
 	_health = std::clamp(_health - damage, 0.0f, _maxHealth);
+	HasTakenDamage = true;
+	_damageTakenToShow += damage;
+
+
 	if (_health <= 0) 
 	{
 		Die();
 	}
+}
+
+float Entity::GetDamageTaken()
+{
+	return _damageTakenToShow;
+}
+
+void Entity::ResetDamageTaken()
+{
+	HasTakenDamage = false;
+	_damageTakenToShow = 0;
 }
 
 void Entity::Heal(float heal) {
@@ -26,7 +43,8 @@ void Entity::Die()
 	IsAlive = false;
 }
 
-void Entity::Draw(sf::RenderWindow& window) {
+void Entity::Draw(sf::RenderWindow& window) 
+{
 
 }
 

@@ -7,12 +7,7 @@ uniform vec3 d;
 uniform vec2 iResolution;
 
 vec3 palette( float t ) {
-    vec3 a2 = a;
-    vec3 b2 = b;
-    vec3 c2 = c;
-    vec3 d2 = d;
-
-    return a2 + b2*cos( 6.28318*(c2*t+d2) );
+    return a + b*cos( 6.28318*(c*t+d) );
 }
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
@@ -30,17 +25,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
         vec3 col = palette(length(uv0) + i*.5 + iTime*.4);
         col.x *= abs(sin(iTime));
 
-        d = sin(d*8. + iTime*1.5)/8.;
-        d = abs(d);
-
+        d = abs(sin(d*8. + iTime*1.5)/8.);
         d = pow(0.01 / d, 1.2);
 
         col *= abs(sin(iTime));
         finalColor += col * d;
     }
-    // Time varying pixel color
-
-    // Output to screen
     fragColor = vec4(finalColor,1.0);
 }
 

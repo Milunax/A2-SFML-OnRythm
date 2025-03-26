@@ -4,7 +4,7 @@
 #include "UpgradeManager.h"
 #include "GameManager.h"
 
-Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, float baseBulletFireRate, float fireRateUpgradeValue, int timesWeaponUpgraded) : Entity(startPos, maxHealth, speed)
+Player::Player(sf::Color color, sf::Vector2f startPos, float radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, float baseBulletFireRate, float fireRateUpgradeValue, int timesWeaponUpgraded) : Entity(startPos, maxHealth, speed)
 {
 	_radius = radius;
 	_color = color;
@@ -24,7 +24,8 @@ Player::Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHeal
 	_fireRateUpgradeValue = fireRateUpgradeValue;
 
 	_timesWeaponUpgraded = timesWeaponUpgraded;
-	std::cout << _timesWeaponUpgraded << std::endl;
+	//std::cout << _timesWeaponUpgraded << std::endl;
+
 }
 
 void Player::Init(GameManager* gameManager) 
@@ -145,7 +146,7 @@ void Player::LevelUp() {
 	_level += 1;
 	_experience = 0;
 	_experienceBar->ResetSize();
-	_experienceToNextLevel *= 2;
+	_experienceToNextLevel *= 1.5f;
 	_experienceBar->UpdateLevel(_level);
 
 	_gameManager->ToUpgradeState();
@@ -168,32 +169,4 @@ float Player::GetFireRate()
 int Player::GetTimesWeaponUpgraded()
 {
 	return _timesWeaponUpgraded;
-}
-
-void Player::UpgradeStat(Upgrade upgrade)
-{
-	switch (upgrade)
-	{
-	case Upgrade::HEALTH:
-		std::cout << _maxHealth << std::endl;
-		_maxHealth += _healthUpgradeValue;
-		_health += _healthUpgradeValue;
-		std::cout << _maxHealth << std::endl;
-		_healthBar->UpdateSize(_health, _maxHealth);
-		break;
-	case Upgrade::ATTACK:
-		std::cout << "Attack Upgrade" << std::endl;
-		_damages += _damagesUpgradeValue;
-		break;
-	case Upgrade::ATTACKSPEED:
-		std::cout << "Attack Speed Upgrade" << std::endl;
-		_bulletFireRate += _fireRateUpgradeValue;
-		break;
-	case Upgrade::WEAPON:
-		std::cout << "Weapon Upgrade" << std::endl;
-		_timesWeaponUpgraded += 1;
-		break;
-	default:
-		break;
-	}
 }

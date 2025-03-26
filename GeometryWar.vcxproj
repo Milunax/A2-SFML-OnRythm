@@ -89,9 +89,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BasicWeapon.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CircularWeapon.cpp" />
+    <ClCompile Include="CloseWeapon.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
@@ -102,6 +105,8 @@
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RythmSystem.cpp" />
     <ClCompile Include="UIBar.cpp" />
@@ -109,12 +114,17 @@
     <ClCompile Include="UpgradeManager.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WaveManager.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="BasicWeapon.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CircularWeapon.h" />
+    <ClInclude Include="CloseWeapon.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
@@ -124,6 +134,8 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RefsData.h" />
     <ClInclude Include="RythmSystem.h" />
@@ -132,6 +144,8 @@
     <ClInclude Include="UpgradeManager.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WaveManager.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Background.frag" />

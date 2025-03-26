@@ -78,6 +78,27 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicWeapon.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularWeapon.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CloseWeapon.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -143,6 +164,27 @@
     <ClInclude Include="UIManager.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicWeapon.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularWeapon.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="CloseWeapon.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Background.frag">
@@ -151,12 +193,26 @@
     <None Include="bin\Background.vert">
       <Filter>Fichiers de ressources</Filter>
     </None>
-    <None Include="bin\Background2.frag" />
-    <None Include="bin\Background2.vert" />
-    <None Include="bin\Background3.frag" />
-    <None Include="bin\Background4.frag" />
-    <None Include="bin\Background5.frag" />
-    <None Include="bin\Background6.frag" />
-    <None Include="bin\Background7.frag" />
+    <None Include="bin\Background2.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="bin\Background2.vert">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="bin\Background3.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="bin\Background4.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="bin\Background5.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="bin\Background6.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="bin\Background7.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
   </ItemGroup>
 </Project>

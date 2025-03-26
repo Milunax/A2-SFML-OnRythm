@@ -15,9 +15,11 @@ WaveManager::WaveManager(float timer, float spawnTime, int numberOfEnemiesToSpaw
 
 	_gameManager = nullptr;
 	_player = nullptr;
+	_particleSystem = nullptr;
+	_uiManager = nullptr;
 }
 
-void WaveManager::Init(sf::RenderWindow& window,GameManager* gameManager, Player* player)
+void WaveManager::Init(sf::RenderWindow& window,GameManager* gameManager, Player* player, ParticleSystem* particleSystem, UIManager* uiManager)
 {
 	std::vector<sf::Vector2f> positions{
 		sf::Vector2f(-50, -50),
@@ -36,6 +38,8 @@ void WaveManager::Init(sf::RenderWindow& window,GameManager* gameManager, Player
 
 	_gameManager = gameManager;
 	_player = player;
+	_particleSystem = particleSystem;
+	_uiManager = uiManager;
 }
 
 void WaveManager::Update(RefsData data) 
@@ -48,6 +52,7 @@ void WaveManager::Update(RefsData data)
 		SpawnWave();
 		_timer = 0;
 	}
+	ShowEnemiesDamageTaken(data);
 	EraseDeadEnemies();
 }
 
@@ -132,6 +137,19 @@ void WaveManager::CheckCollisionAllEnemies()
 	}
 }
 
+void WaveManager::ShowEnemiesDamageTaken(RefsData data)
+{
+	for (Enemy* enemy : _enemyList) 
+	{
+		if (enemy->HasTakenDamage == true) 
+		{
+			sf::Text* text = CreateTextAtPosition((*data.window), (enemy)->GetPosition(), (*data.baseFont), IntStringConcatenate(enemy->GetDamageTaken(), ""), 24);
+			_uiManager->GetDamageTextList()->push_back(text);
+			enemy->ResetDamageTaken();
+		}
+	}
+}
+
 void WaveManager::EraseDeadEnemies() 
 {
 	std::vector<Enemy*>::iterator it = _enemyList.begin();
@@ -141,6 +159,7 @@ void WaveManager::EraseDeadEnemies()
 		{
 			_player->AddExperience((*it)->GetExperienceDropped());
 			_gameManager->AddScore((*it)->GetScore());
+			_particleSystem->Explosion((*it)->GetPosition());
 			delete (*it);
 			it = _enemyList.erase(it);
 		}

@@ -140,6 +140,7 @@ void RythmSystem::ChangeSong(RefsData data, float& bpm, float& tick, int& tickCo
 {
 	if ((*data.music).getStatus() == 0) {
 		_actualLVLCount++;
+		std::cout << _actualLVLCount << std::endl;
 		_actualLVL = _levelArray[_actualLVLCount];
 		tickCount = 0;
 		switch (_actualLVLCount)
@@ -164,7 +165,7 @@ void RythmSystem::MainSequence(int tickCount)
 {
 
 	_actualState = GetStateOfBeat(_actualLVL, tickCount, _actualState);
-	std::cout <<"count :" << tickCount << std::endl;
+	//std::cout <<"count :" << tickCount << std::endl;
 
 	switch (_actualState)
 	{

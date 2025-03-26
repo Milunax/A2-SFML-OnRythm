@@ -17,7 +17,7 @@ enum class Upgrade;
 
 class Player : public Entity {
 	public :
-		Player(sf::Color color, sf::Vector2f startPos, int radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, 
+		Player(sf::Color color, sf::Vector2f startPos, float radius, float maxHealth, float speed, float healthUpgradeValue, float baseDamage, float damagesUpgradeValue, 
 				float bulletFireRate, float fireRateUpgradeValue, int timesWeaponUpgraded);
 		void Init(GameManager* gameManager);
 		void Draw(RefsData data);
@@ -36,7 +36,6 @@ class Player : public Entity {
 		float GetDamages();
 		float GetFireRate();
 		int GetTimesWeaponUpgraded();
-		void UpgradeStat(Upgrade upgrade);
 
 	private :
 		ExperienceBar* _experienceBar;

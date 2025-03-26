@@ -7,6 +7,9 @@ class Entity
 	public :
 		Entity(sf::Vector2f startPos, float maxHealth, float speed);
 		virtual void TakeDamage(float damage);
+		bool HasTakenDamage;
+		float GetDamageTaken();
+		void ResetDamageTaken();
 		void Heal(float heal);
 		virtual void Die();
 		bool IsAlive;
@@ -19,6 +22,7 @@ class Entity
 		sf::Vector2f _position;
 		float _health;
 		float _maxHealth;
+		float _damageTakenToShow;
 	private : 
 		
 		
